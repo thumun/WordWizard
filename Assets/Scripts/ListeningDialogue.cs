@@ -53,6 +53,7 @@ public class ListeningDialogue : MonoBehaviour
     //public string[] Questions = new string[3];
     public bool[] QuestionsBools = new bool[3];
 
+    public GameObject roundObj;
     public GameObject oppDialogue;
 
     public Button attack;
@@ -61,8 +62,6 @@ public class ListeningDialogue : MonoBehaviour
     public Button one;
     public Button two;
     public Button three;
-
-    public int roundCount;
 
     private bool correctanswer = false;
     private List<Dialogue> dialogue;
@@ -113,19 +112,39 @@ public class ListeningDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while (rounds > 0)
+        roundObj.GetComponent<TextMeshProUGUI>().text = rounds.ToString();
+        if (rounds == 0)
+        {
+            one.gameObject.SetActive(false);
+            two.gameObject.SetActive(false);
+            three.gameObject.SetActive(false);
+            oppDialogue.SetActive(false);
+            attack.gameObject.SetActive(false);
+            defense.gameObject.SetActive(false);
+            Debug.Log("end of game");
+
+        } else
         {
             if (correctanswer)
             {
+                Debug.Log("update: " + correctanswer);
                 // when round finished -> go to next round
+
+                one.gameObject.SetActive(false);
+                two.gameObject.SetActive(false);
+                three.gameObject.SetActive(false);
+
+                dialogueNum += 1;
+                oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
 
                 attack.gameObject.SetActive(true);
                 defense.gameObject.SetActive(true);
 
                 correctanswer = false;
+                rounds -= 1;
             }
         }
-
+        
 
         //if (Input.GetMouseButtonDown(0))
         //{
@@ -161,6 +180,7 @@ public class ListeningDialogue : MonoBehaviour
             {
                 Debug.Log("Right answer!");
                 correctanswer = true;
+                Debug.Log("correctanswer: "+ correctanswer);
             }
             else
             {
@@ -215,7 +235,7 @@ public class ListeningDialogue : MonoBehaviour
             QuestionsBools[2] = dialogue[dialogueNum].defCorrect[2] == 1;
         }
 
-        oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
+        //oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
 
 
     }
@@ -267,7 +287,7 @@ public class ListeningDialogue : MonoBehaviour
 
                     for (int i = 0; i < temp.Capacity; i++)
                     {
-                        spell.attack.Add(temp[i]);
+                        spell.defense.Add(temp[i]);
                     }
 
                     //Debug.Log("def added");
@@ -275,7 +295,7 @@ public class ListeningDialogue : MonoBehaviour
                     temp = csvReader[j + 6].Trim('[', ']').Split(',').ToList();
                     for (int i = 0; i < temp.Capacity; i++)
                     {
-                        spell.attCorrect.Add(Convert.ToInt32(temp[i]));
+                        spell.defCorrect.Add(Convert.ToInt32(temp[i]));
                     }
 
                     //Debug.Log("def bools added");
