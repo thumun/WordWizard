@@ -17,8 +17,8 @@ public class Dialogue
     public string opponent;
     public List<string> attack = new List<string>();
     public List<int> attCorrect = new List<int>();
-    public List<string> defense = new List<string>();
-    public List<int> defCorrect = new List<int>();
+    //public List<string> defense = new List<string>();
+    //public List<int> defCorrect = new List<int>();
 
     /*
     int numQuestions;
@@ -56,8 +56,8 @@ public class ListeningDialogue : MonoBehaviour
     public GameObject roundObj;
     public GameObject oppDialogue;
 
-    public Button attack;
-    public Button defense;
+    //public Button attack;
+    //public Button defense;
 
     public Button one;
     public Button two;
@@ -70,28 +70,26 @@ public class ListeningDialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        attack.onClick.AddListener(attackClick);
-        defense.onClick.AddListener(defenseClick);
+        //attack.onClick.AddListener(attackClick);
+        //defense.onClick.AddListener(defenseClick);
         one.onClick.AddListener(delegate { responseClick(0); });
         two.onClick.AddListener(delegate { responseClick(1); });
         three.onClick.AddListener(delegate { responseClick(2); });
 
-        attack.gameObject.SetActive(true);
-        defense.gameObject.SetActive(true);
+        //attack.gameObject.SetActive(true);
+        //defense.gameObject.SetActive(true);
 
-        one.gameObject.SetActive(false);
-        two.gameObject.SetActive(false);
-        three.gameObject.SetActive(false);
+        responses.gameObject.SetActive(false);
 
-        Debug.Log("btns set active");
+        //one.gameObject.SetActive(false);
+        //two.gameObject.SetActive(false);
+        //three.gameObject.SetActive(false);
 
         // putting the file read here initially but should be else where...
         dialogue = ReadSpells("miniGame1");
 
-        Debug.Log("dialogue read");
-
-        oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
-
+        updateResponseBtns();
+        responses.gameObject.SetActive(true);
 
         /*
         int count = 0;
@@ -115,30 +113,24 @@ public class ListeningDialogue : MonoBehaviour
         roundObj.GetComponent<TextMeshProUGUI>().text = rounds.ToString();
         if (rounds == 0)
         {
-            one.gameObject.SetActive(false);
-            two.gameObject.SetActive(false);
-            three.gameObject.SetActive(false);
+            responses.gameObject.SetActive(false);
             oppDialogue.SetActive(false);
-            attack.gameObject.SetActive(false);
-            defense.gameObject.SetActive(false);
+            //attack.gameObject.SetActive(false);
+            //defense.gameObject.SetActive(false);
             Debug.Log("end of game");
 
         } else
         {
             if (correctanswer)
             {
-                Debug.Log("update: " + correctanswer);
                 // when round finished -> go to next round
 
-                one.gameObject.SetActive(false);
-                two.gameObject.SetActive(false);
-                three.gameObject.SetActive(false);
-
                 dialogueNum += 1;
-                oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
+                updateResponseBtns();
+                responses.gameObject.SetActive(true);
 
-                attack.gameObject.SetActive(true);
-                defense.gameObject.SetActive(true);
+                //attack.gameObject.SetActive(true);
+                //defense.gameObject.SetActive(true);
 
                 correctanswer = false;
                 rounds -= 1;
@@ -180,7 +172,8 @@ public class ListeningDialogue : MonoBehaviour
             {
                 Debug.Log("Right answer!");
                 correctanswer = true;
-                Debug.Log("correctanswer: "+ correctanswer);
+                responses.gameObject.SetActive(false);
+               
             }
             else
             {
@@ -189,41 +182,50 @@ public class ListeningDialogue : MonoBehaviour
         }
     }
 
-    public void attackClick()
+    //public void attackClick()
+    //{
+    //    attack.gameObject.SetActive(false);
+    //    //defense.gameObject.SetActive(false);
+    //    updateResponseBtns("attack");
+
+    //}
+
+    //public void defenseClick()
+    //{
+    //    defense.gameObject.SetActive(false);
+    //    attack.gameObject.SetActive(false);
+    //    updateResponseBtns("def");
+
+    //}
+
+    public void updateResponseBtns()
     {
-        attack.gameObject.SetActive(false);
-        defense.gameObject.SetActive(false);
-        updateResponseBtns("attack");
-
-    }
-
-    public void defenseClick()
-    {
-        defense.gameObject.SetActive(false);
-        attack.gameObject.SetActive(false);
-        updateResponseBtns("def");
-
-    }
-
-    public void updateResponseBtns(string type)
-    {
-        one.gameObject.SetActive(true);
-        two.gameObject.SetActive(true);
-        three.gameObject.SetActive(true);
+        //one.gameObject.SetActive(true);
+        //two.gameObject.SetActive(true);
+        //three.gameObject.SetActive(true);
 
         // should get new content from data & update
         // question strings && bool based on data
 
-        if (type == "attack")
-        {
-            one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[0];
-            two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[1];
-            three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[2];
+        one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[0];
+        two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[1];
+        three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[2];
 
-            QuestionsBools[0] = dialogue[dialogueNum].attCorrect[0] == 1;
-            QuestionsBools[1] = dialogue[dialogueNum].attCorrect[1] == 1;
-            QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
-        }
+        QuestionsBools[0] = dialogue[dialogueNum].attCorrect[0] == 1;
+        QuestionsBools[1] = dialogue[dialogueNum].attCorrect[1] == 1;
+        QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
+
+        //if (type == "attack")
+        //{
+        //    one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[0];
+        //    two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[1];
+        //    three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[2];
+
+        //    QuestionsBools[0] = dialogue[dialogueNum].attCorrect[0] == 1;
+        //    QuestionsBools[1] = dialogue[dialogueNum].attCorrect[1] == 1;
+        //    QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
+        //}
+        /*
         else
         {
             one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].defense[0];
@@ -234,9 +236,9 @@ public class ListeningDialogue : MonoBehaviour
             QuestionsBools[1] = dialogue[dialogueNum].defCorrect[1] == 1;
             QuestionsBools[2] = dialogue[dialogueNum].defCorrect[2] == 1;
         }
+        */
 
-        //oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
-
+        oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
 
     }
 
@@ -283,6 +285,7 @@ public class ListeningDialogue : MonoBehaviour
 
                     //Debug.Log("attack bools added");
 
+                    /*
                     temp = csvReader[j + 5].Trim('[', ']').Split(',').ToList();
 
                     for (int i = 0; i < temp.Capacity; i++)
@@ -299,6 +302,7 @@ public class ListeningDialogue : MonoBehaviour
                     }
 
                     //Debug.Log("def bools added");
+                    */
 
                     spells.Add(spell);
                 }
