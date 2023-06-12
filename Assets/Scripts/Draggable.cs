@@ -13,6 +13,28 @@ public class Draggable : MonoBehaviour
     [SerializeField]
     private GameObject wordBox;
 
+    public GameObject anchorCur;
+    public GameObject anchorOrigin;
+    public bool canMove;
+
+    private Vector2 resolution;
+
+    private void Start()
+    {
+        resolution = new Vector2(Screen.width, Screen.height);
+        canMove = true;
+    }
+
+    public void setAnchorCur(GameObject anchor)
+    {
+        anchorCur = anchor;
+    }
+
+    public void setAnchorOrigin(GameObject anchor)
+    {
+        anchorOrigin = anchor;
+    }
+
     public void DragHandler(BaseEventData data)
     {
         PointerEventData pointerData = (PointerEventData)data;
@@ -23,13 +45,26 @@ public class Draggable : MonoBehaviour
             pointerData.position,
             canvas.worldCamera,
             out position);
-        
-        transform.position = canvas.transform.TransformPoint(position);
+        if (canMove)
+        {
+            transform.position = canvas.transform.TransformPoint(position);
+        }
     }
 
-    public void OnClick()
+    public void MouseUp()
     {
-        //GameObject dupe = GameObject.Instantiate(wordBox);
-        //dupe.transform.position = new Vector3(2.0f, 2.0f, 2.0f);
+        transform.position = anchorCur.transform.position;
+    }
+
+    private void Update()
+    {
+        if (resolution.x != Screen.width || resolution.y != Screen.height)
+        {
+
+            transform.position = anchorCur.transform.position;
+
+            resolution.x = Screen.width;
+            resolution.y = Screen.height;
+        }
     }
 }
