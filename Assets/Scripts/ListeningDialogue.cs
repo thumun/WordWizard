@@ -8,6 +8,7 @@ using System.Net;
 using System;
 using NReco.Csv;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 
 public class Dialogue
@@ -53,14 +54,14 @@ public class ListeningDialogue : MonoBehaviour
     //public string[] Questions = new string[3];
     public bool[] QuestionsBools = new bool[3];
 
-    public GameObject roundObj;
+    //public GameObject roundObj;
     public GameObject oppDialogue;
 
     public GameObject oppInfo;
     public Transform lives;
 
-    //public Button attack;
-    //public Button defense;
+    public Transform lose;
+    public Transform win;
 
     public Button one;
     public Button two;
@@ -69,24 +70,20 @@ public class ListeningDialogue : MonoBehaviour
     private bool correctanswer = false;
     private List<Dialogue> dialogue;
     private int dialogueNum = 0;
+    private int initialRounds;
 
     // Start is called before the first frame update
     void Start()
     {
-        //attack.onClick.AddListener(attackClick);
-        //defense.onClick.AddListener(defenseClick);
+        initialRounds = rounds;
+        win.gameObject.SetActive(false);
+        lose.gameObject.SetActive(false);
+
         one.onClick.AddListener(delegate { responseClick(0); });
         two.onClick.AddListener(delegate { responseClick(1); });
         three.onClick.AddListener(delegate { responseClick(2); });
 
-        //attack.gameObject.SetActive(true);
-        //defense.gameObject.SetActive(true);
-
         responses.gameObject.SetActive(false);
-
-        //one.gameObject.SetActive(false);
-        //two.gameObject.SetActive(false);
-        //three.gameObject.SetActive(false);
 
         // putting the file read here initially but should be else where...
         dialogue = ReadSpells("miniGame1");
@@ -94,26 +91,15 @@ public class ListeningDialogue : MonoBehaviour
         updateResponseBtns();
         responses.gameObject.SetActive(true);
 
-        /*
-        int count = 0;
-        foreach (Transform child in responses)
-        {
-            //child.gameObject.GetComponent<TextMeshProUGUI>().text = Questions[count];
-            Button curr = child.gameObject.GetComponent<Button>();
-            curr.GetComponentInChildren<TextMeshProUGUI>().text = Questions[count];
-            //curr.GetComponent<ReferencedScript>().
-            //curr.GetComponent<bool>() = QuestionsBools[count];
-            curr.onClick.AddListener(responseClick);
-            count += 1; 
-        }
-        */
+        endScreen(win);
+        endScreen(lose);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        roundObj.GetComponent<TextMeshProUGUI>().text = rounds.ToString();
+        //roundObj.GetComponent<TextMeshProUGUI>().text = rounds.ToString();
         if (rounds == 0)
         {
             gameOver("w");
@@ -132,18 +118,6 @@ public class ListeningDialogue : MonoBehaviour
                 rounds -= 1;
             }
         }
-        
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    RaycastHit hit;
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        Debug.Log("hit something");
-        //    }
-        //}
-
     }
 
     public void responseClick(int name)
@@ -199,24 +173,25 @@ public class ListeningDialogue : MonoBehaviour
 
     public void gameOver(string end)
     {
-        responses.gameObject.SetActive(false);
-        oppDialogue.SetActive(false);
+        //responses.gameObject.SetActive(false);
+        //oppDialogue.SetActive(false);
         Debug.Log("Game over!");
 
         if (end == "w")
         {
             Debug.Log("Win");
+            StartCoroutine(FadeTransition(win));
         } else
         {
             // if we want to add a thing for more hearts --> add here
             // as extra elif 
             Debug.Log("Loss/Quit");
+            StartCoroutine(FadeTransition(lose));
         }
     }
 
     public void loseLife()
     {
-
         // losing hearts logic   
 
         for (int index = 0; index < lives.childCount; index++)
@@ -235,9 +210,64 @@ public class ListeningDialogue : MonoBehaviour
             }
         }
            
-
         // sprite getting hit
 
+    }
+
+    public void endScreen(Transform bg)
+    {
+        if (bg.name == "GameOver")
+        {
+            Button retry = bg.GetChild(2).GetComponent<Button>();
+            retry.onClick.AddListener(retryBtn);
+        }
+
+        Button quit = bg.GetChild(3).GetComponent<Button>();
+        quit.onClick.AddListener(quitBtn);
+        
+    }
+
+    // would retry have the same questions?
+    private void retryBtn()
+    {
+        // figure out restart
+        dialogueNum = 0; 
+        updateResponseBtns();
+        for (int index = 0; index < lives.childCount; index++)
+        {
+            Transform child = lives.GetChild(index);
+            child.gameObject.GetComponent<Image>().color = Color.white;
+        }
+
+        lose.gameObject.SetActive(false);
+        rounds = initialRounds;
+    }
+
+    private void quitBtn()
+    {
+        // perhaps should quit back to the inside of building later 
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    // kinda grey'd out??
+    // https://www.youtube.com/watch?v=oNz4I0RfsEg 
+    IEnumerator FadeTransition(Transform bg)
+    {
+        Transform child = bg.GetChild(0);
+        Color c = child.GetComponent<Image>().color;
+        c.a = 0f;
+        child.GetComponent<Image>().color = c;
+
+        bg.gameObject.SetActive(true);
+
+        for (float f = 0.05f; f <=1; f += 0.05f)
+        {
+            c = child.GetComponent<Image>().color;
+            c.a = f;
+            child.GetComponent<Image>().color = c;
+
+        }
+        yield return new WaitForSeconds(0.05f);
     }
 
     public static List<Dialogue> ReadSpells(string fileName)
