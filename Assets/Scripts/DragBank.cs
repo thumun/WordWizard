@@ -70,8 +70,6 @@ public class DragBank : MonoBehaviour
         tempRT = null;
         foreach (string s in wordBank)
         {
-            // Updating position (Unused in favor of gridlayout)
-            // canvasPosition = new Vector3((((float)bankWidth / (float)wordBank.Count) * (count + 0.5f)), 60.0f, 0.0f);
             // Clearing the temp
             tempBlock = new wordBlock();
             tempAnchor = null;

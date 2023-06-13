@@ -9,6 +9,11 @@ public class Draggable : MonoBehaviour
     private Canvas canvas;
     [SerializeField]
     private Vector2 pos;
+    [SerializeField]
+    private GameObject target;
+
+    RectTransform targetRect;
+
 
     [SerializeField]
     private GameObject wordBox;
@@ -16,13 +21,20 @@ public class Draggable : MonoBehaviour
     public GameObject anchorCur;
     public GameObject anchorOrigin;
     public bool canMove;
+    public bool overTarget;
 
     private Vector2 resolution;
 
     private void Start()
     {
+        targetRect = (RectTransform)target.transform;
         resolution = new Vector2(Screen.width, Screen.height);
         canMove = true;
+    }
+    public static Rect RectTransformToScreenSpace(RectTransform transform)
+    {
+        Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
+        return new Rect((Vector2)transform.position - (size * 0.5f), size);
     }
 
     public void setAnchorCur(GameObject anchor)
@@ -53,6 +65,15 @@ public class Draggable : MonoBehaviour
 
     public void MouseUp()
     {
+        Rect screenTargetRect = RectTransformToScreenSpace(targetRect);
+
+
+        if (Input.mousePosition.y < (screenTargetRect.y + screenTargetRect.height)
+            && Input.mousePosition.y > (screenTargetRect.y))
+        { 
+            overTarget = true;
+            Debug.Log("Mouse is in answer box");
+        }
         transform.position = anchorCur.transform.position;
     }
 
