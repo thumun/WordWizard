@@ -56,6 +56,9 @@ public class ListeningDialogue : MonoBehaviour
     public GameObject roundObj;
     public GameObject oppDialogue;
 
+    public GameObject oppInfo;
+    public Transform lives;
+
     //public Button attack;
     //public Button defense;
 
@@ -113,11 +116,7 @@ public class ListeningDialogue : MonoBehaviour
         roundObj.GetComponent<TextMeshProUGUI>().text = rounds.ToString();
         if (rounds == 0)
         {
-            responses.gameObject.SetActive(false);
-            oppDialogue.SetActive(false);
-            //attack.gameObject.SetActive(false);
-            //defense.gameObject.SetActive(false);
-            Debug.Log("end of game");
+            gameOver("w");
 
         } else
         {
@@ -128,9 +127,6 @@ public class ListeningDialogue : MonoBehaviour
                 dialogueNum += 1;
                 updateResponseBtns();
                 responses.gameObject.SetActive(true);
-
-                //attack.gameObject.SetActive(true);
-                //defense.gameObject.SetActive(true);
 
                 correctanswer = false;
                 rounds -= 1;
@@ -177,33 +173,15 @@ public class ListeningDialogue : MonoBehaviour
             }
             else
             {
+                loseLife();
                 Debug.Log("Wrong answer!");
+
             }
         }
     }
 
-    //public void attackClick()
-    //{
-    //    attack.gameObject.SetActive(false);
-    //    //defense.gameObject.SetActive(false);
-    //    updateResponseBtns("attack");
-
-    //}
-
-    //public void defenseClick()
-    //{
-    //    defense.gameObject.SetActive(false);
-    //    attack.gameObject.SetActive(false);
-    //    updateResponseBtns("def");
-
-    //}
-
     public void updateResponseBtns()
     {
-        //one.gameObject.SetActive(true);
-        //two.gameObject.SetActive(true);
-        //three.gameObject.SetActive(true);
-
         // should get new content from data & update
         // question strings && bool based on data
 
@@ -215,30 +193,50 @@ public class ListeningDialogue : MonoBehaviour
         QuestionsBools[1] = dialogue[dialogueNum].attCorrect[1] == 1;
         QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
 
-        //if (type == "attack")
-        //{
-        //    one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[0];
-        //    two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[1];
-        //    three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[2];
-
-        //    QuestionsBools[0] = dialogue[dialogueNum].attCorrect[0] == 1;
-        //    QuestionsBools[1] = dialogue[dialogueNum].attCorrect[1] == 1;
-        //    QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
-        //}
-        /*
-        else
-        {
-            one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].defense[0];
-            two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].defense[1];
-            three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].defense[2];
-
-            QuestionsBools[0] = dialogue[dialogueNum].defCorrect[0] == 1;
-            QuestionsBools[1] = dialogue[dialogueNum].defCorrect[1] == 1;
-            QuestionsBools[2] = dialogue[dialogueNum].defCorrect[2] == 1;
-        }
-        */
-
         oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
+
+    }
+
+    public void gameOver(string end)
+    {
+        responses.gameObject.SetActive(false);
+        oppDialogue.SetActive(false);
+        Debug.Log("Game over!");
+
+        if (end == "w")
+        {
+            Debug.Log("Win");
+        } else
+        {
+            // if we want to add a thing for more hearts --> add here
+            // as extra elif 
+            Debug.Log("Loss/Quit");
+        }
+    }
+
+    public void loseLife()
+    {
+
+        // losing hearts logic   
+
+        for (int index = 0; index < lives.childCount; index++)
+        {
+            Transform child = lives.GetChild(index);
+
+            if(child.gameObject.GetComponent<Image>().color != Color.black)
+            {
+                child.gameObject.GetComponent<Image>().color = Color.black;
+                break;
+            }
+
+            if (index == lives.childCount - 1)
+            {
+                gameOver("l");
+            }
+        }
+           
+
+        // sprite getting hit
 
     }
 
@@ -266,8 +264,6 @@ public class ListeningDialogue : MonoBehaviour
                     spell.name = csvReader[j + 1];
                     spell.opponent = csvReader[j + 2];
 
-                    //Debug.Log("name & opponent done");
-
                     temp = csvReader[j + 3].Trim('[', ']').Split(',').ToList();
 
                     for (int i = 0; i < temp.Capacity; i++)
@@ -275,34 +271,11 @@ public class ListeningDialogue : MonoBehaviour
                         spell.attack.Add(temp[i]);
                     }
 
-                    //Debug.Log("attacks added");
-
                     temp = csvReader[j + 4].Trim('[', ']').Split(',').ToList();
                     for (int i = 0; i < temp.Capacity; i++)
                     {
                         spell.attCorrect.Add(Convert.ToInt32(temp[i]));
                     }
-
-                    //Debug.Log("attack bools added");
-
-                    /*
-                    temp = csvReader[j + 5].Trim('[', ']').Split(',').ToList();
-
-                    for (int i = 0; i < temp.Capacity; i++)
-                    {
-                        spell.defense.Add(temp[i]);
-                    }
-
-                    //Debug.Log("def added");
-
-                    temp = csvReader[j + 6].Trim('[', ']').Split(',').ToList();
-                    for (int i = 0; i < temp.Capacity; i++)
-                    {
-                        spell.defCorrect.Add(Convert.ToInt32(temp[i]));
-                    }
-
-                    //Debug.Log("def bools added");
-                    */
 
                     spells.Add(spell);
                 }
