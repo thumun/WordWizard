@@ -552,6 +552,22 @@ PrefabInstance:
       propertyPath: transitionName
       value: Blue-North
       objectReference: {fileID: 0}
+    - target: {fileID: 5202111888421219460, guid: 38b9cbcbf24067247898d16436afc4c0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202111888421219460, guid: 38b9cbcbf24067247898d16436afc4c0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202111888421219460, guid: 38b9cbcbf24067247898d16436afc4c0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 5202111888421219460, guid: 38b9cbcbf24067247898d16436afc4c0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5202111888421219461, guid: 38b9cbcbf24067247898d16436afc4c0, type: 3}
       propertyPath: m_RootOrder
       value: 4
