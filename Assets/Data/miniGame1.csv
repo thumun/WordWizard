@@ -1,0 +1,4 @@
+Category,Name,Opponent Spell,attack,atkCorrect,defense,defCorrect
+Adjective,a,Strong as a lion,"[""Weak as a mouse"",""Angry as a bear"",""Sleepy as a sloth""]","[1, 0, 0]","[""def1"",""def2"",""def3""]","[1, 0, 0]"
+Adjective,b,opp spell here,"[""a"",""b"",""c""]","[1, 0, 0]","[""def4"",""def5"",""def6""]","[1, 0, 0]"
+Adjective,c,wizard,"[""d"",""e"",""f""]","[1, 0, 0]","[""def7"",""def8"",""def9""]","[1, 0, 0]"
