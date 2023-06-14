@@ -12,6 +12,9 @@ public class DragTarget : MonoBehaviour
     // Word bank
     [SerializeField]
     private GameObject bank;
+    // Drag Button
+    [SerializeField]
+    private GameObject dragButton;
 
     // Anchors for the answer blocks to snap to
     [SerializeField]
@@ -28,6 +31,19 @@ public class DragTarget : MonoBehaviour
     private string guess = "";
 
     private bool correct = false;
+
+    // Extra variables for fill in the blank mode
+    [SerializeField]
+    public bool fillInTheBlank = false;
+    private List<GameObject> blanks = new List<GameObject>();
+    private int blankPos;
+    [SerializeField]
+    public string inputString;
+    private string[] inputStrings;
+
+    // Fill in the blank regular text objects
+    GameObject originText;
+    GameObject tempText;
 
     // Adds block to blank
     public void addBlock(wordBlock word)
@@ -52,6 +68,17 @@ public class DragTarget : MonoBehaviour
         guessBlocks.Add(word);
         
     }
+    public void fillBlank(wordBlock word)
+    {
+        answerAnchor = blanks[blankPos];
+
+        word.curAnchor = answerAnchor;
+        word.block.transform.position = answerAnchor.transform.position;
+        word.block.GetComponent<Draggable>().canMove = false;
+        word.block.GetComponent<Draggable>().anchorCur = answerAnchor;
+        guessBlocks.Add(word);
+        blankPos++;
+    }
 
     // Submits answer to be checked
     public void checkAnswer()
@@ -61,29 +88,34 @@ public class DragTarget : MonoBehaviour
             guess += block.word + " ";
         }
         guess = guess.Remove(guess.Length - 1);
-        //correct = guess.Equals(answer);
-        Debug.Log("Guess:" + guess + " Answer:" + answer);
+        Debug.Log(guess.Equals(answer));
     }
 
     // Clears answer block
     public void clearAnswer()
     {
-        anchors = new List<GameObject>();
+        if (!fillInTheBlank)
+        {
+            anchors = new List<GameObject>();
+        }
         guess = "";
         correct = false;
         answerAnchor = new GameObject();
-        // In Progress: delete anchors
-        foreach (Transform child in target.transform)
+        blankPos = 0;
+        if (!fillInTheBlank)
         {
-            GameObject.Destroy(child.gameObject);
+            foreach (Transform child in target.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
         }
 
         // Making blocks moveable and resetting anchors
         foreach (wordBlock word in guessBlocks)
         {
             word.block.GetComponent<Draggable>().canMove = true;
+            word.block.GetComponent<Draggable>().anchorCur = word.block.GetComponent<Draggable>().anchorOrigin; 
             word.block.transform.position = word.block.GetComponent<Draggable>().anchorOrigin.transform.position;
-
         }
         guessBlocks = new List<wordBlock>();
 
@@ -92,7 +124,19 @@ public class DragTarget : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        if (fillInTheBlank)
+        {
+
+            inputStrings = inputString.Split(" ");
+            foreach (string s in inputStrings)
+            {
+                tempText = GameObject.Instantiate(originText);
+            }
+        }
+        else
+        {
+        }
     }
 
     // Update is called once per frame
