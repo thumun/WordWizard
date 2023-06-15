@@ -21,7 +21,7 @@ public class Chunk : MonoBehaviour
         {
             for (int x = 0; x < Voxel.ChunkWidth; x++)
             {
-                for (int z = 0; z < Voxel.ChunkWidth; x++)
+                for (int z = 0; z < Voxel.ChunkWidth; z++)
                 {
                     addVoxeltoChunk(new Vector3(x, y, z));
                 }
