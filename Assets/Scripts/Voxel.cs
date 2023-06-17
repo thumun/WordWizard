@@ -6,7 +6,7 @@ public static class Voxel
 {
     // https://www.youtube.com/watch?v=h66IN1Pndd0
 
-    public static readonly int ChunkWidth = 2;
+    public static readonly int ChunkWidth = 10;
     public static readonly int ChunkHeight = 1; 
 
     public static readonly Vector3[] voxelVertex = new Vector3[8] {
