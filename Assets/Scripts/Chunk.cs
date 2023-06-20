@@ -58,5 +58,8 @@ public class Chunk : MonoBehaviour
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
+        MeshCollider meshc = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+        meshc.sharedMesh = mesh;
+        //MeshCollider. = mesh; 
     }
 }
