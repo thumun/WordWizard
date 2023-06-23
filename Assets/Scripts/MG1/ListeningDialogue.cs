@@ -10,6 +10,40 @@ using NReco.Csv;
 using System.IO;
 using UnityEngine.SceneManagement;
 
+/*
+public class WizardData
+{
+
+    public class Category
+    {
+        
+    }
+
+
+    /*
+    public Dictionary<string, Information> category;
+    public List<string> modes;
+
+    public class Information
+    {
+        public Dictionary<string, string> info = new Dictionary<string, string>();
+
+        public void addInfo(string key, string val)
+        {
+            info.Add(key, val);
+        }
+    }
+    */
+
+    //public string starting;
+    //public string presentContinuous;
+    //public string presentPerfect;
+    //public string presentPerfectContinuous;
+    //public string pastContinuous;
+    //public string pastPerfectContinuous;
+    //public string futureSimple;
+//}
+
 
 public class Dialogue
 {
@@ -18,28 +52,8 @@ public class Dialogue
     public string opponent;
     public List<string> attack = new List<string>();
     public List<int> attCorrect = new List<int>();
-    //public List<string> defense = new List<string>();
-    //public List<int> defCorrect = new List<int>();
 
-    /*
-    int numQuestions;
-    int numAnswers;
-    List<Questions> convos;
-
-    public class Questions
-    {
-        List<(string, bool)> answers;
-
-        public Questions(int numAnswers)
-        {
-            for (int i = 0; i < numAnswers; i++)
-            {
-
-            }
-        }
-    }
-    */
-
+    public List<string> modesTemp; 
 }
 
 
@@ -180,12 +194,14 @@ public class ListeningDialogue : MonoBehaviour
         if (end == "w")
         {
             Debug.Log("Win");
+
             StartCoroutine(FadeTransition(win));
         } else
         {
             // if we want to add a thing for more hearts --> add here
             // as extra elif 
             Debug.Log("Loss/Quit");
+
             StartCoroutine(FadeTransition(lose));
         }
     }
@@ -262,18 +278,78 @@ public class ListeningDialogue : MonoBehaviour
 
         for (float f = 0.05f; f <=1; f += 0.05f)
         {
-            c = child.GetComponent<Image>().color;
+            c = bg.GetChild(0).GetComponent<Image>().color;
             c.a = f;
-            child.GetComponent<Image>().color = c;
+            bg.GetChild(0).GetComponent<Image>().color = c;
+            yield return new WaitForSeconds(0.05f);
+        }
+        
+    }
+
+    /*
+    public static List<WizardData> readCSV(string fileName)
+    {
+        List<WizardData> data = new List<WizardData>();
+
+        using (var streamRdr = new StreamReader(System.IO.Directory.GetCurrentDirectory() + @"/Assets/Data/" + fileName + ".csv"))
+        {
+            var csvReader = new CsvReader(streamRdr, ",");
+
+            // want to split first line 
+            csvReader.Read();
+            // add categories to line.modes 
+
+            while (csvReader.Read())
+            {
+
+                int j = 0;
+
+                Debug.Log(csvReader[j]);
+                
+                WizardData line = new WizardData();
+
+                line.category = new List<WizardData.Information>();
+                line.category.Add()
+
+                line.category = csvReader[j];
+                line.info.Add(line.modes[j], csvReader[j + 1]);
+                line.info.Add(line.modes[j+1], csvReader[j + 2]);
+                line.info.Add(line.modes[j+2], csvReader[j + 3]);
+                line.info.Add(line.modes[j+3], csvReader[j + 4]);
+                line.info.Add(line.modes[j + 4], csvReader[j + 5]);
+                line.info.Add(line.modes[j + 5], csvReader[j + 6]);
+            
+                data.Add(line);
+                
+            }
+        }
+
+        return data; 
+    }
+    */
+
+    // can't reference public val in class ?? 
+    public static List<Dialogue> createDialogue(int round, string category, string tense)
+    {
+
+        
+
+        List<Dialogue> spells = new List<Dialogue>();
+
+        for (int j = 0; j < round; j++)
+        {
 
         }
-        yield return new WaitForSeconds(0.05f);
+
+        return spells; 
     }
+
 
     public static List<Dialogue> ReadSpells(string fileName)
     {
         List<Dialogue> spells = new List<Dialogue>();
 
+     
         using (var streamRdr = new StreamReader(System.IO.Directory.GetCurrentDirectory() + @"/Assets/Data/" + fileName + ".csv"))
         {
             var csvReader = new CsvReader(streamRdr, ",");
@@ -285,8 +361,7 @@ public class ListeningDialogue : MonoBehaviour
 
                 List<string> temp = new List<string>();
 
-                Debug.Log(csvReader[j]);
-
+                
                 if (csvReader[j] == "Adjective")
                 {
                     Dialogue spell = new Dialogue();
@@ -309,8 +384,10 @@ public class ListeningDialogue : MonoBehaviour
 
                     spells.Add(spell);
                 }
+                
             }
         }
+
         return spells;
     }
 
