@@ -52,6 +52,7 @@ namespace TMPro.Examples
         void OnWordSelection(string word, int firstCharacterIndex, int length)
         {
             Debug.Log("Word [" + word + "] with first character index of " + firstCharacterIndex + " and length of " + length + " has been selected.");
+        
         }
 
         void OnLineSelection(string lineText, int firstCharacterIndex, int length)
