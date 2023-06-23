@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.PackageManager.UI;
 
 
 namespace TMPro.Examples
@@ -256,6 +258,92 @@ namespace TMPro.Examples
             }
         }
 
+        /// <summary>
+        /// Method to return corner coords of selected word
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="firstCharIndex"></param>
+        /// <param name="length"></param>
+        /// <returns> List of coords of corners - topLeft, bottomLeft, bottomRight, topRight </returns>
+        public List<Vector3> WordCoords(string word, int firstCharIndex, int length)
+        {
+            bool isBeginRegion = false;
+
+            Vector3 bottomLeft = Vector3.zero;
+            Vector3 topLeft = Vector3.zero;
+            Vector3 bottomRight = Vector3.zero;
+            Vector3 topRight = Vector3.zero;
+
+            float maxAscender = -Mathf.Infinity;
+            float minDescender = Mathf.Infinity;
+
+            for (int i = 0; i < word.Length; i++)
+            {
+                int characterIndex = firstCharIndex + i;
+                TMP_CharacterInfo currentCharInfo = m_TextInfo.characterInfo[characterIndex];
+                int currentLine = currentCharInfo.lineNumber;
+
+                bool isCharacterVisible = characterIndex > m_TextComponent.maxVisibleCharacters ||
+                    currentCharInfo.lineNumber > m_TextComponent.maxVisibleLines ||
+                    (m_TextComponent.overflowMode == TextOverflowModes.Page && currentCharInfo.pageNumber + 1 != m_TextComponent.pageToDisplay) ? false : true;
+
+                // Track Max Ascender and Min Descender
+                maxAscender = Mathf.Max(maxAscender, currentCharInfo.ascender);
+                minDescender = Mathf.Min(minDescender, currentCharInfo.descender);
+
+                if (isBeginRegion == false && isCharacterVisible)
+                {
+                    isBeginRegion = true;
+
+                    bottomLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.descender, 0);
+                    topLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.ascender, 0);
+
+                    //Debug.Log("Start Word Region at [" + currentCharInfo.character + "]");
+
+                    // If Word is one character
+                    if (word.Length == 1)
+                    {
+                        isBeginRegion = false;
+
+                        topLeft = m_Transform.TransformPoint(new Vector3(topLeft.x, maxAscender, 0));
+                        bottomLeft = m_Transform.TransformPoint(new Vector3(bottomLeft.x, minDescender, 0));
+                        bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
+                        topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
+
+                        //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                    }
+                }
+
+                // Last Character of Word
+                if (isBeginRegion && i == word.Length - 1)
+                {
+                    isBeginRegion = false;
+
+                    topLeft = m_Transform.TransformPoint(new Vector3(topLeft.x, maxAscender, 0));
+                    bottomLeft = m_Transform.TransformPoint(new Vector3(bottomLeft.x, minDescender, 0));
+                    bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
+                    topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
+
+                    //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                }
+                // If Word is split on more than one line.
+                else if (isBeginRegion && currentLine != m_TextInfo.characterInfo[characterIndex + 1].lineNumber)
+                {
+                    isBeginRegion = false;
+
+                    topLeft = m_Transform.TransformPoint(new Vector3(topLeft.x, maxAscender, 0));
+                    bottomLeft = m_Transform.TransformPoint(new Vector3(bottomLeft.x, minDescender, 0));
+                    bottomRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, minDescender, 0));
+                    topRight = m_Transform.TransformPoint(new Vector3(currentCharInfo.topRight.x, maxAscender, 0));
+
+                    //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                    maxAscender = -Mathf.Infinity;
+                    minDescender = Mathf.Infinity;
+
+                }
+            }
+            return new List<Vector3>() { topLeft, bottomLeft, bottomRight, topRight };
+        }
 
         /// <summary>
         /// Method to draw rectangles around each word of the text.
@@ -353,11 +441,8 @@ namespace TMPro.Examples
 
                     }
                 }
-
                 //Debug.Log(wInfo.GetWord(m_TextMeshPro.textInfo.characterInfo));
             }
-
-
         }
 
 
