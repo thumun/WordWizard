@@ -2,16 +2,13 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System;
-using System.Collections.Generic;
-using TMPro.Examples;
+
+
 namespace TMPro
 {
 
     public class TMP_TextEventHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField]
-        public GameObject Selector;
-
         [Serializable]
         public class CharacterSelectionEvent : UnityEvent<char, int> { }
 
@@ -239,18 +236,6 @@ namespace TMPro
         {
             if (onWordSelection != null)
                 onWordSelection.Invoke(word, charIndex, length);
-                List<Vector3> rect = gameObject.GetComponent<TMP_TextInfoDebugTool>().WordCoords(word, charIndex, length);
-                foreach (Vector3 coord in rect)
-                {
-                    Debug.Log(coord);
-                }
-                RectTransform RT = (RectTransform)Selector.transform;
-                // topLeft, bottomLeft, bottomRight, topRight
-                float width = rect[3].x - rect[0].x;
-                float height = rect[0].y - rect[1].y;
-                RT.sizeDelta = new Vector2(width, height);
-            Selector.transform.position = new Vector3((rect[0].x + rect[1].x + rect[2].x + rect[3].x) / 4.0f, (rect[0].y + rect[1].y + rect[2].y + rect[3].y) / 4.0f, 0.0f);
-
         }
 
         private void SendOnLineSelection(string line, int charIndex, int length)
