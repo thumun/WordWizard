@@ -23,4 +23,16 @@ public class WDMenu : MonoBehaviour
     {
         
     }
+
+    void FixedUpdate()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D[] results = new RaycastHit2D[6];
+
+        //results = PhysicsScene2D.GetRayIntersection(ray, 100.0f, 0);
+
+       
+    }
+
+
 }

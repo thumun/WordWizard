@@ -9,6 +9,18 @@ public class ResponseChoice
 {
     public Choice Choice { get; set; }
     public bool IsCorrect { get; set; }
+
+    // empty constructor 
+    public ResponseChoice()
+    {
+
+    }
+
+    public ResponseChoice(Choice choice, bool correct)
+    {
+        Choice = choice;
+        IsCorrect = correct;
+    }
 }
 
 
@@ -34,6 +46,21 @@ public class Question
         Choices = choices;
     }
 
+    private static void ShuffleMe<T>(this IList<T> list)
+    {
+        System.Random random = new System.Random();
+        int n = list.Count;
+
+        for (int i = list.Count - 1; i > 1; i--)
+        {
+            int rnd = random.Next(i + 1);
+
+            T value = list[rnd];
+            list[rnd] = list[i];
+            list[i] = value;
+        }
+    }
+
     public List<ResponseChoice> PresentChoices(string tense)
     {
 
@@ -47,12 +74,35 @@ public class Question
 
         //get two wrong answers
 
+        int rnd = -1;
+        List<ResponseChoice> temp = new List<ResponseChoice>();
+
+        while (rnd != -1 && temp.Capacity != 2)
+        {
+            rnd = Random.Range(0, Choices.Capacity);
+
+            if (Choices[rnd].Tense != tense)
+            {
+                continue;
+            } else
+            {
+                temp.Add(new ResponseChoice(new Choice(Choices[rnd].Tense,
+                        Choices[rnd].Response), false));
+            }
+        }
+
         //randomize choices
+        temp.Add(correct);
+        ShuffleMe<ResponseChoice>(temp); // test this 
 
         //which option is correct
         //give the list back
-        throw new System.Exception("Not implemented");
+
+        return temp;
+
+        //throw new System.Exception("Not implemented");
     }
+
 }
 
 public class Category
