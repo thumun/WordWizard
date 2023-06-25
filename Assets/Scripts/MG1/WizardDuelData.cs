@@ -34,19 +34,23 @@ public class Choice
     {
         Tense = tense;
         Response = response;
+
     }
 }
 
 public class Question
 {
     public List<Choice> Choices { get; private set; }
+    public string Ask { get; set; }
 
-    public Question(List<Choice> choices)
+    public Question(List<Choice> choices, string ask)
     {
         Choices = choices;
+        Ask = ask;
     }
 
-    private static void ShuffleMe<T>(this IList<T> list)
+    // https://stackoverflow.com/questions/49570175/simple-way-to-randomly-shuffle-list 
+    private static void ShuffleMe<T>(IList<T> list)
     {
         System.Random random = new System.Random();
         int n = list.Count;
@@ -93,26 +97,28 @@ public class Question
 
         //randomize choices
         temp.Add(correct);
-        ShuffleMe<ResponseChoice>(temp); // test this 
-
-        //which option is correct
-        //give the list back
+        ShuffleMe(temp); // test this 
 
         return temp;
 
         //throw new System.Exception("Not implemented");
     }
-
 }
 
 public class Category
 {
-    
+    public string Name { get; private set; }
     public List<Question> Questions { get; private set; }
 
-    public Category(List<Question> questions)
+    public Category(string name)
     {
-        Questions = questions;
+        Name = name;
+        Questions = new List<Question>();
+    }
+    
+    public void addQuestion(Question question)
+    {
+        Questions.Add(question);
     }
 
 }
@@ -129,6 +135,8 @@ public class WizardData
 }
 
 
+
+
 public class WizardDuelData
 {
     // read csv
@@ -139,24 +147,36 @@ public class WizardDuelData
         {
             var csvReader = new CsvReader(streamRdr, ",");
 
+            Dictionary<string, Category> categories = new Dictionary<string, Category>();
+
             var header = new List<string>();
 
             // want to split first line 
             if(csvReader.Read())
             {
-                header = Enumerable.Range(0, csvReader.FieldsCount).Select(index => csvReader[index]).ToList();
+                // ignoring category label 
+                header = Enumerable.Range(0, csvReader.FieldsCount).Skip(1).Select(index => csvReader[index]).ToList();
             }
 
             // add categories to line.modes 
 
             while (csvReader.Read())
             {
-                var questions = Enumerable.Range(0, csvReader.FieldsCount).Select(index => csvReader[index]).ToList();
 
+                Category category;
 
+                if (!categories.TryGetValue(csvReader[0], out category))
+                {
+                    category = new Category(csvReader[0]);
+                    categories.Add(csvReader[0], category);
+                }
 
+                string question = csvReader[1];
+                var responses = Enumerable.Range(0, csvReader.FieldsCount).Skip(2).Select(index => new Choice(header[index-2], csvReader[index])).ToList();
 
+                Question a = new Question(responses, question);
 
+                category.addQuestion(a);
 
             }
         }

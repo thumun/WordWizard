@@ -89,6 +89,9 @@ public class ListeningDialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        WizardDuelData.readCSV("wizardDuel");
+
         initialRounds = rounds;
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
