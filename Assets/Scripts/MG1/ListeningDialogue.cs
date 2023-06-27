@@ -10,40 +10,6 @@ using NReco.Csv;
 using System.IO;
 using UnityEngine.SceneManagement;
 
-/*
-public class WizardData
-{
-
-    public class Category
-    {
-        
-    }
-
-
-    /*
-    public Dictionary<string, Information> category;
-    public List<string> modes;
-
-    public class Information
-    {
-        public Dictionary<string, string> info = new Dictionary<string, string>();
-
-        public void addInfo(string key, string val)
-        {
-            info.Add(key, val);
-        }
-    }
-    */
-
-    //public string starting;
-    //public string presentContinuous;
-    //public string presentPerfect;
-    //public string presentPerfectContinuous;
-    //public string pastContinuous;
-    //public string pastPerfectContinuous;
-    //public string futureSimple;
-//}
-
 
 public class Dialogue
 {
@@ -120,6 +86,7 @@ public class ListeningDialogue : MonoBehaviour
         if (rounds == 0)
         {
             gameOver("w");
+            rounds--;
 
         } else
         {
