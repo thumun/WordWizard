@@ -29,7 +29,8 @@ public class spriteoptions : MonoBehaviour
 
     void startGame()
     {
-        // start couroutine to start game listeningDialogue
+        // start game 
+        //ListeningDialogue.setup(0);
 
     }
 

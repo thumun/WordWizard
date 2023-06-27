@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -13.141266, y: -7.2910614, z: -114.23005, w: -11.834808}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2049,8 +2049,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2556,6 +2556,16 @@ MonoBehaviour:
   one: {fileID: 1616646081}
   two: {fileID: 1097880571}
   three: {fileID: 1980280397}
+  oppSprite: {fileID: 0}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  gameScreen: {fileID: 946071911}
+  gameScreenUI: {fileID: 1707665425}
+  miniMenuWD: {fileID: 799062087}
+  minimenuUI: {fileID: 1028440176}
 --- !u!1 &604279610
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604279610}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.28, y: 0.75, z: -2.8899999}
+  m_LocalPosition: {x: -0.82, y: -0.38, z: -2.8899999}
   m_LocalScale: {x: 0.27662757, y: 0.27662757, z: 0.27662757}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3153,8 +3163,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5580,7 +5590,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084028131}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.450001, y: -1.22, z: -2.8899999}
+  m_LocalPosition: {x: -10.78, y: -2.04, z: -2.8899999}
   m_LocalScale: {x: 0.5383326, y: 0.5383326, z: 0.5383326}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10315,8 +10325,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

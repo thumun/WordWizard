@@ -47,6 +47,14 @@ public class ListeningDialogue : MonoBehaviour
     public Button two;
     public Button three;
 
+    public Transform oppSprite;
+    public Sprite[] sprites;
+
+    public GameObject gameScreen;
+    public GameObject gameScreenUI;
+    public GameObject miniMenuWD;
+    public GameObject minimenuUI;
+
     private bool correctanswer = false;
     private List<Dialogue> dialogue;
     private int dialogueNum = 0;
@@ -102,6 +110,15 @@ public class ListeningDialogue : MonoBehaviour
                 rounds -= 1;
             }
         }
+    }
+
+    public void setup(int indx)
+    {
+        oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
+        gameScreen.SetActive(true);
+        gameScreenUI.SetActive(true);
+        miniMenuWD.SetActive(false);
+        minimenuUI.SetActive(false);
     }
 
     public void responseClick(int name)
