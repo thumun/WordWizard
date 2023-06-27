@@ -22,6 +22,10 @@ public class Dialogue
     public List<string> modesTemp; 
 }
 
+public class DuelData
+{
+    public Category questionData; 
+}
 
 public class ListeningDialogue : MonoBehaviour
 {
@@ -112,13 +116,25 @@ public class ListeningDialogue : MonoBehaviour
         }
     }
 
-    public void setup(int indx)
+    public static void setup(int indx)
+    {
+        //StartCoroutine(setScene(indx));
+        //oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
+        //gameScreen.SetActive(true);
+        //gameScreenUI.SetActive(true);
+        //miniMenuWD.SetActive(false);
+        //minimenuUI.SetActive(false);
+    }
+
+    IEnumerator setScene(int indx)
     {
         oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
         gameScreen.SetActive(true);
         gameScreenUI.SetActive(true);
         miniMenuWD.SetActive(false);
         minimenuUI.SetActive(false);
+        yield return new WaitForSeconds(0.05f);
+
     }
 
     public void responseClick(int name)
@@ -316,10 +332,17 @@ public class ListeningDialogue : MonoBehaviour
     */
 
     // can't reference public val in class ?? 
-    public static List<Dialogue> createDialogue(int round, string category, string tense)
+    public static List<Dialogue> createDialogue(int round, string category)
     {
+        /*
+        public string category;
+        public string name;
+        public string opponent;
+        public List<string> attack = new List<string>();
+        public List<int> attCorrect = new List<int>();
 
-        
+        public List<string> modesTemp;
+        */
 
         List<Dialogue> spells = new List<Dialogue>();
 

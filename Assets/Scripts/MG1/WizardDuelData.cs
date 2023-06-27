@@ -134,11 +134,11 @@ public class WizardData
 
 }
 
-
-
-
 public class WizardDuelData
 {
+
+    public WizardData data; 
+
     // read csv
     public static void readCSV(string file)
     {

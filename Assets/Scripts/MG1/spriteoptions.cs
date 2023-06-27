@@ -32,6 +32,7 @@ public class spriteoptions : MonoBehaviour
         // start game 
         //ListeningDialogue.setup(0);
 
+
     }
 
     void noBtnLogic()
