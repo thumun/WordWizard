@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterBook : MonoBehaviour
 {
-
+    public Transform bookMenu;
     public string idiomKey; 
 
     // Start is called before the first frame update
@@ -21,7 +21,9 @@ public class MonsterBook : MonoBehaviour
 
     void OnMouseDown()
     {
-        // lib book clicked 
+        // lib book clicked
+        bookMenu.gameObject.SetActive(true);
+        //BookMenu.populateBook();
     }
 
     void OnMouseOver()
@@ -30,4 +32,7 @@ public class MonsterBook : MonoBehaviour
         
     }
 
+    
+
+    
 }
