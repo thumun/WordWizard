@@ -17,6 +17,7 @@ public class spriteoptions : MonoBehaviour
     static bool test = true;
 
     ListeningDialogue listeningDialogue;
+    int indx = -1;
 
 
     // Start is called before the first frame update
@@ -35,10 +36,33 @@ public class spriteoptions : MonoBehaviour
 
     void startGame()
     {
-        // start game 
-        listeningDialogue.setup(1);
+        // start game
 
+        if(tense == "Present Continuous")
+        {
+            indx = 0;
+        } else if (tense == "Present Perfect")
+        {
+            indx = 1;
+        }
+        else if (tense == "Present Perfect Continuous")
+        {
+            indx = 2;
+        }
+        else if (tense == "Past Continuous")
+        {
+            indx = 3;
+        }
+        else if (tense == "Past Perfect Continuous")
+        {
+            indx = 4;
+        }
+        else if (tense == "Future Simple")
+        {
+            indx = 5;
+        }
 
+        listeningDialogue.setup(indx);
     }
 
     void noBtnLogic()
@@ -49,6 +73,8 @@ public class spriteoptions : MonoBehaviour
 
     void OnMouseDown()
     {
+        Transform child = confirmation.GetChild(2);
+        child.GetComponent<TextMeshProUGUI>().text = tense;
         confirmation.gameObject.SetActive(true);
         // disable move over ?? 
         test = false;
