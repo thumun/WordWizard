@@ -24,7 +24,8 @@ public class Dialogue
 
 public class DuelData
 {
-    public Category questionData; 
+    public string opponent; 
+    public List<ResponseChoice> attack = new List<ResponseChoice>();
 }
 
 public class ListeningDialogue : MonoBehaviour
@@ -67,11 +68,13 @@ public class ListeningDialogue : MonoBehaviour
     public int indx = -1;
     public string tense = "";
 
+    public WizardData duelInfo;
+
     // Start is called before the first frame update
     void Start()
     {
         WizardDuelData.SetLoadFile("wizardDuel");
-        WizardData test = WizardDuelData.GetWizardData();
+        duelInfo = WizardDuelData.GetWizardData();
 
         initialRounds = rounds;
         win.gameObject.SetActive(false);
@@ -255,11 +258,12 @@ public class ListeningDialogue : MonoBehaviour
 
     private void quitBtn()
     {
-        // perhaps should quit back to the inside of building later 
+        // perhaps should quit back to the inside of building later
+        
         SceneManager.LoadScene("MainMenu");
+        ResetGame();
     }
 
-    // kinda grey'd out??
     // https://www.youtube.com/watch?v=oNz4I0RfsEg 
     IEnumerator FadeTransition(Transform bg)
     {
@@ -270,37 +274,50 @@ public class ListeningDialogue : MonoBehaviour
 
         bg.gameObject.SetActive(true);
 
-        for (float f = 0.05f; f <=1; f += 0.05f)
+        for (float f = 0.05f; f <1.05; f += 0.05f)
         {
             c = bg.GetChild(0).GetComponent<Image>().color;
             c.a = f;
             bg.GetChild(0).GetComponent<Image>().color = c;
             yield return new WaitForSeconds(0.05f);
         }
-        
     }
 
-   
+    public void ResetGame()
+    {
+        // reseting vals used in mini menu
+        indx = -1;
+        tense = "";
+
+        gameScreen.SetActive(false);
+        gameScreenUI.SetActive(false);
+        miniMenuWD.SetActive(true);
+        minimenuUI.SetActive(true);
+
+        //yield return new WaitForSeconds(0.05f);
+    }
 
     // can't reference public val in class ?? 
-    public static List<Dialogue> createDialogue(int round, string category)
+    public static List<DuelData> createDialogue(int round, string category)
     {
+        List<DuelData> spells = new List<DuelData>();
+
+        // need to cycle through duel data and get specific category
+        //List<Category> test = duelInfo.Categories.Select(c => c.Name == category).ToList();
+
+        // then get questions from list 
+        // ShuffleMe(test.Questions.Choices); // randomize the questions
+
+        //
+
         /*
-        public string category;
-        public string name;
-        public string opponent;
-        public List<string> attack = new List<string>();
-        public List<int> attCorrect = new List<int>();
-
-        public List<string> modesTemp;
-        */
-
-        List<Dialogue> spells = new List<Dialogue>();
-
         for (int j = 0; j < round; j++)
         {
-
+            DuelData spell = new DuelData();
+            spell.opponent = test.Questions[j].Ask;
+            spell.attack = test.Questions[j].PresentChoices(tense);
         }
+        */
 
         return spells; 
     }
