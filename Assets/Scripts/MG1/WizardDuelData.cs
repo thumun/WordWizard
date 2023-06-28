@@ -134,23 +134,40 @@ public class WizardData
 
 }
 
-public class WizardDuelData
+public static class WizardDuelData
 {
 
-    public WizardData data; 
+    private static WizardData data = null;
+    private static string _file = "";
+
+    public static WizardData GetWizardData()
+    {
+        if(data == null)
+        {
+            //load data from the file
+            data = readCSV(_file);
+        }
+
+        return data;
+    }
+
+    public static void SetLoadFile(string file)
+    {
+        _file = file;
+    }
 
     // read csv
-    public static void readCSV(string file)
+    private static WizardData readCSV(string file)
     {
+        Dictionary<string, Category> categories = new Dictionary<string, Category>();
+
+        var header = new List<string>();
 
         using (var streamRdr = new StreamReader(System.IO.Directory.GetCurrentDirectory() + @"/Assets/Data/" + file + ".csv"))
         {
             var csvReader = new CsvReader(streamRdr, ",");
 
-            Dictionary<string, Category> categories = new Dictionary<string, Category>();
-
-            var header = new List<string>();
-
+            
             // want to split first line 
             if(csvReader.Read())
             {
@@ -181,9 +198,8 @@ public class WizardDuelData
             }
         }
 
-
-
-        //WizardData data = new WizardData();
+        WizardData data = new WizardData(categories.Select(kv => kv.Value).ToList());
+        return data;
 
      
     }

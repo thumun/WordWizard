@@ -16,6 +16,9 @@ public class spriteoptions : MonoBehaviour
 
     static bool test = true;
 
+    ListeningDialogue listeningDialogue;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,12 +28,15 @@ public class spriteoptions : MonoBehaviour
         // nBtn
         //confirmation.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(noBtnLogic);
         no.onClick.AddListener(noBtnLogic);
+
+        listeningDialogue = FindAnyObjectByType<ListeningDialogue>();
+
     }
 
     void startGame()
     {
         // start game 
-        //ListeningDialogue.setup(0);
+        listeningDialogue.setup(1);
 
 
     }

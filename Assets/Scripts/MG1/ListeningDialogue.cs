@@ -67,8 +67,8 @@ public class ListeningDialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        WizardDuelData.readCSV("wizardDuel");
+        WizardDuelData.SetLoadFile("wizardDuel");
+        WizardData test = WizardDuelData.GetWizardData();
 
         initialRounds = rounds;
         win.gameObject.SetActive(false);
@@ -116,14 +116,14 @@ public class ListeningDialogue : MonoBehaviour
         }
     }
 
-    public static void setup(int indx)
+    public void setup(int indx)
     {
         //StartCoroutine(setScene(indx));
-        //oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
-        //gameScreen.SetActive(true);
-        //gameScreenUI.SetActive(true);
-        //miniMenuWD.SetActive(false);
-        //minimenuUI.SetActive(false);
+        oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
+        gameScreen.SetActive(true);
+        gameScreenUI.SetActive(true);
+        miniMenuWD.SetActive(false);
+        minimenuUI.SetActive(false);
     }
 
     IEnumerator setScene(int indx)

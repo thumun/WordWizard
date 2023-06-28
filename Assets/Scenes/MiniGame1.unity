@@ -2556,7 +2556,7 @@ MonoBehaviour:
   one: {fileID: 1616646081}
   two: {fileID: 1097880571}
   three: {fileID: 1980280397}
-  oppSprite: {fileID: 0}
+  oppSprite: {fileID: 604279612}
   sprites:
   - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
   - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
@@ -3407,7 +3407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &799062088
 Transform:
   m_ObjectHideFlags: 0
@@ -4149,7 +4149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &946071912
 Transform:
   m_ObjectHideFlags: 0
@@ -5157,7 +5157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1028440177
 Transform:
   m_ObjectHideFlags: 0
@@ -7447,7 +7447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1472171648
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9137,7 +9137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1707665426
 Transform:
   m_ObjectHideFlags: 0
