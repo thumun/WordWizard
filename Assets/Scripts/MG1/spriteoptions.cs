@@ -14,10 +14,13 @@ public class spriteoptions : MonoBehaviour
     public Button yes;
     public Button no;
 
+    public Transform oppSprite;
+    public Sprite[] sprites;
+
     static bool test = true;
 
     ListeningDialogue listeningDialogue;
-    int indx = -1;
+    //int indx = -1;
 
 
     // Start is called before the first frame update
@@ -38,6 +41,7 @@ public class spriteoptions : MonoBehaviour
     {
         // start game
 
+        /*
         if(tense == "Present Continuous")
         {
             indx = 0;
@@ -61,8 +65,9 @@ public class spriteoptions : MonoBehaviour
         {
             indx = 5;
         }
+        */
 
-        listeningDialogue.setup(indx);
+        listeningDialogue.setup(tense);
     }
 
     void noBtnLogic()
@@ -75,6 +80,36 @@ public class spriteoptions : MonoBehaviour
     {
         Transform child = confirmation.GetChild(2);
         child.GetComponent<TextMeshProUGUI>().text = tense;
+        if (listeningDialogue.indx == -1)
+        {
+            if (tense == "Present Continuous")
+            {
+                listeningDialogue.indx = 0;
+            }
+            else if (tense == "Present Perfect")
+            {
+                listeningDialogue.indx = 1;
+            }
+            else if (tense == "Present Perfect Continuous")
+            {
+                listeningDialogue.indx = 2;
+            }
+            else if (tense == "Past Continuous")
+            {
+                listeningDialogue.indx = 3;
+            }
+            else if (tense == "Past Perfect Continuous")
+            {
+                listeningDialogue.indx = 4;
+            }
+            else if (tense == "Future Simple")
+            {
+                listeningDialogue.indx = 5;
+            }
+            oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[listeningDialogue.indx];
+            listeningDialogue.tense = tense;
+        }
+        
         confirmation.gameObject.SetActive(true);
         // disable move over ?? 
         test = false;

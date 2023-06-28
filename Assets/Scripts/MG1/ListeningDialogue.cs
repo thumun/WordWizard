@@ -64,6 +64,9 @@ public class ListeningDialogue : MonoBehaviour
     private int dialogueNum = 0;
     private int initialRounds;
 
+    public int indx = -1;
+    public string tense = "";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -116,25 +119,13 @@ public class ListeningDialogue : MonoBehaviour
         }
     }
 
-    public void setup(int indx)
+    public void setup(string tense)
     {
-        //StartCoroutine(setScene(indx));
-        oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
+        //oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
         gameScreen.SetActive(true);
         gameScreenUI.SetActive(true);
         miniMenuWD.SetActive(false);
         minimenuUI.SetActive(false);
-    }
-
-    IEnumerator setScene(int indx)
-    {
-        oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
-        gameScreen.SetActive(true);
-        gameScreenUI.SetActive(true);
-        miniMenuWD.SetActive(false);
-        minimenuUI.SetActive(false);
-        yield return new WaitForSeconds(0.05f);
-
     }
 
     public void responseClick(int name)
@@ -289,47 +280,7 @@ public class ListeningDialogue : MonoBehaviour
         
     }
 
-    /*
-    public static List<WizardData> readCSV(string fileName)
-    {
-        List<WizardData> data = new List<WizardData>();
-
-        using (var streamRdr = new StreamReader(System.IO.Directory.GetCurrentDirectory() + @"/Assets/Data/" + fileName + ".csv"))
-        {
-            var csvReader = new CsvReader(streamRdr, ",");
-
-            // want to split first line 
-            csvReader.Read();
-            // add categories to line.modes 
-
-            while (csvReader.Read())
-            {
-
-                int j = 0;
-
-                Debug.Log(csvReader[j]);
-                
-                WizardData line = new WizardData();
-
-                line.category = new List<WizardData.Information>();
-                line.category.Add()
-
-                line.category = csvReader[j];
-                line.info.Add(line.modes[j], csvReader[j + 1]);
-                line.info.Add(line.modes[j+1], csvReader[j + 2]);
-                line.info.Add(line.modes[j+2], csvReader[j + 3]);
-                line.info.Add(line.modes[j+3], csvReader[j + 4]);
-                line.info.Add(line.modes[j + 4], csvReader[j + 5]);
-                line.info.Add(line.modes[j + 5], csvReader[j + 6]);
-            
-                data.Add(line);
-                
-            }
-        }
-
-        return data; 
-    }
-    */
+   
 
     // can't reference public val in class ?? 
     public static List<Dialogue> createDialogue(int round, string category)

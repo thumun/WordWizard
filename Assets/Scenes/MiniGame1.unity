@@ -227,6 +227,14 @@ MonoBehaviour:
   tenseData: Subject + auxiliary be (was/were) + main verb (present participle) (ing)
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!60 &20229719
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1227,6 +1235,14 @@ MonoBehaviour:
   tenseData: will be + [verb]
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!60 &239952952
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3007,6 +3023,14 @@ MonoBehaviour:
     participle)
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!60 &545238803
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5563,6 +5587,14 @@ MonoBehaviour:
   tenseData: Subject + has/have been + [present participle (root form of verb + -ing)]
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!60 &971449004
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -8944,6 +8976,14 @@ MonoBehaviour:
   tenseData: Subject + has/have + [past participle]
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!60 &1561293504
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -11379,6 +11419,14 @@ MonoBehaviour:
   tenseData: Subject + to be [am, is, are] + verb [present participle]
   yes: {fileID: 1004300623}
   no: {fileID: 695247883}
+  oppSprite: {fileID: 604279612}
+  sprites:
+  - {fileID: 21300000, guid: afd50840e308545e88ffcc53f02ec17d, type: 3}
+  - {fileID: 21300000, guid: e07a8e1b5fc7046b795eb3965466224c, type: 3}
+  - {fileID: 21300000, guid: aaade0b590a95461da0dfb7b5d607539, type: 3}
+  - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
+  - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
+  - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
 --- !u!1 &1760358951
 GameObject:
   m_ObjectHideFlags: 0
