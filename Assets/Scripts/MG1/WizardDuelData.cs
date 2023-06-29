@@ -50,7 +50,7 @@ public class Question
     }
 
     // https://stackoverflow.com/questions/49570175/simple-way-to-randomly-shuffle-list 
-    private static void ShuffleMe<T>(IList<T> list)
+    public static void ShuffleMe<T>(IList<T> list)
     {
         System.Random random = new System.Random();
         int n = list.Count;

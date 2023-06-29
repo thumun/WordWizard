@@ -297,27 +297,22 @@ public class ListeningDialogue : MonoBehaviour
         //yield return new WaitForSeconds(0.05f);
     }
 
-    // can't reference public val in class ?? 
-    public static List<DuelData> createDialogue(int round, string category)
+    public List<DuelData> createDialogue(int round, string categoryName)
     {
         List<DuelData> spells = new List<DuelData>();
 
         // need to cycle through duel data and get specific category
-        //List<Category> test = duelInfo.Categories.Select(c => c.Name == category).ToList();
+        Category category = duelInfo.Categories.Where(c => c.Name == categoryName).First();
 
         // then get questions from list 
-        // ShuffleMe(test.Questions.Choices); // randomize the questions
-
-        //
-
-        /*
+        Question.ShuffleMe(category.Questions); // randomize the questions
+        
         for (int j = 0; j < round; j++)
         {
             DuelData spell = new DuelData();
-            spell.opponent = test.Questions[j].Ask;
-            spell.attack = test.Questions[j].PresentChoices(tense);
+            spell.opponent = category.Questions[j].Ask;
+            spell.attack = category.Questions[j].PresentChoices(tense);
         }
-        */
 
         return spells; 
     }
