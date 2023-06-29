@@ -3745,7 +3745,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!224 &581564249
 RectTransform:
@@ -3801,10 +3801,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db62c3557c1164ec1a8f0116860755fa, type: 3}
   - {fileID: 21300000, guid: 66cd817c817f849a487272d77e8844bd, type: 3}
   - {fileID: 21300000, guid: 5266796fb219f4818a483a3510df7b3b, type: 3}
+  category: Storytelling
   gameScreen: {fileID: 946071911}
   gameScreenUI: {fileID: 1707665425}
   miniMenuWD: {fileID: 799062087}
   minimenuUI: {fileID: 1028440176}
+  indx: -1
+  tense: 
 --- !u!1 &604279610
 GameObject:
   m_ObjectHideFlags: 0

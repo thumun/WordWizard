@@ -25,7 +25,8 @@ public class Dialogue
 public class DuelData
 {
     public string opponent; 
-    public List<ResponseChoice> attack = new List<ResponseChoice>();
+    public List<ResponseChoice> attack;
+
 }
 
 public class ListeningDialogue : MonoBehaviour
@@ -55,11 +56,14 @@ public class ListeningDialogue : MonoBehaviour
     public Transform oppSprite;
     public Sprite[] sprites;
 
+    public String category; 
+
     public GameObject gameScreen;
     public GameObject gameScreenUI;
     public GameObject miniMenuWD;
     public GameObject minimenuUI;
 
+    private List<DuelData> spells;
     private bool correctanswer = false;
     private List<Dialogue> dialogue;
     private int dialogueNum = 0;
@@ -89,7 +93,7 @@ public class ListeningDialogue : MonoBehaviour
         // putting the file read here initially but should be else where...
         dialogue = ReadSpells("miniGame1");
 
-        updateResponseBtns();
+        //updateResponseBtns();
         responses.gameObject.SetActive(true);
 
         endScreen(win);
@@ -127,6 +131,8 @@ public class ListeningDialogue : MonoBehaviour
         //oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
         gameScreen.SetActive(true);
         gameScreenUI.SetActive(true);
+        spells = createDialogue(initialRounds, category);
+        updateResponseBtns();
         miniMenuWD.SetActive(false);
         minimenuUI.SetActive(false);
     }
@@ -167,9 +173,18 @@ public class ListeningDialogue : MonoBehaviour
 
     public void updateResponseBtns()
     {
-        // should get new content from data & update
-        // question strings && bool based on data
 
+        one.GetComponentInChildren<TextMeshProUGUI>().text = spells[dialogueNum].attack[0].Choice.Response;
+        two.GetComponentInChildren<TextMeshProUGUI>().text = spells[dialogueNum].attack[1].Choice.Response;
+        three.GetComponentInChildren<TextMeshProUGUI>().text = spells[dialogueNum].attack[2].Choice.Response;
+
+        QuestionsBools[0] = spells[dialogueNum].attack[0].IsCorrect;
+        QuestionsBools[1] = spells[dialogueNum].attack[1].IsCorrect;
+        QuestionsBools[2] = spells[dialogueNum].attack[2].IsCorrect;
+
+        oppDialogue.GetComponent<TextMeshProUGUI>().text = spells[dialogueNum].opponent;
+
+        /*
         one.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[0];
         two.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[1];
         three.GetComponentInChildren<TextMeshProUGUI>().text = dialogue[dialogueNum].attack[2];
@@ -179,6 +194,7 @@ public class ListeningDialogue : MonoBehaviour
         QuestionsBools[2] = dialogue[dialogueNum].attCorrect[2] == 1;
 
         oppDialogue.GetComponent<TextMeshProUGUI>().text = dialogue[dialogueNum].opponent;
+        */
 
     }
 
@@ -312,6 +328,7 @@ public class ListeningDialogue : MonoBehaviour
             DuelData spell = new DuelData();
             spell.opponent = category.Questions[j].Ask;
             spell.attack = category.Questions[j].PresentChoices(tense);
+            spells.Add(spell);
         }
 
         return spells; 

@@ -80,13 +80,15 @@ public class Question
 
         int rnd = -1;
         List<ResponseChoice> temp = new List<ResponseChoice>();
-
-        while (rnd != -1 && temp.Capacity != 2)
+        List<int> rndNum = new List<int>();
+        
+        while (temp.Count < 2)
         {
             rnd = Random.Range(0, Choices.Capacity);
 
-            if (Choices[rnd].Tense != tense)
+            if (Choices[rnd].Tense == tense || rndNum.Contains(rnd))
             {
+                rndNum.Add(rnd);
                 continue;
             } else
             {
@@ -94,6 +96,30 @@ public class Question
                         Choices[rnd].Response), false));
             }
         }
+
+        /*
+        for (int i = 0; i < 2; i++)
+        {
+            rnd = Random.Range(0, Choices.Capacity);
+
+            if (Choices[rnd].Tense == tense)
+            {
+                rndNum.Add(rnd);
+                continue;
+            } else if (rndNum.Contains(rnd))
+            {
+                rndNum.Add(rnd);
+                continue;
+            }
+            else
+            {
+                temp.Add(new ResponseChoice(new Choice(Choices[rnd].Tense,
+                        Choices[rnd].Response), false));
+            }
+
+            rndNum.Add(rnd);
+        }
+        */
 
         //randomize choices
         temp.Add(correct);
