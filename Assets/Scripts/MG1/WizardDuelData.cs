@@ -215,7 +215,7 @@ public static class WizardDuelData
                 }
 
                 string question = csvReader[1];
-                var responses = Enumerable.Range(0, csvReader.FieldsCount).Skip(2).Select(index => new Choice(header[index-2], csvReader[index])).ToList();
+                var responses = Enumerable.Range(0, csvReader.FieldsCount).Skip(2).Select(index => new Choice(header[index-1], csvReader[index])).ToList();
 
                 Question a = new Question(responses, question);
 

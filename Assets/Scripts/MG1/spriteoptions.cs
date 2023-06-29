@@ -73,7 +73,8 @@ public class spriteoptions : MonoBehaviour
     void noBtnLogic()
     {
         confirmation.gameObject.SetActive(false);
-        test = true; 
+        test = true;
+        listeningDialogue.indx = -1;
     }
 
     void OnMouseDown()

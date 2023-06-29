@@ -27,6 +27,11 @@ public class DuelData
     public string opponent; 
     public List<ResponseChoice> attack;
 
+    public DuelData()
+    {
+
+    }
+
 }
 
 public class ListeningDialogue : MonoBehaviour
@@ -56,7 +61,9 @@ public class ListeningDialogue : MonoBehaviour
     public Transform oppSprite;
     public Sprite[] sprites;
 
-    public String category; 
+    public GameObject tenseInfo; 
+
+    public string category; 
 
     public GameObject gameScreen;
     public GameObject gameScreenUI;
@@ -88,10 +95,10 @@ public class ListeningDialogue : MonoBehaviour
         two.onClick.AddListener(delegate { responseClick(1); });
         three.onClick.AddListener(delegate { responseClick(2); });
 
-        responses.gameObject.SetActive(false);
+        //responses.gameObject.SetActive(false);
 
         // putting the file read here initially but should be else where...
-        dialogue = ReadSpells("miniGame1");
+        //dialogue = ReadSpells("miniGame1");
 
         //updateResponseBtns();
         responses.gameObject.SetActive(true);
@@ -110,19 +117,27 @@ public class ListeningDialogue : MonoBehaviour
             gameOver("w");
             rounds--;
 
-        } else
+        } else if (rounds > 0)
         {
             if (correctanswer)
             {
                 // when round finished -> go to next round
-
-                dialogueNum += 1;
-                updateResponseBtns();
-                responses.gameObject.SetActive(true);
-
-                correctanswer = false;
                 rounds -= 1;
+
+                if (rounds > 0)
+                {
+                    dialogueNum += 1;
+
+                    updateResponseBtns();
+                    responses.gameObject.SetActive(true);
+
+                    correctanswer = false;
+                }
+                
             }
+        } else
+        {
+            //Debug.Log(dialogueNum);
         }
     }
 
@@ -133,6 +148,7 @@ public class ListeningDialogue : MonoBehaviour
         gameScreenUI.SetActive(true);
         spells = createDialogue(initialRounds, category);
         updateResponseBtns();
+        tenseInfo.GetComponent<TextMeshProUGUI>().text = tense;
         miniMenuWD.SetActive(false);
         minimenuUI.SetActive(false);
     }
@@ -331,10 +347,21 @@ public class ListeningDialogue : MonoBehaviour
             spells.Add(spell);
         }
 
+        // adding rand for ending
+        DuelData filler = new DuelData();
+        filler.opponent = "Opponent info here";
+
+        List<ResponseChoice> fillerAtk = new List<ResponseChoice>();
+        fillerAtk.Add(new ResponseChoice(new Choice("test", "test"), false));
+        fillerAtk.Add(new ResponseChoice(new Choice("test", "test"), false));
+        fillerAtk.Add(new ResponseChoice(new Choice("test", "test"), false));
+
+        filler.attack = fillerAtk;
+
         return spells; 
     }
 
-
+    /*
     public static List<Dialogue> ReadSpells(string fileName)
     {
         List<Dialogue> spells = new List<Dialogue>();
@@ -380,5 +407,5 @@ public class ListeningDialogue : MonoBehaviour
 
         return spells;
     }
-
+    */
 }
