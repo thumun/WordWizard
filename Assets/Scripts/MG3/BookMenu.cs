@@ -8,6 +8,9 @@ public class BookMenu : MonoBehaviour
 {
     public Transform bookMenu;
     public Button exitBtn;
+    public GameObject idiomImage; 
+
+    public bool[] QuestionsBools = new bool[3];
 
     public Transform choices; 
     public Button choiceOne;
@@ -16,13 +19,15 @@ public class BookMenu : MonoBehaviour
 
     public IdiomData data;
 
+
     // Start is called before the first frame update
     void Start()
     {
         MonsterChaosData.SetLoadFile("bookChaos");
-        data = MonsterChaosData.GetIdioms();
+        data = MonsterChaosData.GetIdiomData();
 
         exitBtn.onClick.AddListener(exitMenu);
+
     }
 
     // Update is called once per frame
@@ -31,35 +36,25 @@ public class BookMenu : MonoBehaviour
         
     }
 
-    public void populateBook()
+    public void populateBook(int spriteNum)
     {
-
-        // randomize list
-        List<bool> answers = new List<bool>();
-        List<WrongIdiom> wrong = data.GetWrong();
-
-        int rnd = Random.Range(0, 3);
-        int count = 0; 
+        string spriteInfo = "";
+        List<IdiomBase> answers = data.GetChoices(spriteNum);
 
         for (int i = 0; i < 3; i++)
         {
             Transform child = choices.GetChild(i);
+            child.gameObject.GetComponent<TextMeshProUGUI>().text = answers[i].Idiom;
+            QuestionsBools[i] = answers[i].IsCorrect;
 
-            //(rnd == i) ? answers[i] = true : answers[i] = true;
-            if (rnd == i)
+            if (answers[i].IsCorrect)
             {
-                answers[i] = true;
-                //child.gameObject.GetComponent<TextMeshProUGUI>().text = ;
-                // choiceOne.GetComponent<TextMeshProUGUI>().text ;
-            }
-            else
-            {
-                answers[i] = false;
-                child.gameObject.GetComponent<TextMeshProUGUI>().text = wrong[count].Idiom;
-                count++; 
+                spriteInfo = answers[i].Idiom; // if sprite name same as idiom 
             }
         }
-        
+
+        // set sprite here 
+        idiomImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Assets/Art/Sprites"+spriteInfo);
     }
 
     private void exitMenu()
