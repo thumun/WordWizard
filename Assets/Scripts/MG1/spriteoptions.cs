@@ -67,7 +67,7 @@ public class spriteoptions : MonoBehaviour
         }
         */
 
-        listeningDialogue.setup(tense);
+        listeningDialogue.setup();
     }
 
     void noBtnLogic()

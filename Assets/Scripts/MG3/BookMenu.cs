@@ -14,13 +14,13 @@ public class BookMenu : MonoBehaviour
     public Button choiceTwo;
     public Button choiceThree;
 
-    public Idiom data;
+    public IdiomData data;
 
     // Start is called before the first frame update
     void Start()
     {
         MonsterChaosData.SetLoadFile("bookChaos");
-        data = MonsterChaosData.GetWizardData();
+        data = MonsterChaosData.GetIdioms();
 
         exitBtn.onClick.AddListener(exitMenu);
     }

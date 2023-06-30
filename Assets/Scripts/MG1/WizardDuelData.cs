@@ -94,6 +94,7 @@ public class Question
             {
                 temp.Add(new ResponseChoice(new Choice(Choices[rnd].Tense,
                         Choices[rnd].Response), false));
+                rndNum.Add(rnd);
             }
         }
 

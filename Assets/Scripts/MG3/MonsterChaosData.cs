@@ -5,53 +5,62 @@ using NReco.Csv;
 using System.IO;
 using System.Linq;
 
-public class CorrectIdiom
+public class IdiomBase
 {
     public string Idiom { get; private set; }
+    public IdiomBase(string idiom)
+    {
+        Idiom = idiom;
+    }
+
+}
+public class CorrectIdiom : IdiomBase
+{
     public string Hint { get; private set; }
 
-    public CorrectIdiom(string _idiom, string _hint)
+    public CorrectIdiom(string _idiom, string _hint) : base(_idiom)
     {
-        Idiom = _idiom;
         Hint = _hint;
     }
 }
 
-public class WrongIdiom
+public class WrongIdiom : IdiomBase
 {
-    public string Idiom { get; private set; }
-
-    public WrongIdiom(string _idiom)
+    public WrongIdiom(string _idiom) : base(_idiom)
     {
-        Idiom = _idiom;
+
     }
 }
 
-public class Idiom
+public class IdiomData
 {
     public List<CorrectIdiom> Correct { get; set; }
     public List<WrongIdiom> Wrong { get; set; }
 
-    public Idiom()
+    public IdiomData()
     {
 
     }
 
-    public Idiom(List<CorrectIdiom> _correct, List<WrongIdiom> _wrong)
+    public IdiomData(List<CorrectIdiom> _correct, List<WrongIdiom> _wrong)
     {
         Correct = _correct;
         Wrong = _wrong; 
     }
 
-    public List<WrongIdiom> GetWrong()
+    public List<IdiomBase> GetWrong()
     {
-        List<WrongIdiom> wrongLst = new List<WrongIdiom>();
+        List<IdiomBase> choices = new List<IdiomBase>();
 
         ShuffleMe(Wrong);
-        wrongLst.Add(Wrong[0]);
-        wrongLst.Add(Wrong[1]);
 
-        return wrongLst;
+        choices.Add(Wrong[0]);
+        choices.Add(Wrong[1]);
+        choices.Add(Correct[0]);
+
+        ShuffleMe(choices);
+
+        return choices;
     }
 
     // https://stackoverflow.com/questions/49570175/simple-way-to-randomly-shuffle-list 
@@ -74,10 +83,10 @@ public class Idiom
 public class MonsterChaosData
 {
 
-    private static Idiom data = null;
+    private static IdiomData data = null;
     private static string _file = "";
 
-    public static Idiom GetWizardData()
+    public static IdiomData GetWizardData()
     {
         if (data == null)
         {
@@ -94,9 +103,9 @@ public class MonsterChaosData
     }
 
     // read csv
-    private static Idiom readCSV(string file)
+    private static IdiomData readCSV(string file)
     {
-        Idiom idiom = new Idiom();
+        IdiomData idiom = new IdiomData();
 
         var header = new List<string>();
 
@@ -117,13 +126,11 @@ public class MonsterChaosData
                     idiom.Correct.Add(new CorrectIdiom(csvReader[1], csvReader[2]));
                 } else
                 {
-                    idiom.Correct.Add(new CorrectIdiom(csvReader[1], csvReader[2]));
+                    idiom.Wrong.Add(new WrongIdiom(csvReader[1]));
                 }
             }
         }
 
         return idiom;
-
-
     }
 }

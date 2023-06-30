@@ -141,7 +141,7 @@ public class ListeningDialogue : MonoBehaviour
         }
     }
 
-    public void setup(string tense)
+    public void setup()
     {
         //oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[indx];
         gameScreen.SetActive(true);
@@ -225,6 +225,7 @@ public class ListeningDialogue : MonoBehaviour
             Debug.Log("Win");
 
             StartCoroutine(FadeTransition(win));
+            // resetgame
         } else
         {
             // if we want to add a thing for more hearts --> add here
