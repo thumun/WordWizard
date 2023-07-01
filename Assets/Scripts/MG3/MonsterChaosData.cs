@@ -96,7 +96,7 @@ public class IdiomData
 
         while (choices.Count < 3)
         {
-            rnd = Random.Range(0, Idioms.Capacity);
+            rnd = Random.Range(0, Idioms.Count);
 
             if (choices[rnd].Idiom == tempIdiom || rndNum.Contains(rnd))
             {
@@ -153,9 +153,11 @@ public class MonsterChaosData
     }
 
     // read csv
-    private static IdiomData readCSV(string file)
+    public static IdiomData readCSV(string file)
     {
         IdiomData idiom = new IdiomData();
+
+        List<IdiomBase> data = new List<IdiomBase>();
 
         var header = new List<string>();
 
@@ -166,25 +168,17 @@ public class MonsterChaosData
             // skip 1st line 
             if (csvReader.Read())
             {
-               
+
             }
 
             while (csvReader.Read())
             {
+                data.Add(new IdiomBase(csvReader[0], csvReader[1], csvReader[2]));
 
-                idiom.Idioms.Add(new IdiomBase(csvReader[0], csvReader[1], csvReader[2]));
-
-                /*
-                if (csvReader[0] == "right")
-                {
-                    idiom.Correct.Add(new CorrectIdiom(csvReader[1], csvReader[2], true));
-                } else
-                {
-                    idiom.Wrong.Add(new WrongIdiom(csvReader[1], false));
-                }
-                */
             }
         }
+
+        idiom.Idioms = data;
 
         // shuffling right answers up front
         IdiomData.ShuffleMe(idiom.Idioms);

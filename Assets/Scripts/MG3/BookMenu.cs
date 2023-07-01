@@ -13,11 +13,11 @@ public class BookMenu : MonoBehaviour
     public bool[] QuestionsBools = new bool[3];
 
     public Transform choices; 
-    public Button choiceOne;
-    public Button choiceTwo;
-    public Button choiceThree;
+    //public Button choiceOne;
+    //public Button choiceTwo;
+    //public Button choiceThree;
 
-    public IdiomData data;
+    public IdiomData data = new IdiomData();
 
 
     // Start is called before the first frame update
@@ -39,7 +39,8 @@ public class BookMenu : MonoBehaviour
     public void populateBook(int spriteNum)
     {
         string spriteInfo = "";
-        List<IdiomBase> answers = data.GetChoices(spriteNum);
+        List<IdiomBase> answers = new List<IdiomBase>();
+        answers = data.GetChoices(spriteNum);
 
         for (int i = 0; i < 3; i++)
         {

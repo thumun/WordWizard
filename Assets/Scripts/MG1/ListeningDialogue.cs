@@ -322,10 +322,10 @@ public class ListeningDialogue : MonoBehaviour
         indx = -1;
         tense = "";
 
-        gameScreen.SetActive(false);
-        gameScreenUI.SetActive(false);
-        miniMenuWD.SetActive(true);
-        minimenuUI.SetActive(true);
+        //gameScreen.SetActive(false);
+        //gameScreenUI.SetActive(false);
+        //miniMenuWD.SetActive(true);
+        //minimenuUI.SetActive(true);
 
         //yield return new WaitForSeconds(0.05f);
     }

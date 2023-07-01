@@ -84,7 +84,7 @@ public class Question
         
         while (temp.Count < 2)
         {
-            rnd = Random.Range(0, Choices.Capacity);
+            rnd = Random.Range(0, Choices.Count);
 
             if (Choices[rnd].Tense == tense || rndNum.Contains(rnd))
             {

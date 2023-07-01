@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class LibraryGame : MonoBehaviour
 {
+
+    public Transform bookMenu;
+
     // Start is called before the first frame update
     void Start()
     {
+        bookMenu.gameObject.SetActive(false);
         
     }
 
