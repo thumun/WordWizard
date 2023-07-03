@@ -21,11 +21,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MiniGame3.unity
     guid: d845b053221884e17a9e03432426aefa
   - enabled: 1
-    path: Assets/Scenes/Scene1.unity
-    guid: aba9b68652cb52340ae43d3be96899e7
-  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Scene1.unity
+    guid: aba9b68652cb52340ae43d3be96899e7
   - enabled: 1
     path: Assets/Scenes/Scene2.unity
     guid: 90482ad0d744c334ab25cb1ab78e45d0
