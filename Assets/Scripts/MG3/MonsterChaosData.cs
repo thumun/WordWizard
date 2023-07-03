@@ -97,18 +97,22 @@ public class IdiomData
         while (choices.Count < 3)
         {
             rnd = Random.Range(0, Idioms.Count);
+            
 
-            if (choices[rnd].Idiom == tempIdiom || rndNum.Contains(rnd))
+            if (rndNum.Contains(rnd))
             {
                 rndNum.Add(rnd);
                 continue;
             }
             else
             {
+                Debug.Log(rnd);
                 choices.Add(Idioms[rnd]);
                 rndNum.Add(rnd);
             }
         }
+
+        ShuffleMe(choices);
 
         return choices;
     }

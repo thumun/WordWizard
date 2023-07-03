@@ -8,7 +8,8 @@ public class BookMenu : MonoBehaviour
 {
     public Transform bookMenu;
     public Button exitBtn;
-    public GameObject idiomImage; 
+    public GameObject idiomImage;
+    public GameObject passage; 
 
     public bool[] QuestionsBools = new bool[3];
 
@@ -45,17 +46,19 @@ public class BookMenu : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Transform child = choices.GetChild(i);
-            child.gameObject.GetComponent<TextMeshProUGUI>().text = answers[i].Idiom;
+            child.gameObject.GetComponent<Button>().GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
             QuestionsBools[i] = answers[i].IsCorrect;
 
             if (answers[i].IsCorrect)
             {
-                spriteInfo = answers[i].Idiom; // if sprite name same as idiom 
+                spriteInfo = answers[i].Idiom; // if sprite name same as idiom
+                passage.GetComponent<TextMeshProUGUI>().text = answers[i].Example;
             }
         }
 
         // set sprite here 
-        idiomImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Assets/Art/Sprites"+spriteInfo);
+        idiomImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteInfo);
+        
     }
 
     private void exitMenu()
