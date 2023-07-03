@@ -29,11 +29,8 @@ public class MonsterBook : MonoBehaviour
     {
         // lib book clicked
 
-        //bookMenu.gameObject.GetComponent<BookMenu>().populateBook(idiomKey);
-
         bookMenuScript.populateBook(idiomKey);
         bookMenu.gameObject.SetActive(true);
-        //BookMenu.populateBook();
     }
 
     void OnMouseOver()

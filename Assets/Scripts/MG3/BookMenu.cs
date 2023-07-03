@@ -61,6 +61,12 @@ public class BookMenu : MonoBehaviour
         
     }
 
+    private void responseClick()
+    {
+
+        bookMenu.gameObject.SetActive(false);
+    }
+
     private void exitMenu()
     {
         bookMenu.gameObject.SetActive(false);

@@ -20,31 +20,10 @@ public class IdiomBase
     }
 
 }
-/*
-public class CorrectIdiom : IdiomBase
-{
-    public string Hint { get; private set; }
-
-    public CorrectIdiom(string _idiom, string _hint, bool _isCorrect) : base(_idiom, _isCorrect)
-    {
-        Hint = _hint;
-    }
-}
-
-public class WrongIdiom : IdiomBase
-{
-    public WrongIdiom(string _idiom, bool _isCorrect) : base(_idiom, _isCorrect)
-    {
-
-    }
-}
-*/
 
 public class IdiomData
 {
     public List<IdiomBase> Idioms { get; set; }
-    //public List<CorrectIdiom> Correct { get; set; }
-    //public List<WrongIdiom> Wrong { get; set; }
 
     public IdiomData()
     {
@@ -55,31 +34,6 @@ public class IdiomData
     {
         Idioms = _idioms; 
     }
-
-    /*
-    public IdiomData(List<CorrectIdiom> _correct, List<WrongIdiom> _wrong)
-    {
-        Correct = _correct;
-        Wrong = _wrong; 
-    }
-    */
-
-    /*
-    public List<IdiomBase> GetChoices(int roundNum)
-    {
-        List<IdiomBase> choices = new List<IdiomBase>();
-
-        ShuffleMe(Wrong);
-
-        choices.Add(Wrong[0]);
-        choices.Add(Wrong[1]);
-        choices.Add(Correct[roundNum]);
-
-        ShuffleMe(choices);
-
-        return choices;
-    }
-    */
 
     public List<IdiomBase> GetChoices(int roundNum)
     {
