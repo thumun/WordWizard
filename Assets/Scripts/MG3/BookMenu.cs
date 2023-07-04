@@ -46,7 +46,11 @@ public class BookMenu : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Transform child = choices.GetChild(i);
-            child.gameObject.GetComponent<Button>().GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
+            Button childbtn = child.gameObject.GetComponent<Button>();
+            childbtn.GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
+
+            childbtn.onClick.AddListener(delegate { responseClick(answers[i].IsCorrect); });
+
             QuestionsBools[i] = answers[i].IsCorrect;
 
             if (answers[i].IsCorrect)
@@ -61,10 +65,18 @@ public class BookMenu : MonoBehaviour
         
     }
 
-    private void responseClick()
+    private void responseClick(bool correct)
     {
+        if (correct)
+        {
+            bookMenu.gameObject.SetActive(false);
+        }
+        else
+        {
+            // librarian dialogue
 
-        bookMenu.gameObject.SetActive(false);
+        }
+        
     }
 
     private void exitMenu()

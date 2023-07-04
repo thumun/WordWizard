@@ -5,6 +5,7 @@ using UnityEngine;
 using NReco.Csv;
 using System.IO;
 using System.Linq;
+using System;
 
 public class MonsterBook : MonoBehaviour
 {
@@ -16,13 +17,13 @@ public class MonsterBook : MonoBehaviour
     void Start()
     {
         bookMenuScript = FindAnyObjectByType<BookMenu>();
-      
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnMouseDown()
@@ -36,12 +37,10 @@ public class MonsterBook : MonoBehaviour
     void OnMouseOver()
     {
         // highlight ? 
-        
+
     }
 
-    
-
-
-
-
+  
 }
+
+  
