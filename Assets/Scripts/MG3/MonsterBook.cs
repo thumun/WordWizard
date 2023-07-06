@@ -21,17 +21,23 @@ public class MonsterBook : MonoBehaviour
     }
 
     // Update is called once per frame
+    float timePassed = 0f;
     void Update()
     {
-
+        timePassed += Time.deltaTime;
+        if (timePassed > 100f)
+        {
+            
+        }
     }
 
     void OnMouseDown()
     {
         // lib book clicked
-
-        bookMenuScript.populateBook(idiomKey);
+        bookMenuScript.spriteData(idiomKey, this.gameObject);
+        //bookMenuScript.populateBook(idiomKey);
         bookMenu.gameObject.SetActive(true);
+        //this.gameObject.SetActive(false);
     }
 
     void OnMouseOver()

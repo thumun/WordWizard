@@ -11,6 +11,7 @@ public class IdiomBase
     public string Definition { get; private set; }
     public string Example { get; private set; }
     public bool IsCorrect { get; set; }
+
     public IdiomBase(string idiom, string definition, string example)
     {
         Idiom = idiom;
@@ -19,6 +20,10 @@ public class IdiomBase
         IsCorrect = false;
     }
 
+    public IdiomBase Clone()
+    {
+        return new IdiomBase(this.Idiom, this.Definition, this.Example);
+    }
 }
 
 public class IdiomData
@@ -39,7 +44,7 @@ public class IdiomData
     {
         List<IdiomBase> choices = new List<IdiomBase>();
 
-        choices.Add(Idioms[roundNum]);
+        choices.Add(Idioms[roundNum].Clone());
         choices[0].IsCorrect = true;
 
         int rnd = -1;
@@ -61,7 +66,7 @@ public class IdiomData
             else
             {
                 Debug.Log(rnd);
-                choices.Add(Idioms[rnd]);
+                choices.Add(Idioms[rnd].Clone());
                 rndNum.Add(rnd);
             }
         }

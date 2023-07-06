@@ -13,19 +13,33 @@ public class BookMenu : MonoBehaviour
 
     public bool[] QuestionsBools = new bool[3];
 
-    public Transform choices; 
-    //public Button choiceOne;
-    //public Button choiceTwo;
-    //public Button choiceThree;
+    public Transform choices;
+    public Button choiceOne;
+    public Button choiceTwo;
+    public Button choiceThree;
 
     public IdiomData data = new IdiomData();
 
+    GameObject currSprite; 
 
     // Start is called before the first frame update
     void Start()
     {
         MonsterChaosData.SetLoadFile("bookChaos");
         data = MonsterChaosData.GetIdiomData();
+
+        /*
+        for (int i = 0; i < choices.childCount; i++)
+        {
+            Transform child = choices.GetChild(i);
+            Button childbtn = child.gameObject.GetComponent<Button>();
+            childbtn.onClick.AddListener(delegate { responseClick(i); });
+        }
+        */
+
+        choiceOne.onClick.AddListener(delegate { responseClick(0); });
+        choiceTwo.onClick.AddListener(delegate { responseClick(1); });
+        choiceThree.onClick.AddListener(delegate { responseClick(2); });
 
         exitBtn.onClick.AddListener(exitMenu);
 
@@ -35,6 +49,13 @@ public class BookMenu : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    public void spriteData(int spriteNum, GameObject monster)
+    {
+        populateBook(spriteNum);
+        currSprite = monster;
     }
 
     public void populateBook(int spriteNum)
@@ -48,8 +69,6 @@ public class BookMenu : MonoBehaviour
             Transform child = choices.GetChild(i);
             Button childbtn = child.gameObject.GetComponent<Button>();
             childbtn.GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
-
-            childbtn.onClick.AddListener(delegate { responseClick(answers[i].IsCorrect); });
 
             QuestionsBools[i] = answers[i].IsCorrect;
 
@@ -65,18 +84,36 @@ public class BookMenu : MonoBehaviour
         
     }
 
-    private void responseClick(bool correct)
+    public void responseClick(int name)
     {
-        if (correct)
+        int correctIndx = -1;
+        for (int i = 0; i < QuestionsBools.Length; i++)
         {
-            bookMenu.gameObject.SetActive(false);
+            if (QuestionsBools[i] == true)
+            {
+                correctIndx = i;
+                break;
+            }
+        }
+
+        if (correctIndx == -1)
+        {
+            Debug.Log("Something went wrong with response -> check bools");
         }
         else
         {
-            // librarian dialogue
+            if (name == correctIndx)
+            {
+                Debug.Log("Right answer!");
+                currSprite.SetActive(false);
+                bookMenu.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Wrong answer!");
 
+            }
         }
-        
     }
 
     private void exitMenu()
