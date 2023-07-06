@@ -8,15 +8,22 @@ namespace MinigameTwo
 {
     public class TooltipHandler : MonoBehaviour
     {
-        [SerializeField] private List<TooltipInfos> tooltipContentList;
+        [SerializeField] private List<QuestionFormats> questionContentList;
 
         [SerializeField] private GameObject tooltipContainer;
-        private TMP_Text _tooltipDescriptionTMP;
-        [SerializeField] private Image iconDisplay;
+        // private TMP_Text _tooltipDescriptionTMP;
+        // [SerializeField] private Image iconDisplay;
+
+        public QuestionFormats curQues;
+
+        public void setCurQues(QuestionFormats cQ)
+        {
+            curQues = cQ;
+        }
 
         private void Awake()
         {
-            _tooltipDescriptionTMP = tooltipContainer.GetComponentInChildren<TMP_Text>();
+            // _tooltipDescriptionTMP = tooltipContainer.GetComponentInChildren<TMP_Text>();
         }
 
         private void OnEnable()
@@ -31,15 +38,17 @@ namespace MinigameTwo
 
         private void GetTooltipInfo(string keyword)
         {
-            foreach (var entry in tooltipContentList)
+            foreach (var entry in questionContentList)
             {
                 if (entry.Keyword == keyword)
                 {
-                    if (!tooltipContainer.gameObject.activeInHierarchy)
-                        tooltipContainer.gameObject.SetActive(true);
+                    // if (!tooltipContainer.gameObject.activeInHierarchy)
+                    // tooltipContainer.gameObject.transform.position = mousePosition;
+                    tooltipContainer.gameObject.SetActive(true);
+                    // Debug.Log(entry.word);
+                    // _tooltipDescriptionTMP.text = entry.Keyword;
+                    // iconDisplay.sprite = entry.Image;
 
-                    _tooltipDescriptionTMP.text = entry.Keyword;
-                    iconDisplay.sprite = entry.Image;
                     return;
                 }
             }
@@ -51,6 +60,11 @@ namespace MinigameTwo
             {
                 tooltipContainer.SetActive(false);
             }
+        }
+
+        public void AddtoQuestions(QuestionFormats q)
+        {
+            questionContentList.Add(q);
         }
 
     }

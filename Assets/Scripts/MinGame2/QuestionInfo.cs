@@ -7,8 +7,11 @@ namespace MinigameTwo
 {
     [Serializable]
 
-    public struct QuestionFormat
+    public struct QuestionFormats
     {
+        // Link keyword
+        public string Keyword;
+
         // Index of the first character of the word
         // Does not count link tags
         public int index;
