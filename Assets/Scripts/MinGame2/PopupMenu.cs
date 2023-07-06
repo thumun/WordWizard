@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PopupMenu : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class PopupMenu : MonoBehaviour
     public void onYesClick()
     {
         answerForm.SetActive(true);
+        answerForm.GetComponentInChildren<TMP_InputField>().Select();
         Popup.SetActive(false);
     }
 

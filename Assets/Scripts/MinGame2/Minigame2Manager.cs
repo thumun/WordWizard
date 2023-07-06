@@ -7,7 +7,12 @@ namespace MinigameTwo
 {
     public class Minigame2Manager : MonoBehaviour
     {
-        protected bool complete;
+        public List<QuestionFormats> clickableWords;
+
+        public string formatText;
+
+        public int TODO;
+        public int DONE;
 
         [SerializeField]
         public GameObject managerMenu;
@@ -15,19 +20,21 @@ namespace MinigameTwo
         [SerializeField]
         public string inputString;
 
-        public string formatText;
-
         [SerializeField]
         public GameObject content;
-
-        public List<QuestionFormats> clickableWords;
 
         [SerializeField]
         public GameObject inputField;
 
+        [SerializeField]
+        public GameObject scoreBox;
+
         // Start is called before the first frame update
         void Start()
         {
+            TODO = 0;
+            DONE = 0;
+
             // This will be where the list/string reader will be
             // the final result will be a formatted string with link tags representing each word.
             // Repeat words will share the same tag.
@@ -80,6 +87,7 @@ namespace MinigameTwo
                 if (tempQF.mistake)
                 {
                     tempQF.word = tempStr + "AHAHHAHAAAHHA";
+                    TODO++;
                 }
                 else
                 {
@@ -124,19 +132,20 @@ namespace MinigameTwo
                 formatText.Remove(formatText.Length - 1);
             }
 
-            Debug.Log(formatText);
             content.GetComponent<TMP_Text>().text = formatText;
+
+            // Debug.Log("TODO: " + TODO);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (complete)
+            if (DONE == TODO)
             {
                 Debug.Log("YOU WIN");
             }
 
-            //content.GetComponent<TMP_Text>().text = formatText;
+            scoreBox.GetComponent<TMP_Text>().SetText(DONE + "/" + TODO);
         }
     }
 }

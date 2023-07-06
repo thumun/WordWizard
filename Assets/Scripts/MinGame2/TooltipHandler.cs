@@ -14,13 +14,6 @@ namespace MinigameTwo
         // private TMP_Text _tooltipDescriptionTMP;
         // [SerializeField] private Image iconDisplay;
 
-        public QuestionFormats curQues;
-
-        public void setCurQues(QuestionFormats cQ)
-        {
-            curQues = cQ;
-        }
-
         private void Awake()
         {
             // _tooltipDescriptionTMP = tooltipContainer.GetComponentInChildren<TMP_Text>();

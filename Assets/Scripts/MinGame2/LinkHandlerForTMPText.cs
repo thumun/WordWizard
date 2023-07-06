@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,6 +70,23 @@ namespace MinigameTwo
                     popup.GetComponent<PopupMenu>().setBadYesButton(true);
                 }
                 request.correctAnswer = tempQF.correctAnswer;
+
+                float popupw = popup.GetComponent<RectTransform>().rect.width / 2.0f;
+                float popuph = popup.GetComponent<RectTransform>().rect.height / 2.0f;
+
+                float upperBounds = Screen.height - popuph;
+                float lowerBounds = 0 + popuph;
+
+                float leftBounds = 0 + popupw;
+                float rightBounds = Screen.width - popupw;
+
+                float popupx = Math.Min(Math.Max((mousePosition.x + popupw), leftBounds), rightBounds);
+                float popupy = Math.Min(Math.Max((mousePosition.y - popuph), lowerBounds), upperBounds);
+
+                popup.transform.position = new Vector3(
+                    popupx,
+                    popupy,
+                    0);
                 answerBox.GetComponent<AnswerBlank>().setCurQues(request);
                 OnClickedOnLinkEvent?.Invoke(linkInfo.GetLinkText());
                 

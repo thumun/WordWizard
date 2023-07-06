@@ -16,6 +16,9 @@ namespace MinigameTwo
         }
 
         [SerializeField]
+        public GameObject masterMenu;
+
+        [SerializeField]
         public GameObject AnswerMenu;
 
         [SerializeField]
@@ -30,7 +33,7 @@ namespace MinigameTwo
         public void onSubmitClick()
         {
             string answer = inputField.GetComponent<TMP_InputField>().text;
-            Debug.Log(curQues.correctAnswer);
+            // Debug.Log(curQues.correctAnswer);
 
             if (curQues.correctAnswer.Equals(answer))
             {
@@ -43,6 +46,9 @@ namespace MinigameTwo
                 text = text.Insert((curQues.indexWithTags - 2 - curQues.word.Length), answer);
 
                 content.GetComponent<TMP_Text>().SetText(text);
+
+                masterMenu.GetComponent<Minigame2Manager>().DONE++;
+                // Debug.Log("DONE: " + masterMenu.GetComponent<Minigame2Manager>().DONE);
             }
             else
             {
