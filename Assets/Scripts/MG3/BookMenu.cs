@@ -106,10 +106,14 @@ public class BookMenu : MonoBehaviour
             if (name == correctIndx)
             {
                 Debug.Log("Right answer!");
+
                 libraryGameScript.librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text =
                     libraryGameScript.dialogue.getGoodFeedback();
+
+                libraryGameScript.timePassed = 0f;
+
                 // wait ??
-                StartCoroutine(WaitTime());
+                //StartCoroutine(WaitTime());
                 currSprite.SetActive(false);
                 bookMenu.gameObject.SetActive(false);
             }
@@ -128,8 +132,10 @@ public class BookMenu : MonoBehaviour
         bookMenu.gameObject.SetActive(false);
     }
 
+    /*
     IEnumerator WaitTime()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(10);
     }
+    */
 }

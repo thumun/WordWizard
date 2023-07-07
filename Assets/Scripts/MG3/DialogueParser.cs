@@ -28,40 +28,52 @@ public class DialogueInfo
     public string getMenu()
     {
         menu++;
-        //if (MiniMenu.Count > 0 && menu >= MiniMenu.Count)
-        //{
-        //    menu = 0; 
-        //}
+        if (MiniMenu.Count > 0)
+        {
+            if (menu >= MiniMenu.Count)
+            {
+                menu = 0;
+            }
+        }
         return MiniMenu[menu];
     }
 
     public string getFunFact()
     {
         funfact++;
-        //if (Running.Count > 0 && funfact >= Running.Count)
-        //{
-        //    funfact = 0;
-        //}
+        if (Running.Count > 0)
+        {
+            if (funfact >= Running.Count)
+            {
+                funfact = 0;
+            }
+        }
         return Running[funfact];
     }
 
     public string getGoodFeedback()
     {
         goodResponse++;
-        //if (Good.Count > 0 && goodResponse >= Good.Count)
-        //{
-        //    goodResponse = 0;
-        //}
+        if (Good.Count > 0)
+        {
+            if(goodResponse >= Good.Count)
+            {
+                goodResponse = 0;
+            }
+        }
         return Good[goodResponse];
     }
 
     public string getBadFeedback()
     {
         badResponse++;
-        //if (Bad.Count > 0 && badResponse >= Bad.Count)
-        //{
-        //    badResponse = 0;
-        //}
+        if (Bad.Count > 0)
+        {
+            if(badResponse >= Bad.Count)
+            {
+                badResponse = 0;
+            }
+        }
         return Bad[badResponse];
     }
 

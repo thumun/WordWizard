@@ -14,7 +14,9 @@ public class LibraryGame : MonoBehaviour
     public IdiomData data = new IdiomData();
     public DialogueInfo dialogue = new DialogueInfo();
 
-    public int dialogueIndx = 0; 
+    public int dialogueIndx = 0;
+
+    public float timePassed = 0f; 
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +29,19 @@ public class LibraryGame : MonoBehaviour
         bookMenu.gameObject.SetActive(false);
         bookSprites.gameObject.SetActive(false);
         BookSetUp();
+        // initializing dialogue 
+        librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text = dialogue.getFunFact();
     }
 
     // Update is called once per frame
-    float timePassed = 0f;
     void Update()
     {
         timePassed += Time.deltaTime;
-        if (timePassed > 100f)
+        if (!bookMenu.gameObject.activeSelf && timePassed > 15f)
         {
             //libraryGameScript.changeText();
             librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text = dialogue.getFunFact();
+            timePassed = 0f;
         }
     }
 
