@@ -17,18 +17,12 @@ public class MonsterBook : MonoBehaviour
     void Start()
     {
         bookMenuScript = FindAnyObjectByType<BookMenu>();
-
     }
 
     // Update is called once per frame
-    float timePassed = 0f;
     void Update()
     {
-        timePassed += Time.deltaTime;
-        if (timePassed > 100f)
-        {
-            
-        }
+
     }
 
     void OnMouseDown()

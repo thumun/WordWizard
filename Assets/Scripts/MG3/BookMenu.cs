@@ -20,6 +20,8 @@ public class BookMenu : MonoBehaviour
 
     public IdiomData data = new IdiomData();
 
+    public LibraryGame libraryGameScript;
+
     GameObject currSprite; 
 
     // Start is called before the first frame update
@@ -27,6 +29,9 @@ public class BookMenu : MonoBehaviour
     {
         MonsterChaosData.SetLoadFile("bookChaos");
         data = MonsterChaosData.GetIdiomData();
+
+        libraryGameScript = FindAnyObjectByType<LibraryGame>();
+        libraryGameScript.data = data;
 
         /*
         for (int i = 0; i < choices.childCount; i++)
@@ -42,7 +47,6 @@ public class BookMenu : MonoBehaviour
         choiceThree.onClick.AddListener(delegate { responseClick(2); });
 
         exitBtn.onClick.AddListener(exitMenu);
-
     }
 
     // Update is called once per frame
@@ -50,7 +54,6 @@ public class BookMenu : MonoBehaviour
     {
         
     }
-
 
     public void spriteData(int spriteNum, GameObject monster)
     {
@@ -78,10 +81,8 @@ public class BookMenu : MonoBehaviour
                 passage.GetComponent<TextMeshProUGUI>().text = answers[i].Example;
             }
         }
-
         // set sprite here 
         idiomImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteInfo);
-        
     }
 
     public void responseClick(int name)
@@ -105,13 +106,19 @@ public class BookMenu : MonoBehaviour
             if (name == correctIndx)
             {
                 Debug.Log("Right answer!");
+                libraryGameScript.librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text =
+                    libraryGameScript.dialogue.getGoodFeedback();
+                // wait ??
+                StartCoroutine(WaitTime());
                 currSprite.SetActive(false);
                 bookMenu.gameObject.SetActive(false);
             }
             else
             {
                 Debug.Log("Wrong answer!");
-
+                // librarian negative dialogue
+                libraryGameScript.librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text =
+                    libraryGameScript.dialogue.getBadFeedback();
             }
         }
     }
@@ -119,5 +126,10 @@ public class BookMenu : MonoBehaviour
     private void exitMenu()
     {
         bookMenu.gameObject.SetActive(false);
+    }
+
+    IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(4);
     }
 }

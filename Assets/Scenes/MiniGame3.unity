@@ -4056,6 +4056,7 @@ MonoBehaviour:
   choiceOne: {fileID: 728932917}
   choiceTwo: {fileID: 220343453}
   choiceThree: {fileID: 921724578}
+  libraryGameScript: {fileID: 0}
 --- !u!1 &1653181984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4172,7 +4173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bookMenu: {fileID: 1580123491}
   bookSprites: {fileID: 624047903}
-  bookScript: {fileID: 0}
+  librarianTxt: {fileID: 433585738}
+  dialogueIndx: 0
 --- !u!1 &1688627578
 GameObject:
   m_ObjectHideFlags: 0
