@@ -4486,13 +4486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questionContentList: []
   tooltipContainer: {fileID: 2124157235}
-  curQues:
-    Keyword: 
-    index: 0
-    indexWithTags: 0
-    mistake: 0
-    word: 
-    correctAnswer: 
 --- !u!114 &1235107708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5038,6 +5031,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496747054}
   m_CullTransparentMesh: 1
+--- !u!1 &1504472546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504472547}
+  m_Layer: 0
+  m_Name: ObjectThatDoesn'tMatter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1504472547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504472546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 144.42224, y: 299.60876, z: -13.27265}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559861892
 GameObject:
   m_ObjectHideFlags: 0
