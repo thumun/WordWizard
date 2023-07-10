@@ -1,0 +1,4 @@
+Category,Name,Opponent Spell,attack,atkCorrect,defense,defCorrect
+Adjective,a,The author writes a story.,"[""The author is writing a story."",""The author has written a story."",""The author has been writing a story.""]","[1, 0, 0]","[""def1"",""def2"",""def3""]","[1, 0, 0]"
+Adjective,b,The hero defeats the villain and saves the day.,"[""The hero is defeating the villain and saving the day."",""The hero has defeated the villain and saved the day."",""The hero has been defeating the villain and saving the day.""]","[1, 0, 0]","[""def4"",""def5"",""def6""]","[1, 0, 0]"
+Adjective,c,wizard,"[""d"",""e"",""f""]","[1, 0, 0]","[""def7"",""def8"",""def9""]","[1, 0, 0]"
