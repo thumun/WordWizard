@@ -17,7 +17,7 @@ public class spriteoptions : MonoBehaviour
     public Transform oppSprite;
     public Sprite[] sprites;
 
-    static bool test = true;
+    public static bool disableMouseOver = true;
 
     ListeningDialogue listeningDialogue;
     //int indx = -1;
@@ -73,7 +73,7 @@ public class spriteoptions : MonoBehaviour
     void noBtnLogic()
     {
         confirmation.gameObject.SetActive(false);
-        test = true;
+        disableMouseOver = true;
         listeningDialogue.indx = -1;
     }
 
@@ -113,12 +113,12 @@ public class spriteoptions : MonoBehaviour
         
         confirmation.gameObject.SetActive(true);
         // disable move over ?? 
-        test = false;
+        disableMouseOver = false;
     }
 
     void OnMouseOver()
     {
-        if (test)
+        if (disableMouseOver)
         {
             Transform child = tenseInfo.GetChild(1);
             child.gameObject.GetComponent<TextMeshProUGUI>().text = tense;
