@@ -5,6 +5,7 @@ using UnityEngine;
 using NReco.Csv;
 using System.IO;
 using System.Linq;
+using System;
 
 public class MonsterBook : MonoBehaviour
 {
@@ -16,32 +17,30 @@ public class MonsterBook : MonoBehaviour
     void Start()
     {
         bookMenuScript = FindAnyObjectByType<BookMenu>();
-      
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnMouseDown()
     {
         // lib book clicked
-
-        bookMenuScript.populateBook(idiomKey);
+        bookMenuScript.spriteData(idiomKey, this.gameObject);
+        //bookMenuScript.populateBook(idiomKey);
         bookMenu.gameObject.SetActive(true);
+        //this.gameObject.SetActive(false);
     }
 
     void OnMouseOver()
     {
         // highlight ? 
-        
+
     }
 
-    
-
-
-
-
+  
 }
+
+  

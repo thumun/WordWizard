@@ -13,13 +13,16 @@ public class BookMenu : MonoBehaviour
 
     public bool[] QuestionsBools = new bool[3];
 
-    public Transform choices; 
-    //public Button choiceOne;
-    //public Button choiceTwo;
-    //public Button choiceThree;
+    public Transform choices;
+    public Button choiceOne;
+    public Button choiceTwo;
+    public Button choiceThree;
 
     public IdiomData data = new IdiomData();
 
+    public LibraryGame libraryGameScript;
+
+    GameObject currSprite; 
 
     // Start is called before the first frame update
     void Start()
@@ -27,14 +30,35 @@ public class BookMenu : MonoBehaviour
         MonsterChaosData.SetLoadFile("bookChaos");
         data = MonsterChaosData.GetIdiomData();
 
-        exitBtn.onClick.AddListener(exitMenu);
+        libraryGameScript = FindAnyObjectByType<LibraryGame>();
+        libraryGameScript.data = data;
 
+        /*
+        for (int i = 0; i < choices.childCount; i++)
+        {
+            Transform child = choices.GetChild(i);
+            Button childbtn = child.gameObject.GetComponent<Button>();
+            childbtn.onClick.AddListener(delegate { responseClick(i); });
+        }
+        */
+
+        choiceOne.onClick.AddListener(delegate { responseClick(0); });
+        choiceTwo.onClick.AddListener(delegate { responseClick(1); });
+        choiceThree.onClick.AddListener(delegate { responseClick(2); });
+
+        exitBtn.onClick.AddListener(exitMenu);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void spriteData(int spriteNum, GameObject monster)
+    {
+        populateBook(spriteNum);
+        currSprite = monster;
     }
 
     public void populateBook(int spriteNum)
@@ -46,7 +70,9 @@ public class BookMenu : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             Transform child = choices.GetChild(i);
-            child.gameObject.GetComponent<Button>().GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
+            Button childbtn = child.gameObject.GetComponent<Button>();
+            childbtn.GetComponentInChildren<TextMeshProUGUI>().text = answers[i].Definition;
+
             QuestionsBools[i] = answers[i].IsCorrect;
 
             if (answers[i].IsCorrect)
@@ -55,20 +81,61 @@ public class BookMenu : MonoBehaviour
                 passage.GetComponent<TextMeshProUGUI>().text = answers[i].Example;
             }
         }
-
         // set sprite here 
         idiomImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(spriteInfo);
-        
     }
 
-    private void responseClick()
+    public void responseClick(int name)
     {
+        int correctIndx = -1;
+        for (int i = 0; i < QuestionsBools.Length; i++)
+        {
+            if (QuestionsBools[i] == true)
+            {
+                correctIndx = i;
+                break;
+            }
+        }
 
-        bookMenu.gameObject.SetActive(false);
+        if (correctIndx == -1)
+        {
+            Debug.Log("Something went wrong with response -> check bools");
+        }
+        else
+        {
+            if (name == correctIndx)
+            {
+                Debug.Log("Right answer!");
+
+                libraryGameScript.librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text =
+                    libraryGameScript.dialogue.getGoodFeedback();
+
+                libraryGameScript.timePassed = 0f;
+
+                // wait ??
+                //StartCoroutine(WaitTime());
+                currSprite.SetActive(false);
+                bookMenu.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Wrong answer!");
+                // librarian negative dialogue
+                libraryGameScript.librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text =
+                    libraryGameScript.dialogue.getBadFeedback();
+            }
+        }
     }
 
     private void exitMenu()
     {
         bookMenu.gameObject.SetActive(false);
     }
+
+    /*
+    IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(10);
+    }
+    */
 }
