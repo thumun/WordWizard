@@ -34,6 +34,6 @@ public class PlayerTracker : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, trackedObject.position + Vector3.up * currentDistance - trackedObject.forward * (currentDistance + distance * 0.5f), updateSpeed * Time.deltaTime);
         /// transform.LookAt(ahead.transform);
         //_renderer.enabled = (currentDistance > hideDistance);
-        transform.position = trackedObject.transform.position + new Vector3(0, 1, -5);
+        transform.position = trackedObject.transform.position + new Vector3(-1, 8, -1);
     }
 }
