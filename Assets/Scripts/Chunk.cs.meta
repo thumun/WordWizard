@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/MinGame2/AnswerBlank.cs.meta
+guid: 9bc5daff3cf95444da22ac409a5200a0
+========
+guid: 0b5090b2cbae64a05823916571bf7e56
+>>>>>>>> master:Assets/Scripts/Chunk.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

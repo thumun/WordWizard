@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: cbb88b9e563074d8b9b88ff31839900b
+<<<<<<<< HEAD:Assets/Scripts/MinGame2/LinkHandlerForTMPText.cs.meta
+guid: 8b159e19967660742be71eff34842c63
+========
+guid: ca2e6b718c08444e7b176688329d9bcd
+>>>>>>>> master:Assets/Scripts/Voxel.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

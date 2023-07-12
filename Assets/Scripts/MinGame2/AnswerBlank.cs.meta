@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 7a957b56e46e34557b32eeb526f593b2
+<<<<<<<< HEAD:Assets/Scripts/MinGame2/AnswerBlank.cs.meta
+guid: aa2f8e1a3a09d6b478857b2c6acd9652
+========
+guid: 0b5090b2cbae64a05823916571bf7e56
+>>>>>>>> master:Assets/Scripts/Chunk.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

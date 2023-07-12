@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/MinGame2/Minigame2Manager.cs.meta
+guid: c4db9e3f8c44fd84ca32a2cf3d332e70
+========
+guid: 596f410bd43664d13bbf8a8bd0c304c7
+>>>>>>>> master:Assets/Scripts/joystickController.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
