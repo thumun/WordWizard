@@ -29,9 +29,15 @@ namespace MinigameTwo
         [SerializeField]
         public GameObject scoreBox;
 
+        [SerializeField]
+        public GameObject winScreen;
+
+        private bool winAppear;
+
         // Start is called before the first frame update
         void Start()
         {
+            winAppear = false;
             TODO = 0;
             DONE = 0;
 
@@ -140,9 +146,10 @@ namespace MinigameTwo
         // Update is called once per frame
         void Update()
         {
-            if (DONE == TODO)
+            if (DONE == TODO && winAppear == false)
             {
-                Debug.Log("YOU WIN");
+                winScreen.SetActive(true);
+                winAppear = true;
             }
 
             scoreBox.GetComponent<TMP_Text>().SetText(DONE + "/" + TODO);
