@@ -11,6 +11,8 @@ public class LibraryGame : MonoBehaviour
     public Transform bookSprites;
     public Transform librarianTxt;
 
+    public Transform textUI; 
+
     public IdiomData data = new IdiomData();
     public DialogueInfo dialogue = new DialogueInfo();
 
@@ -31,6 +33,7 @@ public class LibraryGame : MonoBehaviour
         BookSetUp();
         // initializing dialogue 
         librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text = dialogue.getFunFact();
+        textUI.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = (System.Math.Ceiling(bookSprites.childCount / 2.0)).ToString(); // can change to cycling and counting active 
     }
 
     // Update is called once per frame
