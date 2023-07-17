@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BookMenu : MonoBehaviour
 {
+    public Transform currTxt;
     public Transform bookMenu;
     public Button exitBtn;
     public GameObject idiomImage;
@@ -114,8 +115,10 @@ public class BookMenu : MonoBehaviour
 
                 // wait ??
                 //StartCoroutine(WaitTime());
+                currTxt.gameObject.GetComponent<TextMeshProUGUI>().text = (int.Parse(currTxt.gameObject.GetComponent<TextMeshProUGUI>().text) + 1).ToString();
                 currSprite.SetActive(false);
                 bookMenu.gameObject.SetActive(false);
+
             }
             else
             {
