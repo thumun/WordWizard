@@ -14,16 +14,22 @@ public class ScreenMover : MonoBehaviour
     [SerializeField]
     public float zOffset;
 
+    private Vector2 ScreenDimensions;
+
     // Start is called before the first frame update
     void Start()
     {
+        BG.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z + zOffset);
 
+        ScreenDimensions = new Vector2(Screen.width, Screen.height);
     }
 
     // Update is called once per frame
     void Update()
     {
-        BG.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z + zOffset);
-        
+        if (Screen.width != ScreenDimensions.x || Screen.height != ScreenDimensions.y)
+        {
+            BG.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z + zOffset);
+        }
     }
 }
