@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
 
     public void Map()
     {
-        SceneManager.LoadScene("Map");
+        SceneManager.LoadScene("OverworldMap");
         PauseMenu.GameIsPaused = false;
     }
 
