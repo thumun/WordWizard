@@ -1,14 +1,14 @@
 character ,charphrases,mcphrases,Predecessor 
-dog ,Hi! How’s it going?,"Alright, Not well..., Goodbye",N
-dog ,I see.,END,N
-bird,"Sorry, but I’m a bit busy right now. I’m trying to enjoy my coffee and would also enjoy the personal space.","What are you drinking?, Goodbye",N
-bird,I am having a (come up with a really really extravagant drink with too many toppings lol). I highly recommend it.,"Okay, No, Goodbye",N
-bird,"I would go get another drink and a pastry but my seat is too comfortable. Since you already went out of your way to talk to me, can you go grab me some more?",NULL,N
-bird,"Great! I’ll keep staring at the crumbs in the meantime. Don’t forget, I want a (BLAH BLAH BLAH) and a slice of bread.",END,N
-pastry,Don’t they look so delicious?! It’s hard to pick which one! Or maybe I should get all of them…,"Is that a good idea?, I agree., Goodbye",N
-pastry,... *The dog doesn't seem to hear you..he's staring longingly at the pastries.*,END,N
-barista,Bird followup?,test,Bird
-barista,Hi! What can I get you?,"A cup of tea please?, A cup of coffee please?, A smoothie please?",N
-barista,Okay! Any toppings?,"Sprinkles please., Chocolate chips please., Whipped cream please.",N
-barista,Gotcha! You also want that with a pastry?,"Yes, No",N
-barista,Okay! Feel free to browse our desserts when you are ready!,END,N
+ShibaBig,Hi! How’s it going?,"Alright, Not well..., Goodbye",N
+ShibaBig,I see.,END,N
+Bird,"Sorry, but I’m a bit busy right now. I’m trying to enjoy my coffee and would also enjoy the personal space.","What are you drinking?, Goodbye",N
+Bird,I am having a (come up with a really really extravagant drink with too many toppings lol). I highly recommend it.,"Okay, No, Goodbye",N
+Bird,"I would go get another drink and a pastry but my seat is too comfortable. Since you already went out of your way to talk to me, can you go grab me some more?",NULL,N
+Bird,"Great! I’ll keep staring at the crumbs in the meantime. Don’t forget, I want a (BLAH BLAH BLAH) and a slice of bread.",END,N
+ShibaSmall,Don’t they look so delicious?! It’s hard to pick which one! Or maybe I should get all of them…,"Is that a good idea?, I agree., Goodbye",N
+ShibaSmall,... *The dog doesn't seem to hear you..he's staring longingly at the pastries.*,END,N
+Barista,Bird followup?,test,Bird
+Barista,Hi! What can I get you?,"A cup of tea please?, A cup of coffee please?, A smoothie please?",N
+Barista,Okay! Any toppings?,"Sprinkles please., Chocolate chips please., Whipped cream please.",N
+Barista,Gotcha! You also want that with a pastry?,"Yes, No",N
+Barista,Okay! Feel free to browse our desserts when you are ready!,END,N

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
 
 
-public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
+public class MiniMenuFS : MonoBehaviour
 {
 
     NPCCollection dialogue;
@@ -16,11 +16,20 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     public Button three;
 
     public Transform NPCDialogueBtns;
-    public Transform UserBtns; 
+    public Transform UserBtns;
+
+    GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Fetch the Raycaster from the GameObject (the Canvas)
+        m_Raycaster = GetComponent<GraphicRaycaster>();
+        //Fetch the Event System from the Scene
+        m_EventSystem = GetComponent<EventSystem>();
+
         SetDialogue.SetLoadFile("dialogueMG2");
         dialogue = new NPCCollection();
         dialogue = SetDialogue.GetDialogueData();
@@ -38,15 +47,62 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
+        
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            //Set up the new Pointer Event
+            m_PointerEventData = new PointerEventData(m_EventSystem);
+            //Set the Pointer Event Position to that of the mouse position
+            m_PointerEventData.position = Input.mousePosition;
+
+            //Create a list of Raycast Results
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);
+
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+                //Debug.Log("Hit " + result.gameObject.name);
+
+                /*
+                if (result.gameObject.name == "Frog"
+                    || result.gameObject.name == "Barista"
+                    || result.gameObject.name == "ShibaSmall"
+                    || result.gameObject.name == "ShibaBig"
+                    || result.gameObject.name == "Dragon"
+                    || result.gameObject.name == "Bird")
+                {
+                    Debug.Log(result.gameObject.name);
+                    //GetCharDialogue(this.gameObject.name);
+                    //break;
+                }
+                */
+
+                // this is not working
+                
+                if (result.gameObject.layer==6)
+                {
+                    Debug.Log(result.gameObject.name);
+                    GetCharDialogue(result.gameObject.name);
+                    //break;
+                }
+
+            }
+        }
+
 
     }
 
-    void OnPointerDown(PointerEventData eventData)
+    /*
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(this.gameObject.name);
-        GetCharDialogue(this.gameObject.name);
+        Debug.Log(name);
+        //GetCharDialogue(this.gameObject.name);
         
     }
+    */
 
     void GetCharDialogue(string name)
     {
@@ -72,17 +128,17 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
 
             } else
             {
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
+                currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
 
-                one.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[0];
-                two.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[1];
+                one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+                two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
 
                 if (npc.McPhrase.Count == 2)
                 {
                     three.gameObject.SetActive(false);
                 } else
                 {
-                    three.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[2];
+                    three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
                     three.gameObject.SetActive(true);
                 }
 
@@ -113,8 +169,5 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
         currNPCBtn.gameObject.SetActive(false);
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }
