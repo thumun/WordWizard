@@ -8,7 +8,7 @@ public class spriteoptions : MonoBehaviour
 {
 
     public Transform confirmation;
-    public Transform tenseInfo;
+    public GameObject tenseInfo;
     public string tense;
     public string tenseData;
     public Button yes;
@@ -66,7 +66,7 @@ public class spriteoptions : MonoBehaviour
             indx = 5;
         }
         */
-
+        tenseInfo.SetActive(false);
         listeningDialogue.setup();
     }
 
@@ -120,18 +120,18 @@ public class spriteoptions : MonoBehaviour
     {
         if (disableMouseOver)
         {
-            Transform child = tenseInfo.GetChild(1);
+            Transform child = tenseInfo.transform.GetChild(1);
             child.gameObject.GetComponent<TextMeshProUGUI>().text = tense;
-            child = tenseInfo.GetChild(2);
+            child = tenseInfo.transform.GetChild(2);
             child.gameObject.GetComponent<TextMeshProUGUI>().text = tenseData;
 
-            tenseInfo.gameObject.SetActive(true);
+            tenseInfo.transform.gameObject.SetActive(true);
             //test = false;
         }
     }
 
     void OnMouseExit()
     {
-        tenseInfo.gameObject.SetActive(false);
+        tenseInfo.transform.gameObject.SetActive(false);
     }
 }
