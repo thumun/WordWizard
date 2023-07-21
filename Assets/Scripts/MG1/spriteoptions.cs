@@ -107,7 +107,10 @@ public class spriteoptions : MonoBehaviour
             {
                 listeningDialogue.indx = 5;
             }
-            oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[listeningDialogue.indx];
+            Sprite curSprite = sprites[listeningDialogue.indx];
+            string curPath = System.IO.Path.Combine("WizardBattle", curSprite.name + "Neutral");
+            Debug.Log(curPath);
+            oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(curPath);
             listeningDialogue.tense = tense;
         }
         
