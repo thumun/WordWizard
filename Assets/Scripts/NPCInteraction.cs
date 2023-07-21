@@ -6,19 +6,21 @@ using UnityEngine.UI;
 
 public class NPCInteraction : MonoBehaviour
 {
-    public GameObject BlackScreen;
+    private GameObject BlackScreen;
+    private bool canClick;
 
     // Start is called before the first frame update
     void Start()
     {
         BlackScreen = GameObject.Find("BlackScreen");
         BlackScreen.SetActive(false);
+        canClick = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canClick)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -28,6 +30,7 @@ public class NPCInteraction : MonoBehaviour
                 if (hit.transform.gameObject.layer == 6)
                 {
                     Debug.Log("clicked on character");
+                    StartCoroutine(CharacterDialogue(hit.transform.gameObject));
                 }
                 else if (hit.transform.gameObject.layer == 7)
                 {
@@ -52,6 +55,7 @@ public class NPCInteraction : MonoBehaviour
 
     IEnumerator BuildingZoom(GameObject Building, GameObject blackScreen)
     {
+        canClick = false;
         Vector3 CamPos = Camera.main.transform.position;
         Vector3 BuildPos = Building.transform.position;
         Vector3 correctBPos = new Vector3(BuildPos.x - 11.0f, BuildPos.y, BuildPos.z - 11.0f);
@@ -74,7 +78,72 @@ public class NPCInteraction : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         MiniGameStart(Building.gameObject.name);
+        canClick = true;
+    }
 
+    IEnumerator CharacterDialogue(GameObject character)
+    {
+        // FOR THE TIME BEING, CHARACTERS MUST FACE TO THE LEFT
+        canClick = false;
+        Vector3 CamPos = Camera.main.transform.position;
+        Quaternion CamRot = Camera.main.transform.rotation;
+        Quaternion charRot = new Quaternion(
+            Camera.main.transform.rotation.x - Mathf.PI / 16.0f,
+            Camera.main.transform.rotation.y,
+            Camera.main.transform.rotation.z + Mathf.PI / 36.0f,
+            Camera.main.transform.rotation.w
+        );
+        float orthoSize = Camera.main.orthographicSize;
+        float targetSize = 3.0f;
+        Vector3 charPos = character.transform.position;
+        Vector3 correctPos = new Vector3(charPos.x - 14.0f, charPos.y + 2.6f, charPos.z - 15.0f);
+
+        Vector3 newPos = new Vector3(0.0f, 0.0f, 0.0f);
+        Quaternion newRot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        for (float f = 0.0f; f < 1.0; f += 0.01f)
+        {
+            newPos = correctPos * f + CamPos * (1.0f - f);
+            Camera.main.transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
+
+            newRot = new Quaternion ((charRot.x * f + CamRot.x * (1.0f - f)),
+                (charRot.y * f + CamRot.y * (1.0f - f)),
+                (charRot.z * f + CamRot.z * (1.0f - f)),
+                (charRot.w * f + CamRot.w * (1.0f - f))
+                );
+            Camera.main.transform.rotation = newRot;
+
+            Camera.main.orthographicSize = orthoSize * (1.0f - (f)) + targetSize * (f);
+            Debug.Log(Camera.main.orthographicSize);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        // DIALOGUE GOES HERE
+        yield return new WaitForSeconds(1.0f);
+        // DIALOGUE GOES HERE
+
+        for (float f = 0.0f; f < 1.0; f += 0.01f)
+        {
+            newPos = correctPos * (1.0f - f) + CamPos * (f);
+            Camera.main.transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
+
+            newRot = new Quaternion((CamRot.x * f + charRot.x * (1.0f - f)),
+                (CamRot.y * f + charRot.y * (1.0f - f)),
+                (CamRot.z * f + charRot.z * (1.0f - f)),
+                (CamRot.w * f + charRot.w * (1.0f - f))
+                );
+            Camera.main.transform.rotation = newRot;
+
+            Camera.main.orthographicSize = targetSize * (1.0f - (f)) + orthoSize * (f);
+            Debug.Log(Camera.main.orthographicSize);
+
+            yield return new WaitForSeconds(0.01f);
+        }
+        Camera.main.transform.position = CamPos;
+        Camera.main.transform.rotation = CamRot;
+        Camera.main.orthographicSize = orthoSize;
+
+        canClick = true;
     }
 
     // https://www.youtube.com/watch?v=oNz4I0RfsEg 
