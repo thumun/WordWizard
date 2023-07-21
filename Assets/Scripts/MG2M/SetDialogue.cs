@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using NReco.Csv;
 using System.IO;
+using System.Linq;
 
 public class NPCDialogue
 {
     public string CharPhrase { get; set; }
-    public string McPhrase { get; set; }
+    public List<string> McPhrase { get; set; }
     public bool NeedPredecessor { get; set; }
 
-    public NPCDialogue(string charPhrase, string mcPhrase, bool needPredecessor)
+    public NPCDialogue(string charPhrase, List<string> mcPhrase, bool needPredecessor)
     {
         CharPhrase = charPhrase;
         McPhrase = mcPhrase;
@@ -28,12 +29,37 @@ public class NPC
         Name = name;
         CharDialogue = new List<NPCDialogue>();
     }
+
+    public NPC()
+    {
+        CharDialogue = new List<NPCDialogue>();
+    }
 }
 
 public class NPCCollection
 {
     public List<NPC> NPCS { get; set; }
 
+    public NPCCollection()
+    {
+        NPCS = new List<NPC>();
+    }
+
+    public NPC getNPC(string name)
+    {
+        NPC temp = new NPC();
+
+        foreach (NPC character in NPCS)
+        {
+            if (character.Name == name)
+            {
+                temp = character;
+                break;
+            }
+        }
+
+        return temp; 
+    }
 }
 
 
@@ -73,16 +99,18 @@ public class SetDialogue
             }
 
             string currChar = "";
-            int indx = 0;
+            int indx = -1;
 
             while (csvReader.Read())
             {
+                NPC npcChar;
+
                 if (currChar=="" || currChar != csvReader[0])
                 {
                     currChar = csvReader[0];
-                    NPC npcChar = new NPC(currChar);
+                    npcChar = new NPC(currChar);
 
-                    NPCDialogue dialogue = new NPCDialogue(csvReader[1], csvReader[2], csvReader[3] != "N");
+                    NPCDialogue dialogue = new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), csvReader[3] != "N");
 
                     npcChar.CharDialogue.Add(dialogue);
 
@@ -91,7 +119,7 @@ public class SetDialogue
                 }
                 else
                 {
-                    data.NPCS[indx].CharDialogue.Add(new NPCDialogue(csvReader[1], csvReader[2], csvReader[3] != "N"));
+                    data.NPCS[indx].CharDialogue.Add(new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), csvReader[3] != "N"));
                 }
             }
         }
