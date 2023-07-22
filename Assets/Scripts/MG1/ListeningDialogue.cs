@@ -58,7 +58,8 @@ public class ListeningDialogue : MonoBehaviour
     public Button two;
     public Button three;
 
-    public Transform oppSprite;
+    public GameObject oppSprite;
+    public GameObject yourSprite;
     public Sprite[] sprites;
 
     public GameObject tenseInfo; 
@@ -176,12 +177,14 @@ public class ListeningDialogue : MonoBehaviour
                 Debug.Log("Right answer!");
                 correctanswer = true;
                 responses.gameObject.SetActive(false);
+                StartCoroutine(HurtAnim(oppSprite));
                
             }
             else
             {
                 loseLife();
                 Debug.Log("Wrong answer!");
+                StartCoroutine(PlayerHurtAnim(yourSprite));
 
             }
         }
@@ -313,6 +316,37 @@ public class ListeningDialogue : MonoBehaviour
             c.a = f;
             bg.GetChild(0).GetComponent<Image>().color = c;
             yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    IEnumerator HurtAnim(GameObject character)
+    {
+        Sprite origSprite = character.GetComponent<SpriteRenderer>().sprite;
+        String origName = origSprite.name.Replace("Neutral", "");
+        String hurtPath = System.IO.Path.Combine("WizardBattle", origName + "Attacked");
+        Debug.Log(hurtPath);
+        Sprite hurt = Resources.Load<Sprite>(hurtPath);
+
+        for (float f = 0.0f; f < 0.9; f += 0.3f)
+        {
+            character.GetComponent<SpriteRenderer>().sprite = hurt;
+            yield return new WaitForSeconds(0.15f);
+            character.GetComponent<SpriteRenderer>().sprite = origSprite;
+            yield return new WaitForSeconds(0.15f);
+        }
+    }
+
+    IEnumerator PlayerHurtAnim(GameObject character)
+    {
+        Color c = yourSprite.GetComponent<SpriteRenderer>().color;
+        Color r = new Color(1.0f, 0.0f, 0.0f);
+
+        for (float f = 0.0f; f < 0.9; f += 0.3f)
+        {
+            yourSprite.GetComponent<SpriteRenderer>().color = r;
+            yield return new WaitForSeconds(0.15f);
+            yourSprite.GetComponent<SpriteRenderer>().color = c;
+            yield return new WaitForSeconds(0.15f);
         }
     }
 
