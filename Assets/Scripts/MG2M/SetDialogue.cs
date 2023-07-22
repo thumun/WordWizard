@@ -23,6 +23,7 @@ public class NPC
 {
     public string Name { get; private set; }
     public List<NPCDialogue> CharDialogue { get; set; }
+    public int DialoguePosition = 0;
 
     public NPC(string name)
     {
@@ -33,6 +34,11 @@ public class NPC
     public NPC()
     {
         CharDialogue = new List<NPCDialogue>();
+    }
+
+    public void ResetDialogue()
+    {
+        DialoguePosition = 0; 
     }
 }
 

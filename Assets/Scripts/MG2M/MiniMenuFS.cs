@@ -22,6 +22,9 @@ public class MiniMenuFS : MonoBehaviour
     PointerEventData m_PointerEventData;
     EventSystem m_EventSystem;
 
+    private Button currNPCBtn;
+    private NPC current;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,60 +109,70 @@ public class MiniMenuFS : MonoBehaviour
 
     void GetCharDialogue(string name)
     {
-        Button currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
-        NPC current = dialogue.getNPC(name);
+        currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
+        current = dialogue.getNPC(name);
+        current.DialoguePosition = 0;
 
-        foreach (NPCDialogue npc in current.CharDialogue)
-        {
-            if (npc.McPhrase.Contains("END"))
-            {
-                // don't set active MC response
-                // leave npc response bubble there for a bit??
-                // ienumerator perhaps
-                StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
-                UserBtns.gameObject.SetActive(false);
-
-            } else if (npc.McPhrase.Contains("NULL"))
-            {
-                // don't set active MC response
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-                //currNPCBtn.gameObject.SetActive(true);
-                UserBtns.gameObject.SetActive(false);
-
-            } else
-            {
-                currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
-
-                one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
-                two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
-
-                if (npc.McPhrase.Count == 2)
-                {
-                    three.gameObject.SetActive(false);
-                } else
-                {
-                    three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
-                    three.gameObject.SetActive(true);
-                }
-
-                UserBtns.gameObject.SetActive(true);
-                currNPCBtn.gameObject.SetActive(true);
-
-            }
-        }
-
-        
+        AddingInfo(current, currNPCBtn);
     }
 
     void UserResponse(Button button)
     {
-        if (button.GetComponentInChildren<Text>().text == "Goodbye")  
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Goodbye")  
         {
             Debug.Log("End dialogue");
             UserBtns.gameObject.SetActive(false);
+            currNPCBtn.gameObject.SetActive(false);
+        } else
+        {
+            current.DialoguePosition++;
+            // make responses disappear? 
+            AddingInfo(current, currNPCBtn);
+        }
+    }
+
+    void AddingInfo(NPC current, Button currNPCBtn)
+    {
+        NPCDialogue npc = current.CharDialogue[current.DialoguePosition];
+        if (npc.McPhrase.Contains("END"))
+        {
+            // don't set active MC response
+            // leave npc response bubble there for a bit??
+            // ienumerator perhaps
+            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+            UserBtns.gameObject.SetActive(false);
 
         }
+        else if (npc.McPhrase.Contains("NULL"))
+        {
+            // don't set active MC response
+            //currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+            //currNPCBtn.gameObject.SetActive(true);
+            UserBtns.gameObject.SetActive(false);
 
+        }
+        else
+        {
+            currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+
+            one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+            two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
+
+            if (npc.McPhrase.Count == 2)
+            {
+                three.gameObject.SetActive(false);
+            }
+            else
+            {
+                three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
+                three.gameObject.SetActive(true);
+            }
+
+            UserBtns.gameObject.SetActive(true);
+            currNPCBtn.gameObject.SetActive(true);
+
+        }
     }
 
     IEnumerator RidNPCDialogue(Button currNPCBtn, NPCDialogue npc)
@@ -169,5 +182,5 @@ public class MiniMenuFS : MonoBehaviour
         currNPCBtn.gameObject.SetActive(false);
     }
 
-    
+
 }
