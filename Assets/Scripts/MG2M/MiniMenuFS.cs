@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
 
 
-public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
+public class MiniMenuFS : MonoBehaviour
 {
 
     NPCCollection dialogue;
@@ -16,11 +16,23 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     public Button three;
 
     public Transform NPCDialogueBtns;
-    public Transform UserBtns; 
+    public Transform UserBtns;
+
+    GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
+
+    private Button currNPCBtn;
+    private NPC current;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Fetch the Raycaster from the GameObject (the Canvas)
+        m_Raycaster = GetComponent<GraphicRaycaster>();
+        //Fetch the Event System from the Scene
+        m_EventSystem = GetComponent<EventSystem>();
+
         SetDialogue.SetLoadFile("dialogueMG2");
         dialogue = new NPCCollection();
         dialogue = SetDialogue.GetDialogueData();
@@ -38,72 +50,130 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log(this.gameObject.name);
-        GetCharDialogue(this.gameObject.name);
         
-    }
-
-    void GetCharDialogue(string name)
-    {
-        Button currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
-        NPC current = dialogue.getNPC(name);
-
-        foreach (NPCDialogue npc in current.CharDialogue)
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (npc.McPhrase.Contains("END"))
+            //Set up the new Pointer Event
+            m_PointerEventData = new PointerEventData(m_EventSystem);
+            //Set the Pointer Event Position to that of the mouse position
+            m_PointerEventData.position = Input.mousePosition;
+
+            //Create a list of Raycast Results
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);
+
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
             {
-                // don't set active MC response
-                // leave npc response bubble there for a bit??
-                // ienumerator perhaps
-                StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
-                UserBtns.gameObject.SetActive(false);
+                //Debug.Log("Hit " + result.gameObject.name);
 
-            } else if (npc.McPhrase.Contains("NULL"))
-            {
-                // don't set active MC response
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-                //currNPCBtn.gameObject.SetActive(true);
-                UserBtns.gameObject.SetActive(false);
-
-            } else
-            {
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-
-                one.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[0];
-                two.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[1];
-
-                if (npc.McPhrase.Count == 2)
+                /*
+                if (result.gameObject.name == "Frog"
+                    || result.gameObject.name == "Barista"
+                    || result.gameObject.name == "ShibaSmall"
+                    || result.gameObject.name == "ShibaBig"
+                    || result.gameObject.name == "Dragon"
+                    || result.gameObject.name == "Bird")
                 {
-                    three.gameObject.SetActive(false);
-                } else
-                {
-                    three.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[2];
-                    three.gameObject.SetActive(true);
+                    Debug.Log(result.gameObject.name);
+                    //GetCharDialogue(this.gameObject.name);
+                    //break;
                 }
+                */
 
-                UserBtns.gameObject.SetActive(true);
-                currNPCBtn.gameObject.SetActive(true);
+                // this is not working
+                
+                if (result.gameObject.layer==6)
+                {
+                    Debug.Log(result.gameObject.name);
+                    GetCharDialogue(result.gameObject.name);
+                    //break;
+                }
 
             }
         }
 
+
+    }
+
+    /*
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log(name);
+        //GetCharDialogue(this.gameObject.name);
         
+    }
+    */
+
+    void GetCharDialogue(string name)
+    {
+        currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
+        current = dialogue.getNPC(name);
+        current.DialoguePosition = 0;
+
+        AddingInfo(current, currNPCBtn);
     }
 
     void UserResponse(Button button)
     {
-        if (button.GetComponentInChildren<Text>().text == "Goodbye")  
+        // why isn't this working 
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Goodbye")  
         {
             Debug.Log("End dialogue");
             UserBtns.gameObject.SetActive(false);
+            currNPCBtn.gameObject.SetActive(false);
+        } else
+        {
+            current.DialoguePosition++;
+            // make responses disappear? 
+            AddingInfo(current, currNPCBtn);
+        }
+    }
+
+    void AddingInfo(NPC current, Button currNPCBtn)
+    {
+        NPCDialogue npc = current.CharDialogue[current.DialoguePosition];
+        if (npc.McPhrase.Contains("END"))
+        {
+            // don't set active MC response
+            // leave npc response bubble there for a bit??
+            // ienumerator perhaps
+            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+            UserBtns.gameObject.SetActive(false);
 
         }
+        else if (npc.McPhrase.Contains("NULL"))
+        {
+            // don't set active MC response
+            //currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+            //currNPCBtn.gameObject.SetActive(true);
+            UserBtns.gameObject.SetActive(false);
 
+        }
+        else
+        {
+            currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+
+            one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+            two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
+
+            if (npc.McPhrase.Count == 2)
+            {
+                three.gameObject.SetActive(false);
+            }
+            else
+            {
+                three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
+                three.gameObject.SetActive(true);
+            }
+
+            UserBtns.gameObject.SetActive(true);
+            currNPCBtn.gameObject.SetActive(true);
+
+        }
     }
 
     IEnumerator RidNPCDialogue(Button currNPCBtn, NPCDialogue npc)
@@ -113,8 +183,5 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
         currNPCBtn.gameObject.SetActive(false);
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
+
 }
