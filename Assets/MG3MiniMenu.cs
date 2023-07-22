@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MG3MiniMenu : MonoBehaviour
 {
@@ -61,7 +62,8 @@ public class MG3MiniMenu : MonoBehaviour
 
     void StartGame()
     {
-        // trigger scene switcher 
+        // trigger scene switcher
+        SceneManager.LoadScene("MiniGame3");
     }
 
     void CloseDialogue()

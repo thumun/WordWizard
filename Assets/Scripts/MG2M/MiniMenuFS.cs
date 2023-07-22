@@ -118,6 +118,7 @@ public class MiniMenuFS : MonoBehaviour
 
     void UserResponse(Button button)
     {
+        // why isn't this working 
         if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Goodbye")  
         {
             Debug.Log("End dialogue");
