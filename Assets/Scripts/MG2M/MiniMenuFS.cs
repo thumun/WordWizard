@@ -119,7 +119,7 @@ public class MiniMenuFS : MonoBehaviour
     void UserResponse(Button button)
     {
         // why isn't this working 
-        if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Goodbye")  
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "goodbye")  
         {
             Debug.Log("End dialogue");
             UserBtns.gameObject.SetActive(false);
@@ -178,8 +178,8 @@ public class MiniMenuFS : MonoBehaviour
 
     IEnumerator RidNPCDialogue(Button currNPCBtn, NPCDialogue npc)
     {
-        currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-        yield return new WaitForSeconds(0.05f);
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+        yield return new WaitForSeconds(1.0f);
         currNPCBtn.gameObject.SetActive(false);
     }
 
