@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using UnityEngine.SceneManagement;
 
 public class MiniMenuFS : MonoBehaviour
 {
@@ -50,7 +50,7 @@ public class MiniMenuFS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
             //Set up the new Pointer Event
@@ -84,8 +84,8 @@ public class MiniMenuFS : MonoBehaviour
                 */
 
                 // this is not working
-                
-                if (result.gameObject.layer==6)
+
+                if (result.gameObject.layer == 6)
                 {
                     Debug.Log(result.gameObject.name);
                     GetCharDialogue(result.gameObject.name);
@@ -110,21 +110,37 @@ public class MiniMenuFS : MonoBehaviour
     void GetCharDialogue(string name)
     {
         currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
-        current = dialogue.getNPC(name);
-        current.DialoguePosition = 0;
 
-        AddingInfo(current, currNPCBtn);
+        // bit of hard coding for frog so we can edit what he's saying here
+        // instead of in the data 
+        if (name.Trim().ToLower() == "frog")
+        {
+            FrogSettings(currNPCBtn);
+        } else
+        {
+            current = dialogue.getNPC(name);
+            current.DialoguePosition = 0;
+
+            AddingInfo(current, currNPCBtn);
+        }
+
     }
 
     void UserResponse(Button button)
     {
         // why isn't this working 
-        if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "goodbye")  
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "goodbye"
+            || button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "no")
         {
             Debug.Log("End dialogue");
             UserBtns.gameObject.SetActive(false);
             currNPCBtn.gameObject.SetActive(false);
-        } else
+        }
+        else if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "yes")
+        {
+            SceneManager.LoadScene("MiniGame2");
+        }
+        else
         {
             current.DialoguePosition++;
             // make responses disappear? 
@@ -140,18 +156,15 @@ public class MiniMenuFS : MonoBehaviour
             // don't set active MC response
             // leave npc response bubble there for a bit??
             // ienumerator perhaps
-            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+            StartCoroutine(RidNPCDialogue(currNPCBtn, current));
             UserBtns.gameObject.SetActive(false);
 
         }
         else if (npc.McPhrase.Contains("NULL"))
         {
-            // don't set active MC response
-            //currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
-            StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
-            //currNPCBtn.gameObject.SetActive(true);
             UserBtns.gameObject.SetActive(false);
-
+            StartCoroutine(MultipleDialogue(currNPCBtn, current));
+            
         }
         else
         {
@@ -176,11 +189,32 @@ public class MiniMenuFS : MonoBehaviour
         }
     }
 
-    IEnumerator RidNPCDialogue(Button currNPCBtn, NPCDialogue npc)
+
+    IEnumerator RidNPCDialogue(Button currNPCBtn, NPC npc)
     {
-        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
-        yield return new WaitForSeconds(1.0f);
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharDialogue[npc.DialoguePosition].CharPhrase;
+        yield return new WaitForSeconds(2.0f);
         currNPCBtn.gameObject.SetActive(false);
+    }
+
+    // not a smart way to handle this --> assumes that there is only one line after NULL line 
+    IEnumerator MultipleDialogue(Button currNPCBtn, NPC npc)
+    {
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharDialogue[npc.DialoguePosition].CharPhrase;
+        current.DialoguePosition++;
+        yield return new WaitForSeconds(1.5f);
+        yield return RidNPCDialogue(currNPCBtn, npc);
+
+    }
+
+    void FrogSettings(Button currNPCBtn)
+    {
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Oh dear.. I really don't know how to fix the mistakes in my writing.. Can you help? (Are you ready to start the mini game?)";
+        one.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
+        two.GetComponentInChildren<TextMeshProUGUI>().text = "No";
+        three.gameObject.SetActive(false);
+        UserBtns.gameObject.SetActive(true);
+        currNPCBtn.gameObject.SetActive(true);
     }
 
 
