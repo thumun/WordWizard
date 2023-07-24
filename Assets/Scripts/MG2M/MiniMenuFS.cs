@@ -24,6 +24,7 @@ public class MiniMenuFS : MonoBehaviour
 
     private Button currNPCBtn;
     private NPC current;
+    private List<string> charNames = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -67,23 +68,6 @@ public class MiniMenuFS : MonoBehaviour
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                //Debug.Log("Hit " + result.gameObject.name);
-
-                /*
-                if (result.gameObject.name == "Frog"
-                    || result.gameObject.name == "Barista"
-                    || result.gameObject.name == "ShibaSmall"
-                    || result.gameObject.name == "ShibaBig"
-                    || result.gameObject.name == "Dragon"
-                    || result.gameObject.name == "Bird")
-                {
-                    Debug.Log(result.gameObject.name);
-                    //GetCharDialogue(this.gameObject.name);
-                    //break;
-                }
-                */
-
-                // this is not working
 
                 if (result.gameObject.layer == 6)
                 {
@@ -151,41 +135,53 @@ public class MiniMenuFS : MonoBehaviour
     void AddingInfo(NPC current, Button currNPCBtn)
     {
         NPCDialogue npc = current.CharDialogue[current.DialoguePosition];
-        if (npc.McPhrase.Contains("END"))
-        {
-            // don't set active MC response
-            // leave npc response bubble there for a bit??
-            // ienumerator perhaps
-            StartCoroutine(RidNPCDialogue(currNPCBtn, current));
-            UserBtns.gameObject.SetActive(false);
 
-        }
-        else if (npc.McPhrase.Contains("NULL"))
+        if (npc.PredecessorInfo.NeedPredecessor && !charNames.Contains(npc.PredecessorInfo.PredecessorName))
         {
-            UserBtns.gameObject.SetActive(false);
-            StartCoroutine(MultipleDialogue(currNPCBtn, current));
+            
+            current.DialoguePosition++;
+            AddingInfo(current, currNPCBtn);
             
         }
         else
         {
-            currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
 
-            one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
-            two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
-
-            if (npc.McPhrase.Count == 2)
+            if (npc.McPhrase.Contains("END"))
             {
-                three.gameObject.SetActive(false);
+                // don't set active MC response
+                // leave npc response bubble there for a bit??
+                // ienumerator perhaps
+                StartCoroutine(RidNPCDialogue(currNPCBtn, current));
+                UserBtns.gameObject.SetActive(false);
+
+            }
+            else if (npc.McPhrase.Contains("NULL"))
+            {
+                UserBtns.gameObject.SetActive(false);
+                StartCoroutine(MultipleDialogue(currNPCBtn, current));
+
             }
             else
             {
-                three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
-                three.gameObject.SetActive(true);
+                currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
+
+                one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+                two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
+
+                if (npc.McPhrase.Count == 2)
+                {
+                    three.gameObject.SetActive(false);
+                }
+                else
+                {
+                    three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
+                    three.gameObject.SetActive(true);
+                }
+
+                UserBtns.gameObject.SetActive(true);
+                currNPCBtn.gameObject.SetActive(true);
+
             }
-
-            UserBtns.gameObject.SetActive(true);
-            currNPCBtn.gameObject.SetActive(true);
-
         }
     }
 
@@ -195,6 +191,7 @@ public class MiniMenuFS : MonoBehaviour
         currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharDialogue[npc.DialoguePosition].CharPhrase;
         yield return new WaitForSeconds(2.0f);
         currNPCBtn.gameObject.SetActive(false);
+        charNames.Add(npc.Name);
     }
 
     // not a smart way to handle this --> assumes that there is only one line after NULL line 

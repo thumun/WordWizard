@@ -7,8 +7,31 @@ Bird,"I would go get another drink and a pastry but my seat is too comfortable. 
 Bird,"Great! I’ll keep staring at the crumbs in the meantime. Don’t forget, I want a (BLAH BLAH BLAH) and a slice of bread.",END,N
 ShibaSmall,Don’t they look so delicious?! It’s hard to pick which one! Or maybe I should get all of them…,"Is that a good idea?, I agree., Goodbye",N
 ShibaSmall,... *The dog doesn't seem to hear you..he's staring longingly at the pastries.*,END,N
-Barista,Bird followup?,test,Bird
+Barista,Bird followup?,"test, Goodbye",Bird
 Barista,Hi! What can I get you?,"A cup of tea please?, A cup of coffee please?, A smoothie please?",N
 Barista,Okay! Any toppings?,"Sprinkles please., Chocolate chips please., Whipped cream please.",N
-Barista,Gotcha! You also want that with a pastry?,"Yes, No",N
+Barista,Gotcha! You also want that with a pastry?,"Yes please, No thank you",N
 Barista,Okay! Feel free to browse our desserts when you are ready!,END,N
+Dragon,Hello!,"Hello!, Goodbye",N
+Dragon,Fun fact: Did you know that the librarian has lots of fun facts?,"..., Goodbye",N
+Dragon,"Like fun fact: No number before 1,000 uses the letter A?!","..., Goodbye",N
+Dragon,Or that Antarctica is the largest desert in the world?!,"..., Goodbye",N
+Dragon,…,"..., Goodbye",N
+Dragon,…We like to share facts with each other occasionally.,"..., Goodbye",N
+Dragon,But I got some facts of my own if you’re interested!,"..., Goodbye",N
+Dragon,"If you ever want to know more about Lingua and its people, let’s talk!","..., Goodbye",N
+Dragon,I’ve got every obscure detail that an encyclopedia could only dream of!,"..., Goodbye",N
+Dragon,Fun fact…,"No thank you., Yes please.",N
+Dragon,Lingua’s national tool is a pencil!,"..., Goodbye",N
+Dragon,"Lingua was almost about to be named Langua! The co-founders Alph and Abet dueled in an epic battle of rock paper scissors to decide which name it would be! Abet won, fair and square, so now this land is called Lingua.","..., Goodbye",N
+Dragon,"The official name of the Academy is “The Academy of Language Magic, Sentence Modification, and Literary Meaning” but Frase realized that it’s too long, so she eventually shortened it.","..., Goodbye",N
+Dragon,The Academy’s motto is “Anyone can learn word magic”!,"..., Goodbye",N
+Dragon,Lingua’s national motto is “Shared learning.”,"..., Goodbye",N
+Dragon,"No one is sure when the land first existed, but they say that Lingua began with the birth of communication.","..., Goodbye",N
+Dragon,The cafe here is really delicious! …What? It’s a fact!,"..., Goodbye",N
+Dragon,The librarian is the coolest person ever! What? That’s a fact!,"..., Goodbye",N
+Dragon,"Here in Lingua, stories can come to life. Literally!","..., Goodbye",N
+Dragon,Everyone is welcome in Lingua! That’s a fact!,"..., Goodbye",N
+Dragon,"Frase, the current guardian of Lingua, isn’t the first! She comes from a long line of exceptionally talented word wizards. Each of them protected Lingua and its people!","..., Goodbye",N
+Dragon,"When you become an official word wizard, you get a really nice hat! Who wouldn’t want that?",NULL,N
+Dragon,That's it for now! Thanks for listening!,END,N
