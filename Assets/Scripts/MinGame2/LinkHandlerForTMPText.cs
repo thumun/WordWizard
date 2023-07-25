@@ -16,6 +16,7 @@ namespace MinigameTwo
         [SerializeField] private GameObject answerBox;
         [SerializeField] private GameObject popup;
         [SerializeField] private GameObject _masterMenu;
+        [SerializeField] private GameObject dictionary;
 
         public delegate void ClickOnLinkEvent(string keyword);
         public static event ClickOnLinkEvent OnClickedOnLinkEvent;
@@ -70,6 +71,21 @@ namespace MinigameTwo
                     popup.GetComponent<PopupMenu>().setBadYesButton(true);
                 }
                 request.correctAnswer = tempQF.correctAnswer;
+
+                dictionary.GetComponent<Dictionary>().SetDef(
+                    tempQF.correctAnswer
+                    .Replace(" ", "")
+                    .Replace(".", "")
+                    .Replace(",", "")
+                    .Replace("?", "")
+                    .Replace("!", "")
+                    );
+                /*
+                 * TODO: Find a way to get definitions for each word so they can be searched
+                 * 
+                dictionary.SetActive(true);
+                Debug.Log(dictionary.GetComponent<Dictionary>().curTerm);
+                */
 
                 float popupw = popup.GetComponent<RectTransform>().rect.width / 2.0f;
                 float popuph = popup.GetComponent<RectTransform>().rect.height / 2.0f;

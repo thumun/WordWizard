@@ -11,6 +11,10 @@ namespace MinigameTwo
     {
         public List<QuestionFormats> clickableWords;
 
+        //
+        //public List<string> dDataGen;
+        //
+
         public string formatText;
 
         public int TODO;
@@ -109,6 +113,9 @@ namespace MinigameTwo
                     tempQF.word = tempStr;
                     tempQF.correctAnswer = tempStr;
                 }
+                //
+                //dDataGen.Add(tempQF.correctAnswer);
+                //
                 tempQF.Keyword = tempQF.word;
 
                 // Getting Index with tags
@@ -158,5 +165,15 @@ namespace MinigameTwo
 
             scoreBox.GetComponent<TMP_Text>().SetText(DONE + "/" + TODO);
         }
+
+        /*void DictGen()
+        {
+            foreach (string s in DictGen)
+            {
+                var csv = new StringBuilder();
+
+                File.WriteAllText(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets", "Data", "dictionary.csv"), csv.ToString);
+            }
+        }*/
     }
 }
