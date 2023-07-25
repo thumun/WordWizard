@@ -72,12 +72,14 @@ namespace MinigameTwo
                 }
                 request.correctAnswer = tempQF.correctAnswer;
 
-                dictionary.GetComponent<Dictionary>().curTerm = tempQF.correctAnswer
+                dictionary.GetComponent<Dictionary>().SetDef(
+                    tempQF.correctAnswer
                     .Replace(" ", "")
                     .Replace(".", "")
                     .Replace(",", "")
                     .Replace("?", "")
-                    .Replace("!", "");
+                    .Replace("!", "")
+                    );
                 /*
                  * TODO: Find a way to get definitions for each word so they can be searched
                  * 
