@@ -23,6 +23,9 @@ public class PopupMenu : MonoBehaviour
     [SerializeField]
     public GameObject oops;
 
+    [SerializeField]
+    public GameObject dictionary;
+
     public void onYesClick()
     {
         answerForm.SetActive(true);
@@ -34,11 +37,13 @@ public class PopupMenu : MonoBehaviour
     {
         oops.SetActive(true);
         Popup.SetActive(false);
+        dictionary.SetActive(false);
     }
 
     public void onNoClick()
     {
         Popup.SetActive(false);
+        dictionary.SetActive(false);
     }
 
     // For hiding and revealing the buttons

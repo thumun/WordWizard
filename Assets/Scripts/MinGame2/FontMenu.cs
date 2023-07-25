@@ -58,7 +58,6 @@ public class FontMenu : MonoBehaviour
         liberationSansFont = Resources.Load("LiberationSans SDF", typeof(TMP_FontAsset)) as TMP_FontAsset;
 
         fontSize = text.fontSize;
-        Debug.Log(text.fontSize);
         minFont = 20;
         maxFont = 75;
         bold = false;

@@ -30,6 +30,9 @@ namespace MinigameTwo
         [SerializeField]
         public GameObject content;
 
+        [SerializeField]
+        private GameObject dictionary;
+
         public void onSubmitClick()
         {
             string answer = inputField.GetComponent<TMP_InputField>().text;
@@ -58,6 +61,7 @@ namespace MinigameTwo
             AnswerMenu.SetActive(false);
             inputField.GetComponent<TMP_InputField>().SetTextWithoutNotify("");
             curQues = new QuestionFormats();
+            dictionary.SetActive(false);
         }
     }
 }
