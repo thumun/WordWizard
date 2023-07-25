@@ -7,7 +7,7 @@ Bird,"I would go get another drink and a pastry but my seat is too comfortable. 
 Bird,"Great! I’ll keep staring at the crumbs in the meantime. Don’t forget, I want a (BLAH BLAH BLAH) and a slice of bread.",END,N
 ShibaSmall,Don’t they look so delicious?! It’s hard to pick which one! Or maybe I should get all of them…,"Is that a good idea?, I agree., Goodbye",N
 ShibaSmall,... *The dog doesn't seem to hear you..he's staring longingly at the pastries.*,END,N
-Barista,Bird followup?,"test, Goodbye",Bird
+Barista,"I can take care of her order for you, no worries!","Thank you, Goodbye",Bird
 Barista,Hi! What can I get you?,"A cup of tea please?, A cup of coffee please?, A smoothie please?",N
 Barista,Okay! Any toppings?,"Sprinkles please., Chocolate chips please., Whipped cream please.",N
 Barista,Gotcha! You also want that with a pastry?,"Yes please, No thank you",N
