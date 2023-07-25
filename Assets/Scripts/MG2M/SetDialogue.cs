@@ -5,17 +5,30 @@ using NReco.Csv;
 using System.IO;
 using System.Linq;
 
+public class Predecessor
+{
+    public bool NeedPredecessor { get; private set; }
+    public string PredecessorName { get; private set; }
+
+    public Predecessor(bool needPredecessor, string predecessorName)
+    {
+        NeedPredecessor = needPredecessor;
+        PredecessorName = predecessorName;
+    }
+}
+
 public class NPCDialogue
 {
     public string CharPhrase { get; set; }
     public List<string> McPhrase { get; set; }
-    public bool NeedPredecessor { get; set; }
+    public Predecessor PredecessorInfo { get; set; }
+    //public bool NeedPredecessor { get; set; }
 
-    public NPCDialogue(string charPhrase, List<string> mcPhrase, bool needPredecessor)
+    public NPCDialogue(string charPhrase, List<string> mcPhrase, Predecessor predecessorInfo)
     {
         CharPhrase = charPhrase;
         McPhrase = mcPhrase;
-        NeedPredecessor = needPredecessor;
+        PredecessorInfo = predecessorInfo;
     }
 }
 
@@ -116,8 +129,8 @@ public class SetDialogue
                     currChar = csvReader[0];
                     npcChar = new NPC(currChar);
 
-                    NPCDialogue dialogue = new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), csvReader[3] != "N");
-
+                    NPCDialogue dialogue = new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), new Predecessor(csvReader[3] != "N", csvReader[3]));
+                    
                     npcChar.CharDialogue.Add(dialogue);
 
                     data.NPCS.Add(npcChar);
@@ -125,7 +138,7 @@ public class SetDialogue
                 }
                 else
                 {
-                    data.NPCS[indx].CharDialogue.Add(new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), csvReader[3] != "N"));
+                    data.NPCS[indx].CharDialogue.Add(new NPCDialogue(csvReader[1], csvReader[2].Split(',').ToList(), new Predecessor(csvReader[3] != "N", csvReader[3])));
                 }
             }
         }
