@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,11 +16,10 @@ namespace MinigameTwo
         public int TODO;
         public int DONE;
 
-        [SerializeField]
-        public GameObject managerMenu;
+        private string inputString;
 
         [SerializeField]
-        public string inputString;
+        public GameObject managerMenu;
 
         [SerializeField]
         public GameObject content;
@@ -37,6 +38,13 @@ namespace MinigameTwo
         // Start is called before the first frame update
         void Start()
         {
+            string[] passages = new string[] { "MG2Passage1", "MG2Passage2" };
+            int randNum = UnityEngine.Random.Range(0, passages.Length);
+            string filename = passages[randNum];
+            filename = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets", "Data", filename + ".txt");
+
+            inputString = File.ReadAllText(filename);
+
             winAppear = false;
             TODO = 0;
             DONE = 0;
@@ -92,14 +100,15 @@ namespace MinigameTwo
                 tempQF.mistake = mistake;
                 if (tempQF.mistake)
                 {
-                    tempQF.word = tempStr + "AHAHHAHAAAHHA";
+                    tempQF.word = tempStr.Remove(tempStr.IndexOf("$"));
+                    tempQF.correctAnswer = tempStr.Remove(0, tempStr.IndexOf("$") + 1);
                     TODO++;
                 }
                 else
                 {
                     tempQF.word = tempStr;
+                    tempQF.correctAnswer = tempStr;
                 }
-                tempQF.correctAnswer = tempStr;
                 tempQF.Keyword = tempQF.word;
 
                 // Getting Index with tags
@@ -115,10 +124,6 @@ namespace MinigameTwo
                 string soFarNoSpace = soFar.Replace(" ", "");
 
                 tempQF.indexWithTags = 9 + (16 * i) + (soFar.Length + soFarNoSpace.Length) + tempQF.word.Length;
-
-                // Debug.Log(tempQF.word + " " + tempQF.indexWithTags);
-
-                //
 
                 clickableWords.Add(tempQF);
                 keyIndex++;
@@ -140,7 +145,6 @@ namespace MinigameTwo
 
             content.GetComponent<TMP_Text>().text = formatText;
 
-            // Debug.Log("TODO: " + TODO);
         }
 
         // Update is called once per frame
