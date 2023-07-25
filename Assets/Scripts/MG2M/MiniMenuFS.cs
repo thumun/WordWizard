@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-
-public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
+public class MiniMenuFS : MonoBehaviour
 {
 
     NPCCollection dialogue;
@@ -16,11 +16,24 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     public Button three;
 
     public Transform NPCDialogueBtns;
-    public Transform UserBtns; 
+    public Transform UserBtns;
+
+    GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
+
+    private Button currNPCBtn;
+    private NPC current;
+    private List<string> charNames = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
+        //Fetch the Raycaster from the GameObject (the Canvas)
+        m_Raycaster = GetComponent<GraphicRaycaster>();
+        //Fetch the Event System from the Scene
+        m_EventSystem = GetComponent<EventSystem>();
+
         SetDialogue.SetLoadFile("dialogueMG2");
         dialogue = new NPCCollection();
         dialogue = SetDialogue.GetDialogueData();
@@ -39,50 +52,129 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
     void Update()
     {
 
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            //Set up the new Pointer Event
+            m_PointerEventData = new PointerEventData(m_EventSystem);
+            //Set the Pointer Event Position to that of the mouse position
+            m_PointerEventData.position = Input.mousePosition;
+
+            //Create a list of Raycast Results
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);
+
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+
+                if (result.gameObject.layer == 6)
+                {
+                    Debug.Log(result.gameObject.name);
+                    GetCharDialogue(result.gameObject.name);
+                    //break;
+                }
+
+            }
+        }
+
+
     }
 
-    void OnPointerDown(PointerEventData eventData)
+    /*
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(this.gameObject.name);
-        GetCharDialogue(this.gameObject.name);
+        Debug.Log(name);
+        //GetCharDialogue(this.gameObject.name);
         
     }
+    */
 
     void GetCharDialogue(string name)
     {
-        Button currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
-        NPC current = dialogue.getNPC(name);
+        currNPCBtn = NPCDialogueBtns.Find(name + "Btn").GetComponent<Button>();
 
-        foreach (NPCDialogue npc in current.CharDialogue)
+        // bit of hard coding for frog so we can edit what he's saying here
+        // instead of in the data 
+        if (name.Trim().ToLower() == "frog")
         {
+            FrogSettings(currNPCBtn);
+        } else
+        {
+            current = dialogue.getNPC(name);
+            current.DialoguePosition = 0;
+
+            AddingInfo(current, currNPCBtn);
+        }
+
+    }
+
+    void UserResponse(Button button)
+    {
+        // why isn't this working 
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "goodbye"
+            || button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "no")
+        {
+            Debug.Log("End dialogue");
+            UserBtns.gameObject.SetActive(false);
+            currNPCBtn.gameObject.SetActive(false);
+        }
+        else if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "yes")
+        {
+            SceneManager.LoadScene("MiniGame2");
+        }
+        else
+        {
+            current.DialoguePosition++;
+            // make responses disappear? 
+            AddingInfo(current, currNPCBtn);
+        }
+    }
+
+    void AddingInfo(NPC current, Button currNPCBtn)
+    {
+        NPCDialogue npc = current.CharDialogue[current.DialoguePosition];
+
+        if (npc.PredecessorInfo.NeedPredecessor && !charNames.Contains(npc.PredecessorInfo.PredecessorName))
+        {
+            
+            current.DialoguePosition++;
+            AddingInfo(current, currNPCBtn);
+            
+        }
+        else
+        {
+
             if (npc.McPhrase.Contains("END"))
             {
                 // don't set active MC response
                 // leave npc response bubble there for a bit??
                 // ienumerator perhaps
-                StartCoroutine(RidNPCDialogue(currNPCBtn, npc));
+                StartCoroutine(RidNPCDialogue(currNPCBtn, current));
                 UserBtns.gameObject.SetActive(false);
 
-            } else if (npc.McPhrase.Contains("NULL"))
+            }
+            else if (npc.McPhrase.Contains("NULL"))
             {
-                // don't set active MC response
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-                //currNPCBtn.gameObject.SetActive(true);
                 UserBtns.gameObject.SetActive(false);
+                StartCoroutine(MultipleDialogue(currNPCBtn, current));
 
-            } else
+            }
+            else
             {
-                currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
+                currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharPhrase;
 
-                one.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[0];
-                two.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[1];
+                one.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+                two.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
 
                 if (npc.McPhrase.Count == 2)
                 {
                     three.gameObject.SetActive(false);
-                } else
+                }
+                else
                 {
-                    three.gameObject.GetComponentInChildren<Text>().text = npc.McPhrase[2];
+                    three.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
                     three.gameObject.SetActive(true);
                 }
 
@@ -91,30 +183,36 @@ public class MiniMenuFS : MonoBehaviour, IPointerDownHandler
 
             }
         }
-
-        
     }
 
-    void UserResponse(Button button)
+
+    IEnumerator RidNPCDialogue(Button currNPCBtn, NPC npc)
     {
-        if (button.GetComponentInChildren<Text>().text == "Goodbye")  
-        {
-            Debug.Log("End dialogue");
-            UserBtns.gameObject.SetActive(false);
-
-        }
-
-    }
-
-    IEnumerator RidNPCDialogue(Button currNPCBtn, NPCDialogue npc)
-    {
-        currNPCBtn.GetComponentInChildren<Text>().text = npc.CharPhrase;
-        yield return new WaitForSeconds(0.05f);
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharDialogue[npc.DialoguePosition].CharPhrase;
+        yield return new WaitForSeconds(2.0f);
         currNPCBtn.gameObject.SetActive(false);
+        charNames.Add(npc.Name);
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    // not a smart way to handle this --> assumes that there is only one line after NULL line 
+    IEnumerator MultipleDialogue(Button currNPCBtn, NPC npc)
     {
-        throw new System.NotImplementedException();
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = npc.CharDialogue[npc.DialoguePosition].CharPhrase;
+        current.DialoguePosition++;
+        yield return new WaitForSeconds(1.5f);
+        yield return RidNPCDialogue(currNPCBtn, npc);
+
     }
+
+    void FrogSettings(Button currNPCBtn)
+    {
+        currNPCBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Oh dear.. I really don't know how to fix the mistakes in my writing.. Can you help? (Are you ready to start the mini game?)";
+        one.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
+        two.GetComponentInChildren<TextMeshProUGUI>().text = "No";
+        three.gameObject.SetActive(false);
+        UserBtns.gameObject.SetActive(true);
+        currNPCBtn.gameObject.SetActive(true);
+    }
+
+
 }
