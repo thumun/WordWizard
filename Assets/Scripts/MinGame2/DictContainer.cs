@@ -34,7 +34,6 @@ public class DictContainer : MonoBehaviour
 
             while (csvReader.Read())
             {
-                Debug.Log(csvReader[0]);
                 tempTerm = csvReader[0];
                 if (!dict.ContainsKey(tempTerm.ToLower()))
                 {
