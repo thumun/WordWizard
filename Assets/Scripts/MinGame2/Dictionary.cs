@@ -58,9 +58,6 @@ public class Dictionary : MonoBehaviour
         }
         curTerm = input;
 
-        Debug.Log(curTerm);
-        Debug.Log(dict["adventure"]);
-
         if (curTerm != "" && curTerm != null)
         {
             if (dict.ContainsKey(curTerm.ToLower()))
