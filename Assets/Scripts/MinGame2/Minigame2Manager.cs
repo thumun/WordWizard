@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace MinigameTwo
@@ -10,10 +11,6 @@ namespace MinigameTwo
     public class Minigame2Manager : MonoBehaviour
     {
         public List<QuestionFormats> clickableWords;
-
-        //
-        //public List<string> dDataGen;
-        //
 
         public string formatText;
 
@@ -35,7 +32,7 @@ namespace MinigameTwo
         public GameObject scoreBox;
 
         [SerializeField]
-        public GameObject winScreen;
+        public GameObject win;
 
         private bool winAppear;
 
@@ -47,9 +44,10 @@ namespace MinigameTwo
             string filename = passages[randNum];
             filename = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets", "Data", filename + ".txt");
 
+            winAppear = false;
+
             inputString = File.ReadAllText(filename);
 
-            winAppear = false;
             TODO = 0;
             DONE = 0;
 
@@ -113,9 +111,7 @@ namespace MinigameTwo
                     tempQF.word = tempStr;
                     tempQF.correctAnswer = tempStr;
                 }
-                //
-                //dDataGen.Add(tempQF.correctAnswer);
-                //
+
                 tempQF.Keyword = tempQF.word;
 
                 // Getting Index with tags
@@ -157,23 +153,14 @@ namespace MinigameTwo
         // Update is called once per frame
         void Update()
         {
+            DONE = TODO;
             if (DONE == TODO && winAppear == false)
             {
-                winScreen.SetActive(true);
+                win.GetComponent<WinScreen>().FadeIn();
                 winAppear = true;
             }
 
             scoreBox.GetComponent<TMP_Text>().SetText(DONE + "/" + TODO);
         }
-
-        /*void DictGen()
-        {
-            foreach (string s in DictGen)
-            {
-                var csv = new StringBuilder();
-
-                File.WriteAllText(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets", "Data", "dictionary.csv"), csv.ToString);
-            }
-        }*/
     }
 }
