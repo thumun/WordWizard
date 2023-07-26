@@ -7,8 +7,11 @@ using UnityEngine.UI;
 public class spriteoptions : MonoBehaviour
 {
 
-    public Transform confirmation;
-    public GameObject tenseInfo;
+    //public Transform confirmation;
+    public Transform tenseInfo;
+    public GameObject tenseText;
+    public GameObject tenseTitle;
+
     public string tense;
     public string tenseData;
     public Button yes;
@@ -17,7 +20,7 @@ public class spriteoptions : MonoBehaviour
     public Transform oppSprite;
     public Sprite[] sprites;
 
-    public static bool disableMouseOver = true;
+    //public static bool disableMouseOver = true;
 
     ListeningDialogue listeningDialogue;
     //int indx = -1;
@@ -66,21 +69,29 @@ public class spriteoptions : MonoBehaviour
             indx = 5;
         }
         */
-        tenseInfo.SetActive(false);
+        tenseInfo.gameObject.SetActive(false);
         listeningDialogue.setup();
     }
 
     void noBtnLogic()
     {
-        confirmation.gameObject.SetActive(false);
-        disableMouseOver = true;
+        tenseInfo.gameObject.SetActive(false);
+        this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WizardBattle", this.name));
+        //disableMouseOver = true;
         listeningDialogue.indx = -1;
     }
 
     void OnMouseDown()
     {
-        Transform child = confirmation.GetChild(2);
-        child.GetComponent<TextMeshProUGUI>().text = tense;
+        //Transform tenseChild = tenseInfo.transform.GetChild(1);
+        tenseTitle.GetComponent<TextMeshProUGUI>().text = tense;
+        //tenseChild = tenseInfo.transform.GetChild(2);
+        tenseText.GetComponent<TextMeshProUGUI>().text = tenseData;
+
+        tenseInfo.transform.gameObject.SetActive(true);
+
+        //Transform child = confirmation.GetChild(2);
+        //child.GetComponent<TextMeshProUGUI>().text = tense;
         if (listeningDialogue.indx == -1)
         {
             if (tense == "Present Continuous")
@@ -108,17 +119,23 @@ public class spriteoptions : MonoBehaviour
                 listeningDialogue.indx = 5;
             }
             Sprite curSprite = sprites[listeningDialogue.indx];
+
+            // adding highlight to sprite in menu
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDOutlines", curSprite.name + "Outline"));
+
+            // setting opp sprite in game
             string curPath = System.IO.Path.Combine("WizardBattle", curSprite.name + "Neutral");
             Debug.Log(curPath);
             oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(curPath);
             listeningDialogue.tense = tense;
         }
         
-        confirmation.gameObject.SetActive(true);
+        //confirmation.gameObject.SetActive(true);
         // disable move over ?? 
-        disableMouseOver = false;
+        //disableMouseOver = false;
     }
 
+    /*
     void OnMouseOver()
     {
         if (disableMouseOver)
@@ -132,9 +149,12 @@ public class spriteoptions : MonoBehaviour
             //test = false;
         }
     }
+    */
 
+    /*
     void OnMouseExit()
     {
         tenseInfo.transform.gameObject.SetActive(false);
     }
+    */
 }

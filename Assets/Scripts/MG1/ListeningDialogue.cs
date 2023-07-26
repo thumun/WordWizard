@@ -356,7 +356,7 @@ public class ListeningDialogue : MonoBehaviour
         indx = -1;
         tense = "";
 
-        spriteoptions.disableMouseOver = true;
+        //spriteoptions.disableMouseOver = true;
 
         //gameScreen.SetActive(false);
         //gameScreenUI.SetActive(false);
