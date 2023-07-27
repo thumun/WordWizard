@@ -1,17 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NPCInteraction : MonoBehaviour
 {
+
+    public Transform DialogueMenu;
+    public GameObject CharDialogue;
+    public Transform BtnHolder;
+    public Button DialogueClick;
+    public Button Optional;
+    public Button BtnOne;
+    public Button BtnTwo;
+    public Button BtnThree;
+
     private GameObject BlackScreen;
     private bool canClick;
+
+    private NPCCollection dialogue;
+    private NPC current;
 
     // Start is called before the first frame update
     void Start()
     {
+        BtnHolder.gameObject.SetActive(false);
+        DialogueMenu.gameObject.SetActive(false);
+
+        BtnOne.onClick.AddListener(delegate { UserResponse(BtnOne); });
+        BtnTwo.onClick.AddListener(delegate { UserResponse(BtnTwo); });
+        BtnThree.onClick.AddListener(delegate { UserResponse(BtnThree); });
+        Optional.onClick.AddListener(delegate { UserResponse(Optional);});
+        DialogueClick.onClick.AddListener(delegate { UserResponse(DialogueClick); });
+
+        SetDialogue.SetLoadFile("overworldDialogue");
+        dialogue = new NPCCollection();
+        dialogue = SetDialogue.GetDialogueData();
+
         BlackScreen = GameObject.Find("BlackScreen");
         BlackScreen.SetActive(false);
         canClick = true;
@@ -50,7 +77,69 @@ public class NPCInteraction : MonoBehaviour
 
     private void InitiateDialogue(string name)
     {
-        // based on the name we get the dialogue info 
+        // based on the name we get the dialogue info
+        current = dialogue.getNPC(name);
+        current.ResetDialogue();
+        AddInfo(current);
+    }
+
+    private void UserResponse(Button button)
+    {
+        if (button.GetComponentInChildren<TextMeshProUGUI>().text.Trim().ToLower() == "goodbye")
+        {
+            BtnHolder.gameObject.SetActive(false);
+            DialogueMenu.gameObject.SetActive(false);
+        } else 
+        {
+            current.DialoguePosition++;
+            AddInfo(current);
+        } 
+
+    }
+
+    private void AddInfo(NPC current)
+    {
+        NPCDialogue npc = current.CharDialogue[current.DialoguePosition];
+        DialogueClick.gameObject.SetActive(false);
+
+        if (npc.McPhrase.Contains("END"))
+        {
+            // NEED TO CODE ENDING IENUMERATOR !!
+            current.DialoguePosition++;
+            BtnHolder.gameObject.SetActive(false);
+            StartCoroutine(DialogueFade(npc));
+        }
+        else if (npc.McPhrase.Contains("NULL"))
+        {
+            CharDialogue.GetComponent<TextMeshProUGUI>().text = npc.CharPhrase;
+            // how to detect click on panel -- > using btn  
+            BtnHolder.gameObject.SetActive(false);
+            DialogueClick.gameObject.SetActive(true);
+            DialogueMenu.gameObject.SetActive(true);
+        }
+        else
+        {
+            CharDialogue.GetComponent<TextMeshProUGUI>().text = npc.CharPhrase;
+            if (npc.McPhrase.Count == 2)
+            {
+                BtnOne.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+                BtnTwo.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
+                BtnThree.GetComponentInChildren<TextMeshProUGUI>().text = "Goodbye";
+                Optional.gameObject.SetActive(false);
+            } else
+            {
+                Optional.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[0];
+                BtnOne.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[1];
+                BtnTwo.GetComponentInChildren<TextMeshProUGUI>().text = npc.McPhrase[2];
+                BtnThree.GetComponentInChildren<TextMeshProUGUI>().text = "Goodbye";
+
+                Optional.gameObject.SetActive(true);
+            }
+
+            BtnHolder.gameObject.SetActive(true);
+            DialogueMenu.gameObject.SetActive(true);
+        }
+
     }
 
     IEnumerator BuildingZoom(GameObject Building, GameObject blackScreen)
@@ -119,7 +208,8 @@ public class NPCInteraction : MonoBehaviour
         }
 
         // DIALOGUE GOES HERE
-        yield return new WaitForSeconds(1.0f);
+        InitiateDialogue(character.name);
+        //yield return new WaitForSeconds(1.0f);
         // DIALOGUE GOES HERE
 
         for (float f = 0.0f; f < 1.0; f += 0.01f)
@@ -163,6 +253,13 @@ public class NPCInteraction : MonoBehaviour
             bg.GetChild(0).GetComponent<Image>().color = c;
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    IEnumerator DialogueFade(NPCDialogue npc)
+    {
+        CharDialogue.GetComponent<TextMeshProUGUI>().text = npc.CharPhrase;
+        yield return new WaitForSeconds(2.0f);
+        DialogueMenu.gameObject.SetActive(false);
     }
 
     private void MiniGameStart(string name)
