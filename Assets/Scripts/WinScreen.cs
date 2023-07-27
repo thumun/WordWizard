@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class WinScreen : MonoBehaviour
 {
+    public GameObject ResetObject;
+
     public GameObject screenObject;
     private Transform screen;
 
@@ -46,30 +48,12 @@ public class WinScreen : MonoBehaviour
         }
     }
 
-    // would retry have the same questions?
-    private void retryBtn()
-    {
-        /*
-        // figure out restart
-        dialogueNum = 0;
-        updateResponseBtns();
-        for (int index = 0; index < lives.childCount; index++)
-        {
-            Transform child = lives.GetChild(index);
-            child.gameObject.GetComponent<Image>().color = Color.white;
-        }
-
-        lose.gameObject.SetActive(false);
-        rounds = initialRounds;
-        */
-    }
-
-    private void quitBtn()
+    public void quitBtn()
     {
         // perhaps should quit back to the inside of building later
 
         SceneManager.LoadScene("MainMenu");
-        //ResetGame();
+        //MAKE SURE TO CALL THE RESPECTIVE RESETGAME FUNCTION FOR THE GIVEN MINIGAME
     }
 
 }
