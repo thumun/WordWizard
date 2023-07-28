@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BookMenu : MonoBehaviour
 {
     public Transform currTxt;
+
     public Transform bookMenu;
     public Button exitBtn;
     public GameObject idiomImage;
@@ -53,7 +54,7 @@ public class BookMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void spriteData(int spriteNum, GameObject monster)
@@ -133,6 +134,11 @@ public class BookMenu : MonoBehaviour
     private void exitMenu()
     {
         bookMenu.gameObject.SetActive(false);
+    }
+
+    public void resetScore()
+    {
+        currTxt.gameObject.GetComponent<TextMeshProUGUI>().text = "0";
     }
 
     /*

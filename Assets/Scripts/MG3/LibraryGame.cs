@@ -11,6 +11,10 @@ public class LibraryGame : MonoBehaviour
     public Transform bookSprites;
     public Transform librarianTxt;
 
+    public Transform curScore;
+    public Transform goalScore;
+    public GameObject WinScreen;
+
     public Transform textUI; 
 
     public IdiomData data = new IdiomData();
@@ -18,11 +22,15 @@ public class LibraryGame : MonoBehaviour
 
     public int dialogueIndx = 0;
 
-    public float timePassed = 0f; 
+    public float timePassed = 0f;
+
+    public bool winAppear;
 
     // Start is called before the first frame update
     void Start()
     {
+        winAppear = false;
+
         //MonsterChaosData.SetLoadFile("bookChaos");
 
         DialogueParser.SetLoadFile("dialogueData");
@@ -45,6 +53,12 @@ public class LibraryGame : MonoBehaviour
             //libraryGameScript.changeText();
             librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text = dialogue.getFunFact();
             timePassed = 0f;
+        }
+
+        if (int.Parse(curScore.GetComponent<TMP_Text>().text) == int.Parse(goalScore.GetComponent<TMP_Text>().text) && winAppear == false)
+        {
+            WinScreen.GetComponent<WinScreen>().FadeIn();
+            winAppear = true;
         }
     }
 
@@ -95,6 +109,20 @@ public class LibraryGame : MonoBehaviour
 
         bookSprites.gameObject.SetActive(true);
 
+    }
+
+    public void resetGame()
+    {
+        DialogueParser.SetLoadFile("dialogueData");
+        dialogue = DialogueParser.GetDialogueData();
+
+        bookMenu.gameObject.SetActive(false);
+        bookSprites.gameObject.SetActive(false);
+        BookSetUp();
+        // initializing dialogue 
+        librarianTxt.gameObject.GetComponent<TextMeshProUGUI>().text = dialogue.getFunFact();
+        textUI.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = (System.Math.Ceiling(bookSprites.childCount / 2.0)).ToString(); // can change to cycling and counting active
+        winAppear = false;
     }
 
     /*
