@@ -76,7 +76,7 @@ public class spriteoptions : MonoBehaviour
     void noBtnLogic()
     {
         tenseInfo.gameObject.SetActive(false);
-        this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WizardBattle", this.name));
+        this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDMiniMenu", this.name+" Bkg"));
         //disableMouseOver = true;
         listeningDialogue.indx = -1;
     }
@@ -121,7 +121,7 @@ public class spriteoptions : MonoBehaviour
             Sprite curSprite = sprites[listeningDialogue.indx];
 
             // adding highlight to sprite in menu
-            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDOutlines", curSprite.name + "Outline"));
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDOutlines", curSprite.name + "BkgOutline"));
 
             // setting opp sprite in game
             string curPath = System.IO.Path.Combine("WizardBattle", curSprite.name + "Neutral");
