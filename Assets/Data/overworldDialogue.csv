@@ -1,0 +1,25 @@
+character ,charphrases,mcphrases,Precedence
+cat ,Oh…hey…,NULL,N
+cat ,Recently joined the Academy right?,NULL,N
+cat ,There’s not much going on.,"Why is that?, Okay, and…?",N
+cat ,All we do are duels ever since Frase disappeared.,NULL,N
+cat ,The older students are trying their best but it’s just not the same.,NULL,N
+cat ,"You were her personal apprentice, right?",NULL,N
+cat ,Do you remember what she was like?,"A wise and nice wizard., A mean and strict wizard., A quiet but powerful wizard.",N
+cat ,"Yeah, that sounds like her.",NULL,N
+cat ,"Either way, she kept the order in the Academy,",NULL,N
+cat ,"Nowadays, it’s just a mess.","Do you know where she went?, What was the Academy like before?",N
+cat ,Hm…well one person who might have an idea might be around here.,NULL,N
+cat ,But I’ll only tell you if you prove that you really are Frase’s apprentice.,NULL,N
+cat ,"Defeat the students of the Academy (including me), and I’ll tell you.",END,N
+frog,"Hey! You’re new here, right?",NULL,N
+frog,"Cool, I’m known as the soon-to-be best writer in the whole world!",NULL,N
+frog,…But I am also known as Webster.,NULL,N
+frog,I write so much that I run out of my supply of paper every week!,NULL,N
+frog,Any genre is no match for me!,NULL,N
+frog,"Fiction, Science fiction, fantasy fiction, nonfiction, historical fiction, fiction fiction, nonfiction but fiction…",NULL,N
+frog,You get the point!,NULL,N
+frog,"Ha! Maybe one day, you’ll be buying my works!",NULL,N
+frog,"Say, what’s your favorite genre?","My favorite genre is fantasy!, My favorite genre is nonfiction!, My favorite genre is mystery!",N
+frog,"Interesting choice. Maybe at some point, I’ll make a story just for you!",NULL,N
+frog,You’ll thank me later when it becomes highly valuable!,END,N
