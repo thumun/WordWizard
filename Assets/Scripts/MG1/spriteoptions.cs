@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class spriteoptions : MonoBehaviour
 {
+    public static bool clicking;
 
     //public Transform confirmation;
     public Transform tenseInfo;
@@ -29,6 +30,7 @@ public class spriteoptions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        clicking = false;
         // yesBtn
         //confirmation.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(startGame);
         yes.onClick.AddListener(startGame);
@@ -83,56 +85,66 @@ public class spriteoptions : MonoBehaviour
 
     void OnMouseDown()
     {
-        //Transform tenseChild = tenseInfo.transform.GetChild(1);
-        tenseTitle.GetComponent<TextMeshProUGUI>().text = tense;
-        //tenseChild = tenseInfo.transform.GetChild(2);
-        tenseText.GetComponent<TextMeshProUGUI>().text = tenseData;
-
-        tenseInfo.transform.gameObject.SetActive(true);
-
-        //Transform child = confirmation.GetChild(2);
-        //child.GetComponent<TextMeshProUGUI>().text = tense;
-        if (listeningDialogue.indx == -1)
+        if (!clicking)
         {
-            if (tense == "Present Continuous")
-            {
-                listeningDialogue.indx = 0;
-            }
-            else if (tense == "Present Perfect")
-            {
-                listeningDialogue.indx = 1;
-            }
-            else if (tense == "Present Perfect Continuous")
-            {
-                listeningDialogue.indx = 2;
-            }
-            else if (tense == "Past Continuous")
-            {
-                listeningDialogue.indx = 3;
-            }
-            else if (tense == "Past Perfect Continuous")
-            {
-                listeningDialogue.indx = 4;
-            }
-            else if (tense == "Future Simple")
-            {
-                listeningDialogue.indx = 5;
-            }
-            Sprite curSprite = sprites[listeningDialogue.indx];
+            clicking = true;
+            //Transform tenseChild = tenseInfo.transform.GetChild(1);
+            tenseTitle.GetComponent<TextMeshProUGUI>().text = tense;
+            //tenseChild = tenseInfo.transform.GetChild(2);
+            tenseText.GetComponent<TextMeshProUGUI>().text = tenseData;
 
-            // adding highlight to sprite in menu
-            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDOutlines", curSprite.name + "BkgOutline"));
+            tenseInfo.transform.gameObject.SetActive(true);
 
-            // setting opp sprite in game
-            string curPath = System.IO.Path.Combine("WizardBattle", curSprite.name + "Neutral");
-            Debug.Log(curPath);
-            oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(curPath);
-            listeningDialogue.tense = tense;
+            //Transform child = confirmation.GetChild(2);
+            //child.GetComponent<TextMeshProUGUI>().text = tense;
+            if (listeningDialogue.indx == -1)
+            {
+                if (tense == "Present Continuous")
+                {
+                    listeningDialogue.indx = 0;
+                }
+                else if (tense == "Present Perfect")
+                {
+                    listeningDialogue.indx = 1;
+                }
+                else if (tense == "Present Perfect Continuous")
+                {
+                    listeningDialogue.indx = 2;
+                }
+                else if (tense == "Past Continuous")
+                {
+                    listeningDialogue.indx = 3;
+                }
+                else if (tense == "Past Perfect Continuous")
+                {
+                    listeningDialogue.indx = 4;
+                }
+                else if (tense == "Future Simple")
+                {
+                    listeningDialogue.indx = 5;
+                }
+                Sprite curSprite = sprites[listeningDialogue.indx];
+
+                // adding highlight to sprite in menu
+                this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(System.IO.Path.Combine("WDOutlines", curSprite.name + "BkgOutline"));
+
+                // setting opp sprite in game
+                string curPath = System.IO.Path.Combine("WizardBattle", curSprite.name + "Neutral");
+                Debug.Log(curPath);
+                oppSprite.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(curPath);
+                listeningDialogue.tense = tense;
+
+            }
+
+            //confirmation.gameObject.SetActive(true);
+            // disable move over ?? 
+            //disableMouseOver = false;
         }
-        
-        //confirmation.gameObject.SetActive(true);
-        // disable move over ?? 
-        //disableMouseOver = false;
+    }
+
+    public static void setClicking(bool set)
+    {
+        clicking = set;
     }
 
     /*
