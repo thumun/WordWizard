@@ -22,6 +22,15 @@ public class NPCInteraction : MonoBehaviour
 
     private NPCCollection dialogue;
     private NPC current;
+    private Vector3 newPos;
+    private Quaternion newRot;
+    private Quaternion CamRot;
+    private Quaternion charRot;
+    private Vector3 correctPos;
+    private Vector3 CamPos;
+    private float orthoSize;
+    private float targetSize;
+    private string dialogueStatus; 
 
     // Start is called before the first frame update
     void Start()
@@ -89,10 +98,19 @@ public class NPCInteraction : MonoBehaviour
         {
             BtnHolder.gameObject.SetActive(false);
             DialogueMenu.gameObject.SetActive(false);
+            StartCoroutine(CharacterDialogueEnd());
         } else 
         {
-            current.DialoguePosition++;
-            AddInfo(current);
+            if (dialogueStatus == "NULL")
+            {
+                current.DialoguePosition++;
+                AddInfo(current);
+            }
+            else
+            {
+                DialogueMenu.gameObject.SetActive(false);
+            }
+            
         } 
 
     }
@@ -104,18 +122,24 @@ public class NPCInteraction : MonoBehaviour
 
         if (npc.McPhrase.Contains("END"))
         {
-            // NEED TO CODE ENDING IENUMERATOR !!
+            dialogueStatus = "END";
             current.DialoguePosition++;
+            CharDialogue.GetComponent<TextMeshProUGUI>().text = npc.CharPhrase;
+            DialogueClick.gameObject.SetActive(true); // fix this for END dialogue  
             BtnHolder.gameObject.SetActive(false);
-            StartCoroutine(DialogueFade(npc));
+ 
+            StartCoroutine(CharacterDialogueEnd());
         }
         else if (npc.McPhrase.Contains("NULL"))
         {
+            dialogueStatus = "NULL";
             CharDialogue.GetComponent<TextMeshProUGUI>().text = npc.CharPhrase;
             // how to detect click on panel -- > using btn  
-            BtnHolder.gameObject.SetActive(false);
+            //BtnHolder.gameObject.SetActive(false);
+
             DialogueClick.gameObject.SetActive(true);
             DialogueMenu.gameObject.SetActive(true);
+            BtnHolder.gameObject.SetActive(false);
         }
         else
         {
@@ -174,28 +198,28 @@ public class NPCInteraction : MonoBehaviour
     {
         // FOR THE TIME BEING, CHARACTERS MUST FACE TO THE LEFT
         canClick = false;
-        Vector3 CamPos = Camera.main.transform.position;
-        Quaternion CamRot = Camera.main.transform.rotation;
-        Quaternion charRot = new Quaternion(
+        CamPos = Camera.main.transform.position;
+        CamRot = Camera.main.transform.rotation;
+        charRot = new Quaternion(
             Camera.main.transform.rotation.x - Mathf.PI / 16.0f,
             Camera.main.transform.rotation.y,
             Camera.main.transform.rotation.z + Mathf.PI / 36.0f,
             Camera.main.transform.rotation.w
         );
-        float orthoSize = Camera.main.orthographicSize;
-        float targetSize = 3.0f;
+        orthoSize = Camera.main.orthographicSize;
+        targetSize = 3.0f;
         Vector3 charPos = character.transform.position;
-        Vector3 correctPos = new Vector3(charPos.x - 14.0f, charPos.y + 2.6f, charPos.z - 15.0f);
+        correctPos = new Vector3(charPos.x - 14.0f, charPos.y + 2.6f, charPos.z - 15.0f);
 
-        Vector3 newPos = new Vector3(0.0f, 0.0f, 0.0f);
-        Quaternion newRot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-        
+        newPos = new Vector3(0.0f, 0.0f, 0.0f);
+        newRot = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
         for (float f = 0.0f; f < 1.0; f += 0.01f)
         {
             newPos = correctPos * f + CamPos * (1.0f - f);
             Camera.main.transform.position = new Vector3(newPos.x, newPos.y, newPos.z);
 
-            newRot = new Quaternion ((charRot.x * f + CamRot.x * (1.0f - f)),
+            newRot = new Quaternion((charRot.x * f + CamRot.x * (1.0f - f)),
                 (charRot.y * f + CamRot.y * (1.0f - f)),
                 (charRot.z * f + CamRot.z * (1.0f - f)),
                 (charRot.w * f + CamRot.w * (1.0f - f))
@@ -207,11 +231,11 @@ public class NPCInteraction : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        // DIALOGUE GOES HERE
         InitiateDialogue(character.name);
-        //yield return new WaitForSeconds(1.0f);
-        // DIALOGUE GOES HERE
+    }
 
+    IEnumerator CharacterDialogueEnd()
+    {
         for (float f = 0.0f; f < 1.0; f += 0.01f)
         {
             newPos = correctPos * (1.0f - f) + CamPos * (f);
