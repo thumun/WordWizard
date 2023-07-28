@@ -295,12 +295,12 @@ public class NPCInteraction : MonoBehaviour
         }
         else if (name == "cafe")
         {
-            SceneManager.LoadScene("MiniGame2");
+            SceneManager.LoadScene("MG2Menu");
             PauseMenu.GameIsPaused = false;
         }
         else if (name == "library")
         {
-            SceneManager.LoadScene("MiniGame3");
+            SceneManager.LoadScene("MG3Menu");
             PauseMenu.GameIsPaused = false;
         }
       

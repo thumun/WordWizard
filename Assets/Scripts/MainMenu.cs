@@ -12,12 +12,12 @@ public class MainMenu : MonoBehaviour
     }
     public void MiniGame2()
     {
-        SceneManager.LoadScene("MiniGame2");
+        SceneManager.LoadScene("MG2Menu");
         PauseMenu.GameIsPaused = false;
     }
     public void MiniGame3()
     {
-        SceneManager.LoadScene("MiniGame3");
+        SceneManager.LoadScene("MG3Menu");
         PauseMenu.GameIsPaused = false;
     }
 
