@@ -17,11 +17,21 @@ public class PlayerTracker : MonoBehaviour
     private GameObject ahead;
     private MeshRenderer  _renderer;
     public float hideDistance = 1.5f;
+    public static PlayerTracker instance; 
 
     void Start()
     {
-       /// ahead = new GameObject("ahead");
-       // _renderer = trackedObject.gameObject.GetComponent<MeshRenderer>();
+        /// ahead = new GameObject("ahead");
+        // _renderer = trackedObject.gameObject.GetComponent<MeshRenderer>();
+        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
