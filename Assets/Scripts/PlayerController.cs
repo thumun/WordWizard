@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController controller;
+    public CharacterController controller;
     //public Rigidbody theRB;
     public float moveSpeed = 2.0f;
-    private Vector3 playerVelocity;
+    public static Vector3 playerVelocity;
     //private bool groundedPlayer;
     //private float jumpHeight = 1.0f;
     //private float gravityValue = -9.81f;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = gameObject.AddComponent<CharacterController>();
+        //controller = gameObject.AddComponent<CharacterController>();
 
         // Prevents duplicate players in a scene when entering and exiting 
         DontDestroyOnLoad(gameObject);
@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(controller);
+
     }
 
     // Update is called once per frame
