@@ -35957,7 +35957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3392351b891084c4db028c2319510f1b, type: 3}
       propertyPath: m_Name
-      value: library-final
+      value: Library
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3392351b891084c4db028c2319510f1b, type: 3}
       propertyPath: m_Layer
