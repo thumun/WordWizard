@@ -188,6 +188,7 @@ public class NPCInteraction : MonoBehaviour
             c.a = f;
             blackScreen.GetComponent<Image>().color = c;
 
+            Debug.Log(Building.name);
             yield return new WaitForSeconds(0.01f);
         }
         MiniGameStart(Building.gameObject.name);
@@ -298,7 +299,7 @@ public class NPCInteraction : MonoBehaviour
             SceneManager.LoadScene("MG2Menu");
             PauseMenu.GameIsPaused = false;
         }
-        else if (name == "library")
+        else if (name == "Library")
         {
             SceneManager.LoadScene("MG3Menu");
             PauseMenu.GameIsPaused = false;
